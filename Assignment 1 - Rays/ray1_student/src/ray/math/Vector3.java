@@ -174,15 +174,4 @@ public class Vector3 extends Tuple3 {
     this.z += scale * vector.z;
 
   }
-  
-  /** set the smallest component to 1
-   * 
-   */
-  public void smallestToOne(){
-	  if ( x <= y && x <= z) this.x = 1;
-	  if ( y <= x && y <= z) this.y = 1;
-	  else this.z = 1;
-  	
-  }
-
 }

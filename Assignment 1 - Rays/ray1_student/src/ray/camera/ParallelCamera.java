@@ -37,16 +37,13 @@ public class ParallelCamera extends Camera {
 	    // Hint:
     	//   1. check projNormal; if its length is 0, set it to the view direction.
     	if ( projNormal.length() == 0 ) setProjNormal(viewDir);
-    	
 	    //   2. set basisW to be parallel to projection normal but pointing to the opposite direction.
     	basisW.set(projNormal);
     	basisW.scale(-1.0); //multiply by negative 1
     	basisW.normalize();
     	
 	    //   3. set basisU to be parallel to the image's U (horizontal) axis.
-    	Vector3 t = new Vector3(basisW);
-    	t.smallestToOne();
-    	basisU.cross(t, basisW);
+    	basisU.cross(viewUp, basisW);
     	basisU.normalize();
     	
 	    //   4. set basisV to be parallel to the image's V (vertical) axis.
@@ -70,6 +67,8 @@ public class ParallelCamera extends Camera {
 		//Is the view direction negative?
 		//
 	    // TODO: fill in this function.
+		inU = viewWidth/2 * (2 * inU -1);
+		inV = viewHeight/2 * (2 * inV -1);
 		Vector3 tempU = new Vector3(basisU);
 		tempU.scale(inU);
 		Vector3 tempV = new Vector3(basisV);
