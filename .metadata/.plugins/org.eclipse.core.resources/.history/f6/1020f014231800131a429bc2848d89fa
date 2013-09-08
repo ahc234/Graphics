@@ -13,10 +13,10 @@ import ray.surface.Surface;
 public class IntersectionRecord {
 
   /** The location where the intersection occurred. */
-  public Point3 location = new Point3();
+  public final Point3 location = new Point3();
 
   /** The normal of the surface at the intersection location. */
-  public Vector3 normal = new Vector3();
+  public final Vector3 normal = new Vector3();
   
   /** A reference to the actual surface. */
   public Surface surface = null;
