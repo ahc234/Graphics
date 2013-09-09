@@ -65,8 +65,8 @@ public class Sphere extends Surface {
 		  return true;
 	  }
 	  else {
-		  t1 = ((B*-1.0) + Math.sqrt(discriminant))/A;
-		  t2 = ((B*-1.0) - Math.sqrt(discriminant))/A;
+		  t1 = ((B*-1.0) + discriminant )/A;
+		  t2 = ((B*-1.0) - discriminant )/A;
 		if (t1 < 0) t1 = t2;
 		if (t1 >= 0 && t2 >= 0) t1 = Math.min(t1, t2);
 		
