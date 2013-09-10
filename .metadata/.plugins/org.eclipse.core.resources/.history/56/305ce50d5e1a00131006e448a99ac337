@@ -27,29 +27,7 @@ public class Box extends Surface {
    * @return true if the surface intersects the ray
    */
   public boolean intersect(IntersectionRecord outRecord, Ray rayIn) {
-	  // TODO: fill in this function.
-	  Point3 p = new Point3(rayIn.origin);
-
-	  Vector3 d = new Vector3(rayIn.direction);
-	    
-	  
-	 // p + td
-	  double txmin = (minPt.x - p.x) / d.x;
-	  double tymin = (minPt.y - p.y) / d.y;
-	  double tzmin = (minPt.z - p.z) / d.z;
-	  
-	  double txmax = (maxPt.x - p.x) / d.x;
-	  double tymax = (maxPt.y - p.y) / d.y;
-	  double tzmax = (maxPt.z - p.z) / d.z;
-	  
-	  double tmin = Math.max(Math.max(txmin, tymin),tzmin);
-	  double tmax = Math.min(Math.min(txmax, tymax),tzmax);
-	  
-	  Vector3 d2 = new Vector3(d);
-	  Vector3 location = new Vector3(d);
-	  d2.scale(tmin);
-	  location.add(d);
-
+    // TODO: fill in this function.
     
     return true;
 

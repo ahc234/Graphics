@@ -60,25 +60,14 @@ public class Scene {
 	 */
 	public boolean getFirstIntersection(IntersectionRecord outRecord, Ray rayIn) {
 		// TODO: 1) Loop through all surfaces in the scene.
-		boolean result = false;
-		IntersectionRecord tempRecord = new IntersectionRecord();
-		for (Surface s : surfaces){
 		//		 2) Intersect each with a copy of the given ray.
-			boolean inter = s.intersect(tempRecord, rayIn);
 		//		 3) If there was an intersection, check the modified IntersectionRecord to see
 		//			if the object was hit by the ray sooner than any previous object.
 		//			Hint: modifying the end field of your local copy of ray might be useful here.
-			if (inter) {  
-				result = true;
-				if (tempRecord.t < rayIn.end) {
 		//		 4) Set outRecord to the IntersectionRecord of the first object hit.
-					rayIn.end = tempRecord.t;
-					outRecord = tempRecord;
-				}
-			}
 		//		 5) If there was an intersection, return true; otherwise return false.
-		}
-		return result;
+		
+		return false;
 	}
 	
 	/**
@@ -89,10 +78,8 @@ public class Scene {
 	 * @return true if any intersection is found
 	 */
 	public boolean getAnyIntersection(Ray ray) {
-		IntersectionRecord tempRecord = new IntersectionRecord();
-		for (Surface s : surfaces){
-			if (s.intersect(tempRecord, ray)) return true;
-		}
+		// TODO: Fill in this function. It should be much simpler than getFirstIntersection().
+
 		return false;
 	}
 }
