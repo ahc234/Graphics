@@ -46,32 +46,9 @@ public class Box extends Surface {
 	  double tmax = Math.min(Math.min(txmax, tymax),tzmax);
 	  
 	  Vector3 d2 = new Vector3(d);
-	  Point3 pointmin = new Point3(p);
+	  Vector3 location = new Vector3(d);
 	  d2.scale(tmin);
-	  pointmin.add(d);
-	  
-	  Vector3 d3 = new Vector3(d);
-	  Point3 pointmax = new Point3(p);
-	  d3.scale(tmax);
-	  pointmax.add(d);
-	  
-	  if (pointmin.x >= minPt.x && pointmin.x <= maxPt.x &&
-		  pointmin.y >= minPt.y && pointmin.y <= maxPt.y &&
-	      pointmin.x >= minPt.z && pointmin.x <= maxPt.z) {
-		  
-		  outRecord.location = pointmin;
-		  if (pointmin.x == minPt.x) outRecord.normal = new Vector3(0,-1,0);
-		  if (pointmax.x == maxPt.x) outRecord.normal = new Vector3(0,1,0);
-		  if (pointmin.y == minPt.y) outRecord.normal = new Vector3(0,0,-1);
-	      if (pointmax.y == maxPt.y) outRecord.normal = new Vector3(0,0,1);
-		  if (pointmin.z == minPt.z) outRecord.normal = new Vector3(-1,0,0);
-		  if (pointmax.z == minPt.z) outRecord.normal = new Vector3(1,0,0);
-		  outRecord.t = minPt.x;
-		  return true;
-		  
-	  }
-	  
-	  
+	  location.add(d);
 
     
     return true;
