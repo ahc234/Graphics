@@ -8,6 +8,7 @@ import ray.Scene;
 import ray.Workspace;
 import ray.camera.Camera;
 import ray.math.Color;
+import ray.math.Point3;
 import ray.math.Vector3;
 import ray.shader.Shader;
 
@@ -65,6 +66,10 @@ public class BasicRayTracer extends RayTracer {
 
 				// TODO: Compute the viewing ray,
 				//       and call shadeRay on it to get the ray's color.
+				
+				
+				ray.set(new Point3(), new Vector3());
+				shadeRay(pixelColor, scene, ray, work);
 
 
 				image.setPixelColor(pixelColor, x, y);
@@ -102,10 +107,15 @@ public class BasicRayTracer extends RayTracer {
 		// TODO: Compute the color of the intersection point.
 		// 1) Find the first intersection of "ray" with the scene.
 		// Record intersection in intersectionRecord. If it doesn't hit anything, just return.
+		if (!scene.getFirstIntersection(intersectionRecord, ray)) {
+			return;
+		}
 		// 2) Compute the direction of outgoing light, by subtracting the
 		//	  intersection point from the origin of the ray.
+		outgoing.sub(ray.origin, intersectionRecord.location);
 		// 3) Get the shader from the intersection record.
+		Shader recordShader = intersectionRecord.surface.getShader();
 		// 4) Call the shader's shade() method to set the color for this ray.
-		 	
+		recordShader.shade(outColor, scene, workspace);
 	}
 }
