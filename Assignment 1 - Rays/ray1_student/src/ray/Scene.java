@@ -62,6 +62,7 @@ public class Scene {
 		// TODO: 1) Loop through all surfaces in the scene.
 		boolean result = false;
 		IntersectionRecord tempRecord = new IntersectionRecord();
+		rayIn.end = Double.MAX_VALUE;
 		for (Surface s : surfaces){
 		//		 2) Intersect each with a copy of the given ray.
 			boolean inter = s.intersect(tempRecord, rayIn);
@@ -73,7 +74,9 @@ public class Scene {
 				if (tempRecord.t < rayIn.end) {
 		//		 4) Set outRecord to the IntersectionRecord of the first object hit.
 					rayIn.end = tempRecord.t;
-					outRecord = tempRecord;
+					outRecord.surface = tempRecord.surface;
+					outRecord.t = tempRecord.t;
+					outRecord.location = tempRecord.location;
 				}
 			}
 		//		 5) If there was an intersection, return true; otherwise return false.
@@ -91,7 +94,9 @@ public class Scene {
 	public boolean getAnyIntersection(Ray ray) {
 		IntersectionRecord tempRecord = new IntersectionRecord();
 		for (Surface s : surfaces){
-			if (s.intersect(tempRecord, ray)) return true;
+			if (s.intersect(tempRecord, ray)) {
+				return true;
+			}
 		}
 		return false;
 	}

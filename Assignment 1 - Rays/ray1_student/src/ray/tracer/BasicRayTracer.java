@@ -71,7 +71,17 @@ public class BasicRayTracer extends RayTracer {
 				double adjV = y/height;
 				cam.getRay(ray, adjU, adjV);
 				shadeRay(rayColor, scene, ray, work);
-
+				
+				
+				
+				//TODO: remove this when code works
+				if (scene.getAnyIntersection(ray)){
+					pixelColor.set(new Color(0, 255, 0));
+					}
+				else{
+					pixelColor.set(new Color(255, 0, 0));
+					}
+				//TODO: remove this when code works ^^^^^^^
 
 				image.setPixelColor(pixelColor, x, y);
 

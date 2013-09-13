@@ -37,6 +37,7 @@ public class Sphere extends Surface {
     // TODO: fill in this function.
 	  Point3 e = new Point3(rayIn.origin);
 	  Vector3 d = new Vector3(rayIn.direction);
+	  d.normalize();
 	  Point3 c = new Point3(center);
 	  
 	  double t1;
@@ -48,9 +49,11 @@ public class Sphere extends Surface {
 	  double A = (d.dot(d));
 	  double C = (EminC).dot(EminC) - (radius*radius);
 	  
-	  double discriminant= (B*2) - A*C;
+	  double discriminant= (B*B) - A*C;
 	  
-	  if (discriminant < 0 ) return false;
+	  if (discriminant < 0 ) {
+		  return false;
+	  }
 	  if (discriminant == 0 ){
 		  t1 = (B*-1.0)/A;
 		  Vector3 d2 = new Vector3(d);
@@ -80,10 +83,6 @@ public class Sphere extends Surface {
 		  outRecord.surface = this;
 		  outRecord.normal.sub(location, center);  //outRecordnormal
 	  }
-
-	  
-	  
-	 
         
     return true;
 
