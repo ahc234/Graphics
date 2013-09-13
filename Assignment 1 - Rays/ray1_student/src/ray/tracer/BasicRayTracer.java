@@ -46,6 +46,8 @@ public class BasicRayTracer extends RayTracer {
 		// Set the camera aspect ratio to match output image
 		int width = image.getWidth();
 		int height = image.getHeight();
+		double dWidth = (double)width;
+		double dHeight = (double)height;
 
 		// Timing counters
 		long startTime = System.currentTimeMillis();
@@ -66,9 +68,8 @@ public class BasicRayTracer extends RayTracer {
 
 				// TODO: Compute the viewing ray,
 				//       and call shadeRay on it to get the ray's color.
-				
-				double adjU = x/width;
-				double adjV = y/height;
+				double adjU = x/dWidth;
+				double adjV = y/dHeight;
 				cam.getRay(ray, adjU, adjV);
 				shadeRay(rayColor, scene, ray, work);
 				

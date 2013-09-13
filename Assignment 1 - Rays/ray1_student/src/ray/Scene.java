@@ -95,6 +95,7 @@ public class Scene {
 		IntersectionRecord tempRecord = new IntersectionRecord();
 		for (Surface s : surfaces){
 			if (s.intersect(tempRecord, ray)) {
+				System.out.println("yes");
 				return true;
 			}
 		}
