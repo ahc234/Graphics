@@ -54,7 +54,7 @@ public class Sphere extends Surface {
 	  if (discriminant < 0 ) {
 		  return false;
 	  }
-	  if (discriminant == 0 ){
+	  else if (discriminant == 0 ){
 		  t1 = (-B)/A;
 		  Vector3 d2 = new Vector3(d);
 		  d2.scale(t1);
@@ -69,7 +69,6 @@ public class Sphere extends Surface {
 		  return true;
 	  }
 	  else {
-		  System.out.println("hi");
 		  t1 = ((-B) - Math.sqrt(discriminant))/A;
 		  t2 = ((-B) + Math.sqrt(discriminant))/A;
 		if (t1 < 0) t1 = t2;

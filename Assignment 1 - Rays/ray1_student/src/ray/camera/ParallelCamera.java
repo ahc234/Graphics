@@ -63,9 +63,7 @@ public class ParallelCamera extends Camera {
 	@Override
 	public void getRay(Ray outRay, double inU, double inV) {
 		if (!initialized) initView();
-	    //Still ignoring width and height, which is obviously a problem
-		//Is the view direction negative?
-		//
+
 	    // TODO: fill in this function.
 		inU = viewWidth/2 * (2 * inU -1);
 		inV = viewHeight/2 * (2 * inV -1);

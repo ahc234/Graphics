@@ -68,21 +68,25 @@ public class BasicRayTracer extends RayTracer {
 
 				// TODO: Compute the viewing ray,
 				//       and call shadeRay on it to get the ray's color.
-				double adjU = x/dWidth;
-				double adjV = y/dHeight;
+				double r = 1;
+				double l = 0;
+				double t = 1;
+				double b = 0;
+				double adjU = l + (r-l)*(x + 0.5)/dWidth;
+				double adjV = b + (t-b)*(y + 0.5)/dHeight;
 				cam.getRay(ray, adjU, adjV);
 				shadeRay(rayColor, scene, ray, work);
 				
 				
 				
-				//TODO: remove this when code works
-				if (scene.getAnyIntersection(ray)){
-					pixelColor.set(new Color(0, 255, 0));
-					}
-				else{
-					pixelColor.set(new Color(255, 0, 0));
-					}
-				//TODO: remove this when code works ^^^^^^^
+//				//TODO: remove this when code works
+//				if (scene.getAnyIntersection(ray)){
+//					pixelColor.set(new Color(0, 255, 0));
+//					}
+//				else{
+//					pixelColor.set(new Color(255, 0, 0));
+//					}
+//				//TODO: remove this when code works ^^^^^^^
 
 				image.setPixelColor(pixelColor, x, y);
 
