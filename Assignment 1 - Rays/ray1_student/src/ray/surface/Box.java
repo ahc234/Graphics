@@ -96,15 +96,26 @@ public class Box extends Surface {
 //	  
 	 if (!((txmin > tymax) || (tymin > txmax) || (tzmin > tymax) || 
 	     (tzmin > txmax) || (txmin > tzmax) || tymin > tzmax)){ 
-		
 
-		  outRecord.location.set(pointenter);
-		  if (pointenter.x == minPt.x) outRecord.normal.set(new Vector3(0,-1,0));
-		  if (pointexit.x == maxPt.x) outRecord.normal.set(new Vector3(0,1,0));
-		  if (pointenter.y == minPt.y) outRecord.normal.set(new Vector3(0,0,-1));
-	      if (pointexit.y == maxPt.y) outRecord.normal.set(new Vector3(0,0,1));
-		  if (pointenter.z == minPt.z) outRecord.normal.set(new Vector3(-1,0,0));
-		  if (pointexit.z == minPt.z) outRecord.normal.set(new Vector3(1,0,0));
+		 if (tenter < rayIn.start || tenter > rayIn.end) {
+			 System.out.println("inside box");
+			  return false;
+		 }
+		 
+		  if (pointenter.x == minPt.x) outRecord.normal.set(new Vector3(-1,0,0));
+		  if (pointenter.x == maxPt.x) outRecord.normal.set(new Vector3(1,0,0));
+		  if (pointenter.y == minPt.y) outRecord.normal.set(new Vector3(0,-1,0));
+	      if (pointenter.y == maxPt.y) outRecord.normal.set(new Vector3(0,1,0));
+		  if (pointenter.z == minPt.z) outRecord.normal.set(new Vector3(0,0,-1));
+		  if (pointenter.z == maxPt.z) outRecord.normal.set(new Vector3(0,0,1));
+		  
+		  
+		  
+		 // System.out.println(outRecord.normal);
+		  if(outRecord.normal.x == 0.0 && outRecord.normal.y == 0.0 && outRecord.normal.z == 0.0){
+			 // System.out.println(pointenter);
+			  //System.out.println(pointexit);
+		  }
 		  
 		  outRecord.t = tenter;
 		  outRecord.surface = this;
