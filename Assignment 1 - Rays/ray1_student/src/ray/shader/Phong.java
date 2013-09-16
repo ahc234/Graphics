@@ -56,7 +56,6 @@ public class Phong extends Shader {
 		// 2) If the intersection point is shadowed, skip the calculation for the light.
 		//	  See Shader.java for a useful shadowing function.
 			if (!isShadowed(scene, l, record, shadowRay)) {
-				
 		// 3) Compute the incoming direction by subtracting
 		//    the intersection point from the light's position.
 				incoming.sub(l.position, record.location);
@@ -78,10 +77,12 @@ public class Phong extends Shader {
 					I.scale(Math.max(0, ndotwi));
 					kd.scale(I);
 					
-					I = new Color(l.intensity);
-					I.scale(Math.pow((Math.max(0, ndoth)), exponent));
-					ks.scale(I);
+//					I = new Color(l.intensity);
+//					//I.scale(Math.pow((Math.max(0, ndoth)), exponent));
+//					System.out.println(I);
+//					//ks.scale(I);
 					
+					ks.scale(Math.pow((Math.max(0, ndoth)), exponent));
 					kd.add(ks);
 					
 					color.add(kd);

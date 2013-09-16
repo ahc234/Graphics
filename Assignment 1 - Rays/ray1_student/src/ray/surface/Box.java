@@ -98,13 +98,13 @@ public class Box extends Surface {
 	     (tzmin > txmax) || (txmin > tzmax) || tymin > tzmax)){ 
 		
 
-		  outRecord.location = pointenter;
-		  if (pointenter.x == minPt.x) outRecord.normal = new Vector3(0,-1,0);
-		  if (pointexit.x == maxPt.x) outRecord.normal = new Vector3(0,1,0);
-		  if (pointenter.y == minPt.y) outRecord.normal = new Vector3(0,0,-1);
-	      if (pointexit.y == maxPt.y) outRecord.normal = new Vector3(0,0,1);
-		  if (pointenter.z == minPt.z) outRecord.normal = new Vector3(-1,0,0);
-		  if (pointexit.z == minPt.z) outRecord.normal = new Vector3(1,0,0);
+		  outRecord.location.set(pointenter);
+		  if (pointenter.x == minPt.x) outRecord.normal.set(new Vector3(0,-1,0));
+		  if (pointexit.x == maxPt.x) outRecord.normal.set(new Vector3(0,1,0));
+		  if (pointenter.y == minPt.y) outRecord.normal.set(new Vector3(0,0,-1));
+	      if (pointexit.y == maxPt.y) outRecord.normal.set(new Vector3(0,0,1));
+		  if (pointenter.z == minPt.z) outRecord.normal.set(new Vector3(-1,0,0));
+		  if (pointexit.z == minPt.z) outRecord.normal.set(new Vector3(1,0,0));
 		  
 		  outRecord.t = tenter;
 		  outRecord.surface = this;
@@ -112,7 +112,7 @@ public class Box extends Surface {
 	  
 	  }
 
-return false;
+	 return false;
   }
   
   /**

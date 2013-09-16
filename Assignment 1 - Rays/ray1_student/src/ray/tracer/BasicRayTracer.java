@@ -133,6 +133,5 @@ public class BasicRayTracer extends RayTracer {
 		// 4) Call the shader's shade() method to set the color for this ray.
 		//System.out.println(outColor);
 		recordShader.shade(outColor, scene, workspace);
-		//System.out.println(outColor);
 	}
 }

@@ -77,6 +77,7 @@ public class Scene {
 					outRecord.surface = tempRecord.surface;
 					outRecord.t = tempRecord.t;
 					outRecord.location = tempRecord.location;
+					outRecord.normal.set(tempRecord.normal);
 				}
 			}
 		//		 5) If there was an intersection, return true; otherwise return false.
