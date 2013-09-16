@@ -31,7 +31,7 @@ public class Box extends Surface {
 	  Point3 p = new Point3(rayIn.origin);
 
 	  Vector3 d = new Vector3(rayIn.direction);
-	  d.normalize();
+	  //d.normalize();
 	  
 	 // p + td
 	  double txmin = (minPt.x - p.x) / d.x;

@@ -37,7 +37,6 @@ public class Sphere extends Surface {
     // TODO: fill in this function.
 	  Point3 e = new Point3(rayIn.origin);
 	  Vector3 d = new Vector3(rayIn.direction);
-	  d.normalize();
 	  Point3 c = new Point3(center);
 	  
 	  double t1;
@@ -49,6 +48,8 @@ public class Sphere extends Surface {
 	  double A = (d.dot(d));
 	  double C = (EminC).dot(EminC) - (radius*radius);
 	  
+	  //System.out.println("A: " + A +"; "+ "B: " + B + "; "+ "C: " + C);
+	  
 	  double discriminant= (B*B) - A*C;
 	  
 	  if (discriminant < 0 ) {
@@ -56,6 +57,9 @@ public class Sphere extends Surface {
 	  }
 	  else if (discriminant == 0 ){
 		  t1 = (-B)/A;
+		  if (t1 < rayIn.start || t1 > rayIn.end) {
+			  return false;
+		  }
 		  Vector3 d2 = new Vector3(d);
 		  d2.scale(t1);
 		  Point3 location= new Point3(e);
@@ -69,12 +73,17 @@ public class Sphere extends Surface {
 		  return true;
 	  }
 	  else {
-		  t1 = ((-B) - Math.sqrt(discriminant))/A;
-		  t2 = ((-B) + Math.sqrt(discriminant))/A;
-		if (t1 < 0) t1 = t2;
-		if (t1 >= 0 && t2 >= 0) t1 = Math.min(t1, t2);
-		
-		  //t1 = (-B)/A;
+		  t1 = ((-B) + Math.sqrt(discriminant))/A;
+		  t2 = ((-B) - Math.sqrt(discriminant))/A;
+		  if (t1 < rayIn.start || t1 > rayIn.end) {
+			  	t1 = t2;
+		  }
+		  if (t1 < rayIn.start || t1 > rayIn.end) {
+			  return false;
+		  }
+			  
+		  t1 = Math.min(t1, t2);
+			
 		  Vector3 d2 = new Vector3(d);
 		  d2.scale(t1);
 		  Point3 location= new Point3(e);

@@ -75,9 +75,7 @@ public class BasicRayTracer extends RayTracer {
 				double adjU = l + (r-l)*(x + 0.5)/dWidth;
 				double adjV = b + (t-b)*(y + 0.5)/dHeight;
 				cam.getRay(ray, adjU, adjV);
-				shadeRay(rayColor, scene, ray, work);
-				
-				
+				shadeRay(pixelColor, scene, ray, work);
 				
 //				//TODO: remove this when code works
 //				if (scene.getAnyIntersection(ray)){
@@ -87,6 +85,7 @@ public class BasicRayTracer extends RayTracer {
 //					pixelColor.set(new Color(255, 0, 0));
 //					}
 //				//TODO: remove this when code works ^^^^^^^
+				
 
 				image.setPixelColor(pixelColor, x, y);
 
@@ -132,6 +131,8 @@ public class BasicRayTracer extends RayTracer {
 		// 3) Get the shader from the intersection record.
 		Shader recordShader = intersectionRecord.surface.getShader();
 		// 4) Call the shader's shade() method to set the color for this ray.
+		//System.out.println(outColor);
 		recordShader.shade(outColor, scene, workspace);
+		//System.out.println(outColor);
 	}
 }

@@ -49,8 +49,8 @@ public class Phong extends Shader {
 		Color color = workspace.color;
 		
 		// TODO: Fill in this function.
-		outIntensity = new Color(0,0,0);
-		color = new Color(0,0,0);
+		outIntensity.set(new Color(0,0,0));
+		color.set(new Color(0,0,0));
 		// 1) Loop through each light in the scene.
 		for (Light l : scene.getLights()){
 		// 2) If the intersection point is shadowed, skip the calculation for the light.
@@ -83,14 +83,12 @@ public class Phong extends Shader {
 					ks.scale(I);
 					
 					kd.add(ks);
-					System.out.println(color);
 					
 					color.add(kd);
 				}
 				outIntensity.add(color);
 			}
 		}
-		
 	}
 
 }
