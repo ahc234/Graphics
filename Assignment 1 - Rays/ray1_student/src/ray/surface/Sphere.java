@@ -69,7 +69,6 @@ public class Sphere extends Surface {
 		  outRecord.surface = this;
 		  outRecord.normal.sub(location, center);   //outRecordnormal
 		  outRecord.normal.normalize();
-		
 		  return true;
 	  }
 	  else {

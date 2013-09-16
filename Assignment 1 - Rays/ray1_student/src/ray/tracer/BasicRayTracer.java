@@ -124,14 +124,14 @@ public class BasicRayTracer extends RayTracer {
 		// Record intersection in intersectionRecord. If it doesn't hit anything, just return.
 		if (!scene.getFirstIntersection(intersectionRecord, ray)) {
 			return;
-		}
+		}	
 		// 2) Compute the direction of outgoing light, by subtracting the
 		//	  intersection point from the origin of the ray.
 		outgoing.sub(ray.origin, intersectionRecord.location);
 		// 3) Get the shader from the intersection record.
 		Shader recordShader = intersectionRecord.surface.getShader();
 		// 4) Call the shader's shade() method to set the color for this ray.
-		//System.out.println(outColor);
+		
 		recordShader.shade(outColor, scene, workspace);
 	}
 }
