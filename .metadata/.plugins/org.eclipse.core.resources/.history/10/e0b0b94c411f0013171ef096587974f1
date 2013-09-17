@@ -101,15 +101,13 @@ public class Box extends Surface {
 			 System.out.println("inside box");
 			  return false;
 		 }
-		 
-		  double epsilon = 0.00000005;
+		 double epsilon = 0.000005;
 		  if (pointenter.x >= minPt.x - epsilon && pointenter.x <= minPt.x + epsilon) outRecord.normal.set(new Vector3(-1,0,0));
 		  if (pointenter.x >= maxPt.x - epsilon && pointenter.x <= maxPt.x + epsilon) outRecord.normal.set(new Vector3(1,0,0));
 		  if (pointenter.y >= minPt.y - epsilon && pointenter.y <= minPt.y + epsilon) outRecord.normal.set(new Vector3(0,-1,0));
 	      if (pointenter.y >= maxPt.y - epsilon && pointenter.y <= maxPt.y + epsilon) outRecord.normal.set(new Vector3(0,1,0));
 		  if (pointenter.z >= minPt.z - epsilon && pointenter.z <= minPt.z + epsilon) outRecord.normal.set(new Vector3(0,0,-1));
 		  if (pointenter.z >= maxPt.z - epsilon && pointenter.z <= maxPt.z + epsilon) outRecord.normal.set(new Vector3(0,0,1));
-		 
 		  
 		  if(outRecord.normal.x == 0.0 && outRecord.normal.y == 0.0 && outRecord.normal.z == 0.0){
 		  }
