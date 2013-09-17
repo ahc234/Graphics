@@ -75,8 +75,6 @@ public class Box extends Surface {
 	  
 	  double tenter = Math.max(Math.max(txenter, tyenter),tzenter);
 	  double texit = Math.min(Math.min(txexit, tyexit),tzexit);
-
-	
 	  
 	  Vector3 d2 = new Vector3(d);
 	  Point3 pointenter = new Point3(p);
@@ -87,19 +85,13 @@ public class Box extends Surface {
 	  Point3 pointexit = new Point3(p);
 	  d3.scale(texit);
 	  pointexit.add(d3);
-
-
 	  
-//	  if (pointmin.x >= minPt.x && pointmin.x <= maxPt.x &&
-//		  pointmin.y >= minPt.y && pointmin.y <= maxPt.y &&
-//	      pointmin.z >= minPt.z && pointmin.z <= maxPt.z) {
-//	  
+	  if (tenter < rayIn.start || tenter > rayIn.end) {
+		 return false;
+	  }
+
 	 if (!((txmin > tymax) || (tymin > txmax) || (tzmin > tymax) || 
 	     (tzmin > txmax) || (txmin > tzmax) || tymin > tzmax)){ 
-
-		 if (tenter < rayIn.start || tenter > rayIn.end) {
-			  return false;
-		 }
 		 
 		  double epsilon = Ray.EPSILON;
 		  if (pointenter.x >= minPt.x - epsilon && pointenter.x <= minPt.x + epsilon) outRecord.normal.set(new Vector3(-1,0,0));

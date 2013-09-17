@@ -50,9 +50,9 @@ public class Phong extends Shader {
 		
 		// TODO: Fill in this function.
 		outIntensity.set(new Color(0,0,0));
-		color.set(new Color(0,0,0));
 		// 1) Loop through each light in the scene.
 		for (Light l : scene.getLights()){
+			color.set(new Color(0,0,0));
 		// 2) If the intersection point is shadowed, skip the calculation for the light.
 		//	  See Shader.java for a useful shadowing function.
 
