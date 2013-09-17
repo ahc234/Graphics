@@ -36,8 +36,12 @@ public class ParallelCamera extends Camera {
 	    // TODO: fill in this function. Remember to check Camera.java for inherited fields.
 	    // Hint:
     	//   1. check projNormal; if its length is 0, set it to the view direction.
+    	if (projNormal.dot(viewDir) > 0) {
+    		projNormal.scale(-1.0);
+    	}
     	if ( projNormal.length() == 0 ) setProjNormal(viewDir);
 	    //   2. set basisW to be parallel to projection normal but pointing to the opposite direction.
+
     	basisW.set(projNormal);
     	basisW.scale(-1.0); //multiply by negative 1
     	basisW.normalize();

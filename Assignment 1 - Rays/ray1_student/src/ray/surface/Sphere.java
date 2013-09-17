@@ -48,8 +48,6 @@ public class Sphere extends Surface {
 	  double A = (d.dot(d));
 	  double C = (EminC).dot(EminC) - (radius*radius);
 	  
-	  //System.out.println("A: " + A +"; "+ "B: " + B + "; "+ "C: " + C);
-	  
 	  double discriminant= (B*B) - A*C;
 	  
 	  if (discriminant < 0 ) {

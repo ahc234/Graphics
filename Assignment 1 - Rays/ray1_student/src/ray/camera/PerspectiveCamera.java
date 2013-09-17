@@ -40,6 +40,9 @@ public class PerspectiveCamera extends Camera {
 	// TODO: fill in this function. Remember to check Camera.java for inherited fields.
 	// Hint:
   	//   1. check projNormal; if its length is 0, set it to the view direction.
+	if (projNormal.dot(viewDir) > 0) {
+  		projNormal.scale(-1.0);
+  	}
   	if ( projNormal.length() == 0 ) setProjNormal(viewDir);
 	    //   2. set basisW to be parallel to projection normal but pointing to the opposite direction.
   	basisW.set(projNormal);
@@ -78,9 +81,6 @@ public class PerspectiveCamera extends Camera {
 	newDir.scale(projDistance);
 	newDir.add(tempU);
 	newDir.add(tempV); // newDir = -dw + uu + vv
-	
-	//System.out.println(tempU);
-	//System.out.println(tempV);
 	
 	outRay.set(this.viewPoint, newDir);
 

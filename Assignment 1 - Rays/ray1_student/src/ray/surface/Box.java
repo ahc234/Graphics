@@ -109,12 +109,7 @@ public class Box extends Surface {
 		  if (pointenter.z == minPt.z) outRecord.normal.set(new Vector3(0,0,-1));
 		  if (pointenter.z == maxPt.z) outRecord.normal.set(new Vector3(0,0,1));
 		  
-		  
-		  
-		 // System.out.println(outRecord.normal);
 		  if(outRecord.normal.x == 0.0 && outRecord.normal.y == 0.0 && outRecord.normal.z == 0.0){
-			 // System.out.println(pointenter);
-			  //System.out.println(pointexit);
 		  }
 		  
 		  outRecord.t = tenter;
