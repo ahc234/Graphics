@@ -75,28 +75,15 @@ public class Phong extends Shader {
 					double ndoth = record.normal.dot(h);
 					Color kd = new Color(diffuseColor);
 					Color ks = new Color(specularColor);
-					//Color I = new Color(l.intensity);
-					
-					//I.scale(Math.max(0, ndotwi));
-					//kd.scale(I);
-					
-					
-//					I = new Color(l.intensity);
-//					//I.scale(Math.pow((Math.max(0, ndoth)), exponent));
-//					//ks.scale(I);
+					Color I = new Color(l.intensity);
 					
 					kd.scale(Math.max(ndotwi, 0));
+					kd.scale(I);
 					ks.scale(Math.pow(Math.max(ndoth, 0), exponent));
+					ks.scale(I);
 					
-					
-					//System.out.println(ndoth);
 					kd.add(ks);
 					color.add(kd);
-//					double pow = Math.pow(Math.max(0, ndotwi));
-//					ks.scale(Math.pow((Math.max(0, ndoth)), exponent));
-//					kd.add(ks);
-//					
-//					color.add(kd);
 					
 				}
 				outIntensity.add(color);
