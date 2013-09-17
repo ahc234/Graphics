@@ -87,7 +87,6 @@ public class Phong extends Shader {
 					
 				}
 				outIntensity.add(color);
-				//System.out.println("Phong: " + outIntensity);
 			}
 		}
 	}

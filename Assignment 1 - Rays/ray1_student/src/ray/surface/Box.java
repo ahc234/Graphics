@@ -98,11 +98,10 @@ public class Box extends Surface {
 	     (tzmin > txmax) || (txmin > tzmax) || tymin > tzmax)){ 
 
 		 if (tenter < rayIn.start || tenter > rayIn.end) {
-			 System.out.println("inside box");
 			  return false;
 		 }
 		 
-		  double epsilon = 0.00000005;
+		  double epsilon = Ray.EPSILON;
 		  if (pointenter.x >= minPt.x - epsilon && pointenter.x <= minPt.x + epsilon) outRecord.normal.set(new Vector3(-1,0,0));
 		  if (pointenter.x >= maxPt.x - epsilon && pointenter.x <= maxPt.x + epsilon) outRecord.normal.set(new Vector3(1,0,0));
 		  if (pointenter.y >= minPt.y - epsilon && pointenter.y <= minPt.y + epsilon) outRecord.normal.set(new Vector3(0,-1,0));
@@ -114,6 +113,7 @@ public class Box extends Surface {
 		  if(outRecord.normal.x == 0.0 && outRecord.normal.y == 0.0 && outRecord.normal.z == 0.0){
 		  }
 		  
+		  outRecord.normal.normalize();
 		  outRecord.t = tenter;
 		  outRecord.surface = this;
 		  return true;
