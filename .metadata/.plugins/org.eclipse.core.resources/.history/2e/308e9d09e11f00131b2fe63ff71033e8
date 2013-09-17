@@ -104,7 +104,6 @@ public class Box extends Surface {
 		  
 		  //outRecord.normal.normalize();
 		  outRecord.t = tenter;
-		  outRecord.location = pointenter;
 		  outRecord.surface = this;
 		  return true;
 	  

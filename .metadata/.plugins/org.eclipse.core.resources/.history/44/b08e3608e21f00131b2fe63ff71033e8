@@ -92,8 +92,8 @@ public class Sphere extends Surface {
 		  outRecord.surface = this;
 		  outRecord.normal.sub(location, center);  //outRecordnormal
 		  outRecord.normal.normalize();
-		  System.out.println("Loccation" + location);
-		  System.out.println("Normal" + outRecord.normal);
+		  System.out.print(location);
+		  System.out.print(outRecord.normal);
 		  
 		  return true;
 	  }

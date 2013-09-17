@@ -86,9 +86,9 @@ public class Box extends Surface {
 	  d3.scale(texit);
 	  pointexit.add(d3);
 	  
-	  if (tenter < rayIn.start || tenter > rayIn.end) {
+	/*  if (tenter < rayIn.start || tenter > rayIn.end) {
 		 return false;
-	  }
+	  }*/
 
 	 if (!((txmin > tymax) || (tymin > txmax) || (tzmin > tymax) || 
 	     (tzmin > txmax) || (txmin > tzmax) || tymin > tzmax)){ 
@@ -104,14 +104,12 @@ public class Box extends Surface {
 		  
 		  //outRecord.normal.normalize();
 		  outRecord.t = tenter;
-		  outRecord.location = pointenter;
 		  outRecord.surface = this;
 		  return true;
 	  
 	  }
 
 	 return false;
-	 
   }
   
   /**

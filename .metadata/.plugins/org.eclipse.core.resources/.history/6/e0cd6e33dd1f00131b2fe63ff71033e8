@@ -102,16 +102,17 @@ public class Box extends Surface {
 		  if (pointenter.z >= maxPt.z - epsilon && pointenter.z <= maxPt.z + epsilon) outRecord.normal.set(new Vector3(0,0,1));
 		 
 		  
-		  //outRecord.normal.normalize();
+		  if(outRecord.normal.x == 0.0 && outRecord.normal.y == 0.0 && outRecord.normal.z == 0.0){
+		  }
+		  
+		  outRecord.normal.normalize();
 		  outRecord.t = tenter;
-		  outRecord.location = pointenter;
 		  outRecord.surface = this;
 		  return true;
 	  
 	  }
 
 	 return false;
-	 
   }
   
   /**
