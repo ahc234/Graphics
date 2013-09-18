@@ -31,7 +31,6 @@ public class Box extends Surface {
 	  Point3 p = new Point3(rayIn.origin);
 
 	  Vector3 d = new Vector3(rayIn.direction);
-	  //d.normalize();
 	  
 	 // p + td
 	  double txmin = (minPt.x - p.x) / d.x;
@@ -63,8 +62,6 @@ public class Box extends Surface {
 		  tzmin = (maxPt.z - p.z)/d.z;
 		  tzmax = (minPt.z - p.z)/d.z;
 	  }
-	  
-	  
 	
 	  double txenter = Math.min(txmin, txmax);
 	  double txexit = Math.max(txmin, txmax);
@@ -101,8 +98,6 @@ public class Box extends Surface {
 		  if (pointenter.z >= minPt.z - epsilon && pointenter.z <= minPt.z + epsilon) outRecord.normal.set(new Vector3(0,0,-1));
 		  if (pointenter.z >= maxPt.z - epsilon && pointenter.z <= maxPt.z + epsilon) outRecord.normal.set(new Vector3(0,0,1));
 		 
-		  
-		  //outRecord.normal.normalize();
 		  outRecord.t = tenter;
 		  outRecord.location = pointenter;
 		  outRecord.surface = this;
