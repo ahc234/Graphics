@@ -19,6 +19,40 @@ public class Sphere extends TriangleMesh {
 		// and put this information in the GL buffers using the
 		//   set*()
 		// methods from TriangleMesh.
+		
+		double numSectors = (2*Math.PI) / tolerance;
+		int rowLength = (int)(Math.ceil(numSectors));
+		double sideLength = (2*Math.PI/numSectors);
+		int numPoints = rowLength * rowLength;
+		
+		double[] vertexCoords = new double[numPoints*3];
+		double[] normalCoords = new double[numPoints*3];
+		double[] triangleVerts = new double[numPoints*3];
+		
+		double x = 0;
+		double y = 0;
+		double z = 0;
+		
+		double phi = 0;
+		double theta = 0;
+		
+		for (int v = 0; v < rowLength; v++) {
+			for (int u = 0; u < rowLength; u++) {
+				int rowPos = v*u*3;
+				
+				phi = (v/rowLength) * Math.PI;
+				theta = 2 * (u/rowLength) * Math.PI;
+				
+				x = (Math.sin(phi) * Math.cos(theta));
+				y = (Math.sin(phi) * Math.sin(theta));
+				z = Math.cos(phi);
+				
+				vertexCoords[rowPos] = x;
+				vertexCoords[rowPos+1] = y;
+				vertexCoords[rowPos+2] = z;
+			}
+		}
+		
 	}
 
 	@Override
