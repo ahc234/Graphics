@@ -20,38 +20,54 @@ public class Sphere extends TriangleMesh {
 		//   set*()
 		// methods from TriangleMesh.
 		
-		double numSectors = (2*Math.PI) / tolerance;
+		float numSectors = (float)(2*Math.PI) / tolerance;
 		int rowLength = (int)(Math.ceil(numSectors));
-		double sideLength = (2*Math.PI/numSectors);
+		float sideLength = (float)(2*Math.PI/numSectors);
 		int numPoints = rowLength * rowLength;
 		
-		double[] vertexCoords = new double[numPoints*3];
-		double[] normalCoords = new double[numPoints*3];
-		double[] triangleVerts = new double[numPoints*3];
+		float[] vertexCoords = new float[numPoints*3];
+		float[] normalCoords = new float[numPoints*3];
+		int[] triangleVerts = new int[numPoints*3];
+		int[] wireframeVerts = new int[numPoints*2];
 		
-		double x = 0;
-		double y = 0;
-		double z = 0;
+		float x = 0;
+		float y = 0;
+		float z = 0;
 		
-		double phi = 0;
-		double theta = 0;
+		float phi = 0;
+		float theta = 0;
 		
-		for (int v = 0; v < rowLength; v++) {
-			for (int u = 0; u < rowLength; u++) {
-				int rowPos = v*u*3;
+		for (float v = 0; v <= rowLength; v++) {
+			for (float u = 0; u <= rowLength; u++) {
+				int rowPos = (int)(v*u*3);
 				
-				phi = (v/rowLength) * Math.PI;
-				theta = 2 * (u/rowLength) * Math.PI;
+				phi = (float)((v/rowLength) * Math.PI);
+				theta = (float)(2 * (u/rowLength) * Math.PI);
 				
-				x = (Math.sin(phi) * Math.cos(theta));
-				y = (Math.sin(phi) * Math.sin(theta));
-				z = Math.cos(phi);
+				x = (float)(Math.sin(phi) * Math.cos(theta));
+				y = (float)(Math.sin(phi) * Math.sin(theta));
+				z = (float)Math.cos(phi);
 				
 				vertexCoords[rowPos] = x;
 				vertexCoords[rowPos+1] = y;
 				vertexCoords[rowPos+2] = z;
+				
+				normalCoords[rowPos] = x;
+				normalCoords[rowPos+1] = y;
+				normalCoords[rowPos+2] = z;
 			}
 		}
+		
+		for (int v = 0; v < rowLength; v++) {
+			for (int u = 0; u < rowLength; u++) {
+				//TODO: add triangleindices, wireframeindices
+			}
+		}
+		
+		setVertices(gl, vertexCoords);
+		setNormals(gl, normalCoords);
+		setTriangleIndices(gl, triangleVerts);
+		setWireframeIndices(gl, wireframeVerts);
 		
 	}
 
