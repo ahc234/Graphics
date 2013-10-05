@@ -22,13 +22,12 @@ public class Sphere extends TriangleMesh {
 		
 		float numSectors = (float)(2*Math.PI) / tolerance;
 		int rowLength = (int)(Math.ceil(numSectors));
-		float sideLength = (float)(2*Math.PI/numSectors);
-		int numPoints = rowLength * rowLength;
+		int numPoints = ((rowLength+1) * (rowLength+1));
 		
 		float[] vertexCoords = new float[numPoints*3];
 		float[] normalCoords = new float[numPoints*3];
-		int[] triangleVerts = new int[numPoints*3];
-		int[] wireframeVerts = new int[numPoints*2];
+		int[] triangleVerts = new int[numPoints*3*2];
+		int[] wireframeVerts = new int[numPoints*2*2];
 		
 		float x = 0;
 		float y = 0;
@@ -39,7 +38,7 @@ public class Sphere extends TriangleMesh {
 		
 		for (float v = 0; v <= rowLength; v++) {
 			for (float u = 0; u <= rowLength; u++) {
-				int rowPos = (int)(v*u*3);
+				int rowPos = (int)(((v*rowLength) + u)*3);
 				
 				phi = (float)((v/rowLength) * Math.PI);
 				theta = (float)(2 * (u/rowLength) * Math.PI);
@@ -60,7 +59,32 @@ public class Sphere extends TriangleMesh {
 		
 		for (int v = 0; v < rowLength; v++) {
 			for (int u = 0; u < rowLength; u++) {
-				//TODO: add triangleindices, wireframeindices
+				int rowPos = (((v*rowLength) + u)*3*2);
+				
+				triangleVerts[rowPos] = v*rowLength + u;
+				triangleVerts[rowPos+1] = (v+1)*rowLength + u;
+				triangleVerts[rowPos+2] = triangleVerts[rowPos] + 1;
+				
+				triangleVerts[rowPos+3] = triangleVerts[rowPos+2];
+				triangleVerts[rowPos+4] = triangleVerts[rowPos+1];
+				triangleVerts[rowPos+5] = triangleVerts[rowPos+1] + 1;
+				
+				int vertPos = (((v*rowLength) + u)*2*2);
+				
+				if (u == rowLength-1) {
+					wireframeVerts[vertPos] = triangleVerts[rowPos];
+					wireframeVerts[vertPos+1] = triangleVerts[(v*rowLength)*3*2];
+					
+					wireframeVerts[vertPos+2] = triangleVerts[rowPos];
+					wireframeVerts[vertPos+3] = triangleVerts[rowPos+1];
+				}
+				else {
+					wireframeVerts[vertPos] = triangleVerts[rowPos];
+					wireframeVerts[vertPos+1] = triangleVerts[rowPos+1];
+					
+					wireframeVerts[vertPos+2] = triangleVerts[rowPos];
+					wireframeVerts[vertPos+3] = triangleVerts[rowPos+2];
+				}
 			}
 		}
 		
