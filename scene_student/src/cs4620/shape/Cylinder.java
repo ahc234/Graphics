@@ -25,9 +25,9 @@ public class Cylinder extends TriangleMesh
 		int rowLength = (int)(Math.ceil(numSectors));
 		int numPoints = (rowLength+1)*2 + 2;
 		
-		float[] vertexCoords = new float[numPoints*3];
-		float[] normalCoords = new float[numPoints*3];
-		int[] triangleVerts = new int[(numPoints*3 + numPoints*3)*2];
+		float[] vertexCoords = new float[numPoints*3*2];
+		float[] normalCoords = new float[numPoints*3*2];
+		int[] triangleVerts = new int[(numPoints*3 + numPoints*3 + numPoints*3)*2];
 		int[] wireframeVerts = new int[(numPoints*2 + numPoints)*2];
 		
 		float x = 0;
@@ -69,10 +69,18 @@ public class Cylinder extends TriangleMesh
 			vertexCoords[rowPos+1] = y;
 			vertexCoords[rowPos+2] = z;
 			
+			vertexCoords[rowPos+numPoints*3+1] = x;
+			vertexCoords[rowPos+numPoints*3+1+1] = y;
+			vertexCoords[rowPos+numPoints*3+1+2] = z;
+			
 			//Top face normals
-			normalCoords[rowPos] = 0;
-			normalCoords[rowPos+1] = 1;
-			normalCoords[rowPos+2] = 0;
+			normalCoords[rowPos] = x;
+			normalCoords[rowPos+1] = 0;
+			normalCoords[rowPos+2] = z;
+			
+			normalCoords[rowPos+numPoints*3+1] = 0;
+			normalCoords[rowPos+1+numPoints*3+1] = 1;
+			normalCoords[rowPos+2+numPoints*3+1] = 0;
 			
 			//Bottom face points
 			rowPos = (int)((u + rowLength + 1)*3);
@@ -83,10 +91,17 @@ public class Cylinder extends TriangleMesh
 			vertexCoords[rowPos+1] = y;
 			vertexCoords[rowPos+2] = z;
 			
+			vertexCoords[rowPos+numPoints*3+1] = x;
+			vertexCoords[rowPos+numPoints*3+1+1] = y;
+			vertexCoords[rowPos+numPoints*3+1+2] = z;
 			//Bottom face normals
-			normalCoords[rowPos] = 0;
-			normalCoords[rowPos+1] = -1;
-			normalCoords[rowPos+2] = 0;
+			normalCoords[rowPos] = x;
+			normalCoords[rowPos+1] = 0;
+			normalCoords[rowPos+2] = z;
+			
+			normalCoords[rowPos+numPoints*3+1] = 0;
+			normalCoords[rowPos+1+numPoints*3+1] = -1;
+			normalCoords[rowPos+2+numPoints*3+1] = 0;
 		}
 	
 		//Populate the triangles and lines
@@ -95,15 +110,19 @@ public class Cylinder extends TriangleMesh
 			rowPos = (int)(u*3);
 			
 			triangleVerts[rowPos] = (2*(rowLength+1));
-			triangleVerts[rowPos+1] = u;
-			triangleVerts[rowPos+2] = u+1;
+			triangleVerts[rowPos+1] = u + 1;
+			triangleVerts[rowPos+2] = u;
+			
+			System.out.println(vertexCoords[u+1 + numPoints*3]);
+			System.out.println(vertexCoords[u+1 ]);
+		
 			
 			//Bottom face triangles
 			rowPos = (u + rowLength+1)*3;
 			
 			triangleVerts[rowPos] = (2*(rowLength+1))+1;
-			triangleVerts[rowPos+1] = u + rowLength + 1;
-			triangleVerts[rowPos+2] = u + rowLength + 2;
+			triangleVerts[rowPos+1] = u + rowLength+2;
+			triangleVerts[rowPos+2] = u + rowLength+1;
 			
 			//Top face lines
 			int vertPos = (u*4);
@@ -129,18 +148,33 @@ public class Cylinder extends TriangleMesh
 			wireframeVerts[linePos] = u;
 			wireframeVerts[linePos+1] = u + rowLength + 1;
 			
+			
 			//Vertical triangles
-			int trianglePos = (u + 2*(rowLength+1))*3;
+			int trianglePos = ((u + 2*(rowLength+1))*12);
 			
+		//if (u <= rowLength/2){
 			triangleVerts[trianglePos] = u;
-			triangleVerts[trianglePos+1] = u + rowLength + 1;
-			triangleVerts[trianglePos+2] = u + rowLength + 2;
-			
-			triangleVerts[trianglePos+3] = u + rowLength + 2;
-			triangleVerts[trianglePos+4] = u + 1;
+			triangleVerts[trianglePos+1] = u + rowLength + 2;
+			triangleVerts[trianglePos+2] = u + rowLength + 1;
+					
+			triangleVerts[trianglePos+3] = u + 1;
+			triangleVerts[trianglePos+4] = u + rowLength + 2;
 			triangleVerts[trianglePos+5] = u;
+			//}else{
+			triangleVerts[trianglePos+6] = u;
+			triangleVerts[trianglePos+7] = u + rowLength + 1;
+			triangleVerts[trianglePos+8] = u + rowLength + 2;
+			
+			triangleVerts[trianglePos+9] = u + rowLength + 2;
+			triangleVerts[trianglePos+10] = u + 1;
+			triangleVerts[trianglePos+11] = u;
+			//}
+			
 			
 		}
+
+				
+	
 		setVertices(gl, vertexCoords);
 		setNormals(gl, normalCoords);
 		setTriangleIndices(gl, triangleVerts);
