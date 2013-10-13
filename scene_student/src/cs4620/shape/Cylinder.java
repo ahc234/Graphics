@@ -150,7 +150,8 @@ public class Cylinder extends TriangleMesh
 			//Vertical triangles
 			int trianglePos = ((u + 2*(rowLength+1))*12);
 			
-		//if (u <= rowLength/2){
+		if (vertexCoords[u*3+2] <= 0){
+			
 			triangleVerts[trianglePos] = u;
 			triangleVerts[trianglePos+1] = u + rowLength + 2;
 			triangleVerts[trianglePos+2] = u + rowLength + 1;
@@ -158,7 +159,7 @@ public class Cylinder extends TriangleMesh
 			triangleVerts[trianglePos+3] = u + 1;
 			triangleVerts[trianglePos+4] = u + rowLength + 2;
 			triangleVerts[trianglePos+5] = u;
-			//}else{
+			}else{
 			triangleVerts[trianglePos+6] = u;
 			triangleVerts[trianglePos+7] = u + rowLength + 1;
 			triangleVerts[trianglePos+8] = u + rowLength + 2;
@@ -166,7 +167,7 @@ public class Cylinder extends TriangleMesh
 			triangleVerts[trianglePos+9] = u + rowLength + 2;
 			triangleVerts[trianglePos+10] = u + 1;
 			triangleVerts[trianglePos+11] = u;
-			//}
+			}
 			
 			
 		}
