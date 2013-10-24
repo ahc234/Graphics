@@ -114,6 +114,15 @@ public class ManipUtils {
 	{
 		// TODO (Manipulators P1): Implement this helper method as described in the assignment
 		// description and the comment above.
+		// (p+ tv) 
+		
+		Vector3f between = new Vector3f();
+		between.cross(v, vTarget);
+		//between.
+		//System.out.println("Cross: " + between);
+		//float t = (between.x + between.y+between.z) / (v.x + v.y + v.z);
+		
+		
 		return 0;
 	}
 	
@@ -126,6 +135,9 @@ public class ManipUtils {
 	{
 		// TODO (Manipulators P1): Implement this helper method as described in the assignment
 		// description and the comment above.
+
+		
+		
 		return 0;
 	}
 

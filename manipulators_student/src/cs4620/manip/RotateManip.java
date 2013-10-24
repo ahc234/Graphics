@@ -51,7 +51,18 @@ public class RotateManip extends Manip
 	@Override
 	public void dragged(Vector2f mousePosition, Vector2f mouseDelta)
 	{
-		// TODO (Manipulators P1): Implement this manipulator.
+		// TODO (Manipulators P1): Implement this manipulator.		
+		float change = 65*mouseDelta.y;
+		if (this.axisMode == PICK_X){
+			sceneNode.rotation.set(sceneNode.rotation.x+change,sceneNode.rotation.y,sceneNode.rotation.z);
+		}
+		if (this.axisMode == PICK_Y){
+			sceneNode.rotation.set(sceneNode.rotation.x,sceneNode.rotation.y+change,sceneNode.rotation.z);
+		}
+		if (this.axisMode == PICK_Z){
+			sceneNode.rotation.set(sceneNode.rotation.x,sceneNode.rotation.y,sceneNode.rotation.z+change);
+		}
+		
 	}
 
 	@Override

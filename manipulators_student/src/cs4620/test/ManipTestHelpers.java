@@ -250,17 +250,17 @@ public class ManipTestHelpers {
 	public static void main(String [] args)
 	{
 		
-		runTimeClosestTests();
+		//runTimeClosestTests();
 		
 		PerspectiveCamera perspectiveCamera = new PerspectiveCamera(
 				new Point3f(5,5,5), new Point3f(0,0,0), new Vector3f(0,1,0),
 				0.1f, 100, 45);
-		runGetRayTests(perspectiveCamera);
+		//runGetRayTests(perspectiveCamera);
 		
 		OrthographicCamera orthographicCamera = new OrthographicCamera(
 				new Point3f(10, 0, 0), new Point3f(0,0,0), new Vector3f(0,1,0),
 				0.1f, 100.0f, 45);
-		runGetRayTests(orthographicCamera);
+		//runGetRayTests(orthographicCamera);
 		
 		runRayPlaneTests();
 		
