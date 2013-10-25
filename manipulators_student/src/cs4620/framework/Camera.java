@@ -179,5 +179,24 @@ public abstract class Camera {
 	{
 		// TODO (Manipulators P1): Implement this helper method as described in the assignment
 		// description and the comment above.
+		
+		Vector4f back = new Vector4f(ndc.x, ndc.y, 1.0f, 1.0f);
+		Vector4f front = new Vector4f(ndc.x, ndc.y, -1.0f, 1.0f);
+		
+		Matrix4f projMat = getProjection();
+		Matrix4f viewMat = getView();
+		
+		Matrix4f combined = new Matrix4f(projMat);
+		combined.mul(viewMat);
+		combined.invert();
+		
+		combined.transform(back);
+		combined.transform(front);
+		
+		back.scale(1f/back.w);
+		front.scale(1f/front.w);
+		back.sub(front);
+		p.set(front.x, front.y, front.z);
+		v.set(back.x, back.y, back.z);
 	}
 }

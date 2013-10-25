@@ -133,7 +133,6 @@ public class ManipTestHelpers {
 		
 		// get ray
 		camera.getRayNDC(ndc, p, v);
-		
 		p1.set(p.x, p.y, p.z, 1.0f);
 		p2.set(p.x + v.x, p.y + v.y, p.z + v.z, 1.0f);
 		
@@ -144,6 +143,8 @@ public class ManipTestHelpers {
 		camera.getView().transform(p2);
 		camera.getProjection().transform(p2);
 		p2.scale(1.0f / p2.w);
+		
+		//System.out.println("Old: " + ndc.x + ", " + ndc.y + " ; New: " + p1.x + ", " + p1.y);
 		
 		// these two points should have the same x and y NDC coordinates
 		if (!floatsWithinEpsilon(0.0f, Math.abs(p1.x - p2.x) + Math.abs(p1.y - p2.y)))
@@ -250,7 +251,7 @@ public class ManipTestHelpers {
 	public static void main(String [] args)
 	{
 		
-		//runTimeClosestTests();
+		runTimeClosestTests();
 		
 		PerspectiveCamera perspectiveCamera = new PerspectiveCamera(
 				new Point3f(5,5,5), new Point3f(0,0,0), new Vector3f(0,1,0),
@@ -262,7 +263,7 @@ public class ManipTestHelpers {
 				0.1f, 100.0f, 45);
 		//runGetRayTests(orthographicCamera);
 		
-		runRayPlaneTests();
+		//runRayPlaneTests();
 		
 		printTestStats();
 	}

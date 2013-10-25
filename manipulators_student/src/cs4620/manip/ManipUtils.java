@@ -116,14 +116,25 @@ public class ManipUtils {
 		// description and the comment above.
 		// (p+ tv) 
 		
-		Vector3f between = new Vector3f();
-		between.cross(v, vTarget);
-		//between.
+		//Check whether rays are parallel
+		Vector3f vectDot = new Vector3f(vTarget);
+		vectDot.sub(v);
+		float dotProd = vectDot.dot(vectDot);
+		float epsilon = 1e-3f;
+		if (dotProd < epsilon) {
+			return 0f;
+		}
+		
+		Vector3f posDiff = new Vector3f(pTarget);
+		posDiff.sub(p);
+		
+		return ((-1)*(posDiff.dot(vectDot))/dotProd);
+		
+		
+		//between.cross(v, vTarget);
 		//System.out.println("Cross: " + between);
 		//float t = (between.x + between.y+between.z) / (v.x + v.y + v.z);
 		
-		
-		return 0;
 	}
 	
 	/**
