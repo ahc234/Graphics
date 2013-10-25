@@ -150,11 +150,17 @@ public class ManipUtils {
 	public static float intersectRayPlane(Vector3f p, Vector3f v, Vector3f planeP, Vector3f planeN)
 	{
 		// TODO (Manipulators P1): Implement this helper method as described in the assignment
-		// description and the comment above.
+				// description and the comment above.
+				float num = (p.x-planeP.x)*planeN.x + (p.y-planeP.y)*planeN.y + (p.z-planeP.z)*planeN.z;
+				float denom = -1*(v.x*planeN.x + v.y*planeN.y + v.z*planeN.z);
 
-		
-		
-		return 0;
+					    if (denom >= 0) {
+					        return 0f;
+					    }
+					    else {
+					        return num/denom;
+					    }
+
 	}
 
 }
