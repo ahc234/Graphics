@@ -114,7 +114,6 @@ public class ManipUtils {
 	{
 		// TODO (Manipulators P1): Implement this helper method as described in the assignment
 		// description and the comment above.
-		// (p+ tv) 
 		
 		//Check whether rays are parallel
 		Vector3f vectDot = new Vector3f(vTarget);
@@ -125,15 +124,21 @@ public class ManipUtils {
 			return 0f;
 		}
 		
-		Vector3f posDiff = new Vector3f(pTarget);
-		posDiff.sub(p);
+		//Solve the linear equations:
+		//(v dot (point on v, point on vTarget) = 0
+		//(vTarget dot (point on v, point on vTarget)) = 0
+		Vector3f pDiff = new Vector3f(p);
+		pDiff.sub(pTarget);
 		
-		return ((-1)*(posDiff.dot(vectDot))/dotProd);
+		float num = (v.dot(vTarget))*(vTarget.dot(pDiff)) - (vTarget.dot(vTarget))*(v.dot(pDiff));
+		float denom = (v.dot(v))*(vTarget.dot(vTarget)) - (v.dot(vTarget))*(v.dot(vTarget));
 		
-		
-		//between.cross(v, vTarget);
-		//System.out.println("Cross: " + between);
-		//float t = (between.x + between.y+between.z) / (v.x + v.y + v.z);
+	    if (denom < epsilon) {
+	        return 0f;
+	    }
+	    else {
+	        return num/denom;
+	    }
 		
 	}
 	
