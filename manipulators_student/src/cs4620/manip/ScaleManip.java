@@ -166,13 +166,7 @@ public class ScaleManip extends Manip {
 					sceneNode.scaling.z+change);
 		}
 		if (this.axisMode == PICK_CENTER){
-			Vector3f transY = new Vector3f(eY);
-			parTrans.transform(transY);
-			
-			float t0 = ManipUtils.timeClosestToRay(transOrig, transY, initNDCpoint, initNDCvect);
-			float t1 = ManipUtils.timeClosestToRay(transOrig, transY, finalNDCpoint, finalNDCvect);
-			
-			float change = t1 - t0;
+			float change = mouseDelta.y;
 			float changePow = (float)Math.pow(2.0, (double)change);
 			sceneNode.scaling.set(sceneNode.scaling.x*changePow,
 					sceneNode.scaling.y*changePow,
