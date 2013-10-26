@@ -10,6 +10,7 @@ import cs4620.scene.SceneNode;
 import cs4620.scene.SceneProgram;
 import cs4620.shape.Cube;
 import cs4620.shape.TriangleMesh;
+import cs4620.test.ManipTestHelpers;
 import cs4620.framework.Camera;
 import cs4620.framework.Transforms;
 import cs4620.manip.ManipUtils;
@@ -118,6 +119,23 @@ public class TranslateManip extends Manip
 					sceneNode.translation.z+change);
 		}
 		if (this.axisMode == PICK_CENTER){
+			Vector3f planeN = camera.getViewDir();
+			Vector3f planeP = transOrig;
+			float Pold;
+			float Pnew;
+			
+			Pold = ManipUtils.intersectRayPlane(initNDCpoint, initNDCvect, planeP, planeN);
+			Pnew = ManipUtils.intersectRayPlane(finalNDCpoint, finalNDCvect, planeP, planeN);
+			
+			ManipTestHelpers.testIntersectRayPlane(initNDCpoint, initNDCvect, planeP, planeN, 8.0f,true);
+			ManipTestHelpers.testIntersectRayPlane(finalNDCpoint, finalNDCvect, planeP, planeN, 8.0f,true);
+			
+			float change = Pnew - Pold;
+			//System.out.print(change);
+			sceneNode.translation.set(sceneNode.translation.x,
+					sceneNode.translation.y,
+					sceneNode.translation.z+change);
+			
 		}
 	}
 
