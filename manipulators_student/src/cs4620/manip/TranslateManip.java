@@ -75,21 +75,36 @@ public class TranslateManip extends Manip
 		camera.getRayNDC(mousePosition, initNDCpoint, initNDCvect);
 		camera.getRayNDC(mousePosition, finalNDCpoint, finalNDCvect);
 		
+		SceneNode parent = sceneNode.getSceneNodeParent();
+		Matrix4f parTrans = new Matrix4f(parent.toWorld());
+		
 		if (this.axisMode == PICK_X){
-			float t0 = ManipUtils.timeClosestToRay(new Vector3f(0, 0, 0), eX, initNDCpoint, initNDCvect);
-			float t1 = ManipUtils.timeClosestToRay(new Vector3f(0, 0, 0), eX, finalNDCpoint, finalNDCvect);
+			Vector3f transX = new Vector3f(eX);
+			parTrans.transform(transX);
+			
+			float t0 = ManipUtils.timeClosestToRay(new Vector3f(0, 0, 0), transX, initNDCpoint, initNDCvect);
+			float t1 = ManipUtils.timeClosestToRay(new Vector3f(0, 0, 0), transX, finalNDCpoint, finalNDCvect);
+			
 			float change = t1 - t0;
 			sceneNode.translation.set(sceneNode.translation.x+change,sceneNode.translation.y,sceneNode.translation.z);
 		}
 		if (this.axisMode == PICK_Y){
-			float t0 = ManipUtils.timeClosestToRay(new Vector3f(0, 0, 0), eY, initNDCpoint, initNDCvect);
-			float t1 = ManipUtils.timeClosestToRay(new Vector3f(0, 0, 0), eY, finalNDCpoint, finalNDCvect);
+			Vector3f transY = new Vector3f(eY);
+			parTrans.transform(transY);
+			
+			float t0 = ManipUtils.timeClosestToRay(new Vector3f(0, 0, 0), transY, initNDCpoint, initNDCvect);
+			float t1 = ManipUtils.timeClosestToRay(new Vector3f(0, 0, 0), transY, finalNDCpoint, finalNDCvect);
+			
 			float change = t1 - t0;
 			sceneNode.translation.set(sceneNode.translation.x,sceneNode.translation.y+change,sceneNode.translation.z);
 		}
 		if (this.axisMode == PICK_Z){
-			float t0 = ManipUtils.timeClosestToRay(new Vector3f(0, 0, 0), eZ, initNDCpoint, initNDCvect);
-			float t1 = ManipUtils.timeClosestToRay(new Vector3f(0, 0, 0), eZ, finalNDCpoint, finalNDCvect);
+			Vector3f transZ = new Vector3f(eZ);
+			parTrans.transform(transZ);
+			
+			float t0 = ManipUtils.timeClosestToRay(new Vector3f(0, 0, 0), transZ, initNDCpoint, initNDCvect);
+			float t1 = ManipUtils.timeClosestToRay(new Vector3f(0, 0, 0), transZ, finalNDCpoint, finalNDCvect);
+			
 			float change = t1 - t0;
 			sceneNode.translation.set(sceneNode.translation.x,sceneNode.translation.y,sceneNode.translation.z+change);
 		}
