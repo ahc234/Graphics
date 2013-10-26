@@ -11,6 +11,7 @@ import javax.vecmath.Matrix4f;
 import javax.vecmath.Vector3f;
 
 import cs4620.framework.Transforms;
+import cs4620.manip.Manip;
 import cs4620.util.Util;
 
 public class SceneNode extends DefaultMutableTreeNode {
@@ -62,10 +63,19 @@ public class SceneNode extends DefaultMutableTreeNode {
 		// node's local coordinates to world space.
 		// WARNING: the handles drawn for the three manipulators will not display properly until
 		// you implement this method.
+		if (getSceneNodeParent() == null){
+			 return Transforms.identity3DH();
+		}
 		
+		Matrix4f nextTransform = new Matrix4f(getSceneNodeParent().toWorld());
+
+		nextTransform.mul(Transforms.translate3DH(translation.x, translation.y, translation.z));
+		nextTransform.mul(Transforms.rotateAxis3DH(Manip.Z_AXIS, rotation.z));
+		nextTransform.mul(Transforms.rotateAxis3DH(Manip.Y_AXIS, rotation.y));
+		nextTransform.mul(Transforms.rotateAxis3DH(Manip.X_AXIS, rotation.x));
+		nextTransform.mul(Transforms.scale3DH(scaling.x, scaling.y, scaling.z));
 		
-		
-		return Transforms.identity3DH();
+		return nextTransform;
 	}
 	
 	/**
