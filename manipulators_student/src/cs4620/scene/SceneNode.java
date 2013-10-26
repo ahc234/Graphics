@@ -62,6 +62,9 @@ public class SceneNode extends DefaultMutableTreeNode {
 		// node's local coordinates to world space.
 		// WARNING: the handles drawn for the three manipulators will not display properly until
 		// you implement this method.
+		
+		
+		
 		return Transforms.identity3DH();
 	}
 	

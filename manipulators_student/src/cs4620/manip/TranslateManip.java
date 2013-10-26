@@ -62,6 +62,39 @@ public class TranslateManip extends Manip
 	public void dragged(Vector2f mousePosition, Vector2f mouseDelta)
 	{
 		// TODO (Manipulators P1): Implement this manipulator.
+		
+		Vector2f initPoint = new Vector2f(mousePosition);
+		initPoint.sub(mouseDelta);
+		Vector2f finalPoint = new Vector2f(initPoint);
+		
+		Vector3f initNDCpoint = new Vector3f();
+		Vector3f initNDCvect = new Vector3f();
+		Vector3f finalNDCpoint = new Vector3f();
+		Vector3f finalNDCvect = new Vector3f();
+		
+		camera.getRayNDC(mousePosition, initNDCpoint, initNDCvect);
+		camera.getRayNDC(mousePosition, finalNDCpoint, finalNDCvect);
+		
+		if (this.axisMode == PICK_X){
+			float t0 = ManipUtils.timeClosestToRay(new Vector3f(0, 0, 0), eX, initNDCpoint, initNDCvect);
+			float t1 = ManipUtils.timeClosestToRay(new Vector3f(0, 0, 0), eX, finalNDCpoint, finalNDCvect);
+			float change = t1 - t0;
+			sceneNode.translation.set(sceneNode.translation.x+change,sceneNode.translation.y,sceneNode.translation.z);
+		}
+		if (this.axisMode == PICK_Y){
+			float t0 = ManipUtils.timeClosestToRay(new Vector3f(0, 0, 0), eY, initNDCpoint, initNDCvect);
+			float t1 = ManipUtils.timeClosestToRay(new Vector3f(0, 0, 0), eY, finalNDCpoint, finalNDCvect);
+			float change = t1 - t0;
+			sceneNode.translation.set(sceneNode.translation.x,sceneNode.translation.y+change,sceneNode.translation.z);
+		}
+		if (this.axisMode == PICK_Z){
+			float t0 = ManipUtils.timeClosestToRay(new Vector3f(0, 0, 0), eZ, initNDCpoint, initNDCvect);
+			float t1 = ManipUtils.timeClosestToRay(new Vector3f(0, 0, 0), eZ, finalNDCpoint, finalNDCvect);
+			float change = t1 - t0;
+			sceneNode.translation.set(sceneNode.translation.x,sceneNode.translation.y,sceneNode.translation.z+change);
+		}
+		if (this.axisMode == PICK_CENTER){
+		}
 	}
 
 	@Override
