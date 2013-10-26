@@ -106,6 +106,78 @@ public class ScaleManip extends Manip {
 	public void dragged(Vector2f mousePosition, Vector2f mouseDelta)
 	{
 		// TODO (Manipulators P1): Implement this manipulator.
+		
+		Vector2f initPoint = new Vector2f(mousePosition);
+		initPoint.sub(mouseDelta);
+		Vector2f finalPoint = new Vector2f(mousePosition);
+		
+		Vector3f initNDCpoint = new Vector3f();
+		Vector3f initNDCvect = new Vector3f();
+		Vector3f finalNDCpoint = new Vector3f();
+		Vector3f finalNDCvect = new Vector3f();
+		
+		camera.getRayNDC(initPoint, initNDCpoint, initNDCvect);
+		camera.getRayNDC(finalPoint, finalNDCpoint, finalNDCvect);
+		
+		SceneNode parent = sceneNode.getSceneNodeParent();
+		Matrix4f parTrans = new Matrix4f(parent.toWorld());
+		parTrans.mul(Transforms.translate3DH(sceneNode.translation.x, sceneNode.translation.y, sceneNode.translation.z));
+		parTrans.mul(Transforms.rotateAxis3DH(Manip.Z_AXIS, sceneNode.rotation.z));
+		parTrans.mul(Transforms.rotateAxis3DH(Manip.Y_AXIS, sceneNode.rotation.y));
+		parTrans.mul(Transforms.rotateAxis3DH(Manip.X_AXIS, sceneNode.rotation.x));
+		
+		Vector3f transOrig = new Vector3f(0, 0, 0);
+		parTrans.transform(transOrig);
+		
+		if (this.axisMode == PICK_X){
+			Vector3f transX = new Vector3f(eX);
+			parTrans.transform(transX);
+			
+			float t0 = ManipUtils.timeClosestToRay(transOrig, transX, initNDCpoint, initNDCvect);
+			float t1 = ManipUtils.timeClosestToRay(transOrig, transX, finalNDCpoint, finalNDCvect);
+			
+			float change = t1 - t0;
+			sceneNode.scaling.set(sceneNode.scaling.x+change,
+					sceneNode.scaling.y,
+					sceneNode.scaling.z);
+		}
+		if (this.axisMode == PICK_Y){
+			Vector3f transY = new Vector3f(eY);
+			parTrans.transform(transY);
+			
+			float t0 = ManipUtils.timeClosestToRay(transOrig, transY, initNDCpoint, initNDCvect);
+			float t1 = ManipUtils.timeClosestToRay(transOrig, transY, finalNDCpoint, finalNDCvect);
+			
+			float change = t1 - t0;
+			sceneNode.scaling.set(sceneNode.scaling.x,
+					sceneNode.scaling.y+change,
+					sceneNode.scaling.z);
+		}
+		if (this.axisMode == PICK_Z){
+			Vector3f transZ = new Vector3f(eZ);
+			parTrans.transform(transZ);
+			
+			float t0 = ManipUtils.timeClosestToRay(transOrig, transZ, initNDCpoint, initNDCvect);
+			float t1 = ManipUtils.timeClosestToRay(transOrig, transZ, finalNDCpoint, finalNDCvect);
+			
+			float change = t1 - t0;
+			sceneNode.scaling.set(sceneNode.scaling.x,
+					sceneNode.scaling.y,
+					sceneNode.scaling.z+change);
+		}
+		if (this.axisMode == PICK_CENTER){
+			Vector3f transY = new Vector3f(eY);
+			parTrans.transform(transY);
+			
+			float t0 = ManipUtils.timeClosestToRay(transOrig, transY, initNDCpoint, initNDCvect);
+			float t1 = ManipUtils.timeClosestToRay(transOrig, transY, finalNDCpoint, finalNDCvect);
+			
+			float change = t1 - t0;
+			float changePow = (float)Math.pow(2.0, (double)change);
+			sceneNode.scaling.set(sceneNode.scaling.x*changePow,
+					sceneNode.scaling.y*changePow,
+					sceneNode.scaling.z*changePow);
+			}
 	}
 
 	@Override
