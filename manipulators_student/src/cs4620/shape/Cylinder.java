@@ -118,8 +118,8 @@ public class Cylinder extends TriangleMesh
 			rowPos = (u + rowLength+1)*3;
 			
 			triangleVerts[rowPos] = (2*(rowLength+1))+1;
-			triangleVerts[rowPos+1] = u + rowLength+2 +  numPoints+1;
-			triangleVerts[rowPos+2] = u + rowLength+1 +  numPoints+1;
+			triangleVerts[rowPos+1] = u + rowLength+1 +  numPoints+1;
+			triangleVerts[rowPos+2] = u + rowLength+2 +  numPoints+1;
 			
 			//Top face lines
 			int vertPos = (u*4);
