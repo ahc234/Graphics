@@ -139,6 +139,9 @@ public class TranslateManip extends Manip
 			Vector3f change = newP;
 			change.sub(oldP);
 			
+			parTrans.invert();
+			parTrans.transform(change);
+			
 			sceneNode.translation.set(sceneNode.translation.x+change.x,
 					sceneNode.translation.y+change.y,
 					sceneNode.translation.z+change.z);
