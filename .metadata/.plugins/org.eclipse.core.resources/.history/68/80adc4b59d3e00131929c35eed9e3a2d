@@ -124,28 +124,17 @@ public class TranslateManip extends Manip
 			float Pold;
 			float Pnew;
 			
-			
 			Pold = ManipUtils.intersectRayPlane(initNDCpoint, initNDCvect, planeP, planeN);
 			Pnew = ManipUtils.intersectRayPlane(finalNDCpoint, finalNDCvect, planeP, planeN);
 			
-			//p +tv
-			Vector3f oldP= initNDCpoint;
-			Vector3f newP= finalNDCpoint;
-			initNDCvect.scale(Pold);
-			finalNDCvect.scale(Pnew);
-			oldP.add(initNDCvect);
-			newP.add(finalNDCvect);
+			ManipTestHelpers.testIntersectRayPlane(initNDCpoint, initNDCvect, planeP, planeN, 8.0f,true);
+			ManipTestHelpers.testIntersectRayPlane(finalNDCpoint, finalNDCvect, planeP, planeN, 8.0f,true);
 			
-			
-			//ManipTestHelpers.testIntersectRayPlane(initNDCpoint, initNDCvect, planeP, planeN, 8.0f,true);
-			//ManipTestHelpers.testIntersectRayPlane(finalNDCpoint, finalNDCvect, planeP, planeN, 8.0f,true);
-			Vector3f change = newP;
-			change.sub(oldP);
-			
-			
-			sceneNode.translation.set(sceneNode.translation.x+change.x,
-					sceneNode.translation.y+change.y,
-					sceneNode.translation.z+change.z);
+			float change = Pnew - Pold;
+			System.out.print(change);
+			sceneNode.translation.set(sceneNode.translation.x,
+					sceneNode.translation.y,
+					sceneNode.translation.z+change);
 			
 		}
 	}
