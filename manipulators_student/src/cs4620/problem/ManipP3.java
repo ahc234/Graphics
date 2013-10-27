@@ -128,6 +128,12 @@ class SolarSystemAnimator extends SceneTraverser
 	public void buildInitialScene(GL2 gl, Scene scene)
 	{
 		// TODO (Manipulators P3): Initialize scene by loading your solar system from Problem 2.
+		try {
+			scene.load(gl, "data/scenes/manip/solarsystem.txt");
+		} catch (IOException e) {
+			System.err.println("FAIL: loading solar system");
+			e.printStackTrace();
+		}
 	}
 	
 	@Override
@@ -135,6 +141,24 @@ class SolarSystemAnimator extends SceneTraverser
 		// TODO (Manipulators P3): Update the scene given the current time
 		// in this.time. This method will be called once per node in the scene
 		// to update the whole scene.
+		SceneNode parent = node.getSceneNodeParent();
+		Vector3f transOrig = new Vector3f(0, 0, 0);
+		if (parent != null){
+		Matrix4f parTrans = new Matrix4f(parent.toWorld());
+		parTrans.transform(transOrig);
+		}
+		
+		if (node.getName().equals("MarsGroup")) node.rotation.z = time*2;
+		
+		if (node.getName().equals("Mars")) node.rotation.z =  time*4;
+
+		if (node.getName().equals("EarthGroup")) node.rotation.z = time*4;
+
+		if (node.getName().equals("Earth")) node.rotation.z = time*4;
+		
+		if (node.getName().equals("Moon")) node.rotation.z = time*5;
+		
+	
 	}
 }
 
