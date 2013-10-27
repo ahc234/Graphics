@@ -121,16 +121,14 @@ public class TranslateManip extends Manip
 		if (this.axisMode == PICK_CENTER){
 			Vector3f planeN = camera.getViewDir();
 			Vector3f planeP = transOrig;
-			System.out.println(transOrig);
+			
 			float Pold;
 			float Pnew;
 			
-			
 			Pold = ManipUtils.intersectRayPlane(initNDCpoint, initNDCvect, planeP, planeN);
 			Pnew = ManipUtils.intersectRayPlane(finalNDCpoint, finalNDCvect, planeP, planeN);
-
 			
-			//p +tv
+			//p + tv
 			Vector3f oldP= initNDCpoint;
 			Vector3f newP= finalNDCpoint;
 			initNDCvect.scale(Pold);
@@ -138,18 +136,12 @@ public class TranslateManip extends Manip
 			oldP.add(initNDCvect);
 			newP.add(finalNDCvect);
 			
-			
-			//ManipTestHelpers.testIntersectRayPlane(initNDCpoint, initNDCvect, planeP, planeN, 8.0f,true);
-			//ManipTestHelpers.testIntersectRayPlane(finalNDCpoint, finalNDCvect, planeP, planeN, 8.0f,true);
 			Vector3f change = newP;
 			change.sub(oldP);
-			
 			
 			sceneNode.translation.set(sceneNode.translation.x+change.x,
 					sceneNode.translation.y+change.y,
 					sceneNode.translation.z+change.z);
-
-			
 		}
 	}
 
