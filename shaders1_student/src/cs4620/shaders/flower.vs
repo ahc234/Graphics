@@ -21,17 +21,34 @@ uniform mat4 un_FrameToObj;
 uniform mat4 un_ObjToFrame;
 
 // TODO: (Shaders 1 Problem 2) Declare any additional uniform variables here
+uniform mat4 un_vertTransform;
+uniform mat4 un_normTransform;
 
 // vertex attributes -- distinct value used for each vertex
 attribute vec3 in_Vertex;
 attribute vec3 in_Normal;
 
 // TODO: (Shaders 1 Problem 2) Declare any varying variables here
+varying vec3 ex_bentNorm;
+varying vec3 ex_bentVert;
 
 void main()
 {
 	// TODO: (Shaders 1 Problem 2) Implement the vertex shader for the
 	// flower shader here
-    gl_Position = un_Projection * un_ModelView * vec4(in_Vertex, 1);
+	
+	vec3 ex_bentVert = un_ObjToFrame * vec3(in_Vertex, 1.0);
+	ex_bentNorm = un_ObjToFrame * vec3(in_Normal, 1.0);
+	
+	ex_bentVert = un_vertTransform * ex_bentVert;
+	ex_bentNorm = un_normTransform * ex_bentNorm;
+	
+	ex_bentVert = un_FrameToObj * ex_bentVert;
+	ex_bentNorm = un_FrameToObj * ex_bentNorm;
+	
+	ex_bentNorm = normalize(un_NormalMatrix * ex_bentNorm);
+	ex_bentVert = un_ModelView * ex_bentVert;
+	
+    gl_Position = un_Projection * un_ModelView * bentVert;
 }
 
