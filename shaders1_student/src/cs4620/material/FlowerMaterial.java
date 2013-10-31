@@ -30,8 +30,9 @@ public class FlowerMaterial extends PhongMaterial {
 	
 	// TODO: (Shaders 1 Problem 2) Declare any other variables you want to pass as
 	// uniforms to your vertex shader here
-	private Matrix4f un_vertTransform;
-	private Matrix4f un_normTransform;
+	private float un_maxPhi;
+	private float un_maxRadius;
+	private float un_PI;
 	
 	public FlowerMaterial()
 	{
@@ -84,12 +85,10 @@ public class FlowerMaterial extends PhongMaterial {
 			
 			// TODO: (Shaders 1 Problem 2) use L_x and L_y to calculate any other uniforms you
 			// want to send to the vertex shader
-			
-			float phi = (float)Math.PI - (float)(Math.PI/2.0) - theta;
-			float radius = height/phi;
+			un_maxPhi = (float)Math.PI - (float)(Math.PI/2.0) - theta;
+			un_maxRadius = height/un_maxPhi;
+			un_PI = (float)Math.PI;
 					
-			un_vertTransform = new Matrix4f();
-			un_normTransform = new Matrix4f();
 		}
 	}
 
