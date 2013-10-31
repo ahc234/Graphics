@@ -24,17 +24,16 @@ uniform mat4 un_ObjToFrame;
 uniform float un_maxPhi;
 uniform float un_maxRadius;
 uniform float flowerHeight;
-uniform float un_PI;
 
 // TODO: (Shaders 1 Problem 2) Declare any varying variables here
-varying vec4 ex_bentNorm;
 varying vec4 ex_bentVert;
+varying vec4 ex_bentNorm;
 
 void main()
 {
 	// TODO: (Shaders 1 Problem 2) Implement the fragment shader for the flower shader here
 	
- 	vec3 unitToLight = vec3(0.0,0.0,0.0);
+	vec3 unitToLight = vec3(0.0,0.0,0.0);
     
 	vec4 bentNormalized = normalize(ex_bentNorm);
 	vec3 unitNormal = vec3(bentNormalized.x, bentNormalized.y, bentNormalized.z);

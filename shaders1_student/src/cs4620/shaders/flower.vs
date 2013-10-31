@@ -24,15 +24,14 @@ uniform mat4 un_ObjToFrame;
 uniform float un_maxPhi;
 uniform float un_maxRadius;
 uniform float flowerHeight;
-uniform float un_PI;
 
 // vertex attributes -- distinct value used for each vertex
 attribute vec3 in_Vertex;
 attribute vec3 in_Normal;
 
 // TODO: (Shaders 1 Problem 2) Declare any varying variables here
-varying vec4 ex_bentNorm;
 varying vec4 ex_bentVert;
+varying vec4 ex_bentNorm;
 
 void main()
 {
@@ -45,10 +44,9 @@ void main()
 	
 	float radius = un_maxRadius - ex_bentVert.x;
 	float phi = (ex_bentVert.y/flowerHeight) * un_maxPhi;
-	float shiftedAngle = un_PI - phi;
 	
-	ex_bentVert.x = radius + radius * cos(shiftedAngle);
-	ex_bentVert.y = 0.0 + radius * sin(shiftedAngle);
+	ex_bentVert.x = un_maxRadius - (radius * cos(phi));
+	ex_bentVert.y = 0.0 + radius * sin(phi);
 	
 	ex_bentVert = un_FrameToObj * ex_bentVert;
 	ex_bentNorm = un_FrameToObj * ex_bentNorm;
