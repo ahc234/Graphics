@@ -35,24 +35,21 @@ void main()
 	
 	vec3 unitToLight = vec3(0.0,0.0,0.0);
     
-	vec4 bentNormalized = normalize(ex_bentNorm);
-	vec3 unitNormal = vec3(bentNormalized.x, bentNormalized.y, bentNormalized.z);
+	//vec4 bentNormalized = normalize(ex_bentNorm);
+	vec3 unitNormal = ex_bentNorm.xyz;
 	vec3 colorRGB = un_AmbientColor * un_LightAmbientIntensity;
     
     vec3 unitToEye = normalize(-ex_bentVert.xyz);
 	vec3 unitHalfVec = vec3(0.0,0.0,0.0);
     
-	// for each light source
-    for (int i = 0; i < 16; i++)
-    {
-        unitToLight = normalize(un_LightPositions[i] - ex_bentVert.xyz);
+    unitToLight = normalize(un_LightPositions[0] - ex_bentVert.xyz);
         
         // if ndotL < 0 don't add
         if (dot(unitNormal, unitToLight) > 0){
             unitHalfVec = normalize(unitToLight + unitToEye);
-            colorRGB = colorRGB + un_LightIntensities[i] * un_DiffuseColor * max(dot(unitNormal, unitToLight), 0.0);
-            colorRGB = colorRGB + un_LightIntensities[i] * un_SpecularColor * pow(max(dot(unitNormal, unitHalfVec), 0.0), un_Shininess);
-        }
+            colorRGB = colorRGB + un_LightIntensities[0] * un_DiffuseColor * max(dot(unitNormal, unitToLight), 0.0);
+            colorRGB = colorRGB + un_LightIntensities[0] * un_SpecularColor * pow(max(dot(unitNormal, unitHalfVec), 0.0), un_Shininess);
+
     }
 
 	gl_FragColor = vec4(colorRGB, 1.0f);

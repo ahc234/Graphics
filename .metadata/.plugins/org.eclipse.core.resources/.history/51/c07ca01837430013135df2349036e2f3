@@ -67,8 +67,8 @@ public class FlowerMaterial extends PhongMaterial {
 		}
 		else
 		{
-			useFlowerShader = true;
-			//useFlowerShader = false;
+			//useFlowerShader = true;
+			useFlowerShader = false;
 			
 			// These matrices map between the frame of the flower mesh's vertices and a frame in which
 			// the light lies on the z>0 part of the x-y plane

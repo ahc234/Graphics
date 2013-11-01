@@ -58,17 +58,16 @@ public class FlowerMaterial extends PhongMaterial {
 		float L_x = (float) Math.sqrt(lightx * lightx + lightz * lightz);
 		float L_y = lighty;
 		
-		if(L_x < 0.00001)
+		/*if(L_x < 0.00001)
 		{
 			// if the light is too close to lying directly above the flower, the math
 			// for the bending of the flower becomes unstable, so just render
 			// the unbent flower
 			useFlowerShader = false;
-		}
+		}*/
 		else
 		{
 			useFlowerShader = true;
-			//useFlowerShader = false;
 			
 			// These matrices map between the frame of the flower mesh's vertices and a frame in which
 			// the light lies on the z>0 part of the x-y plane

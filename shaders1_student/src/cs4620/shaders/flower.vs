@@ -39,18 +39,28 @@ void main()
 	// flower shader here
 	
 	ex_bentVert = un_ObjToFrame * vec4(in_Vertex, 1.0);
-	vec3 normalized = normalize(un_NormalMatrix * in_Normal);
-	ex_bentNorm = un_ObjToFrame * vec4(normalized, 1.0);
+	//vec3 normalized = normalize(in_Normal);
+	ex_bentNorm = un_ObjToFrame * vec4(in_Normal, 1.0);
+
 	
 	float radius = un_maxRadius - ex_bentVert.x;
 	float phi = (ex_bentVert.y/flowerHeight) * un_maxPhi;
-	
+
+    
 	ex_bentVert.x = un_maxRadius - (radius * cos(phi));
 	ex_bentVert.y = 0.0 + radius * sin(phi);
+    
+    
+    mat4 rotation = mat4(
+         vec4(cos(-1*phi),sin(-1*phi),0,0),           //first column
+         vec4(-1*sin(-1*phi),cos(-1*phi),0,0),        //second column
+         vec4(0,0,1,0),                             //third column
+         vec4(0,0,0,1));                            //fourth column
 	
+    
 	ex_bentVert = un_FrameToObj * ex_bentVert;
-	ex_bentNorm = un_FrameToObj * ex_bentNorm;
-	
-    gl_Position = un_Projection * un_ModelView * ex_bentVert;
+	ex_bentNorm.xyz = normalize(un_NormalMatrix * (un_FrameToObj * rotation * normalize(ex_bentNorm)).xyz);
+    ex_bentVert = un_ModelView * ex_bentVert;
+    gl_Position = un_Projection * ex_bentVert;
 }
 

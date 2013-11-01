@@ -32,7 +32,7 @@ public class FlowerMaterial extends PhongMaterial {
 	// uniforms to your vertex shader here
 	private float un_maxPhi;
 	private float un_maxRadius;
-	
+	private float un_PI;
 	
 	public FlowerMaterial()
 	{
@@ -68,7 +68,6 @@ public class FlowerMaterial extends PhongMaterial {
 		else
 		{
 			useFlowerShader = true;
-			//useFlowerShader = false;
 			
 			// These matrices map between the frame of the flower mesh's vertices and a frame in which
 			// the light lies on the z>0 part of the x-y plane
@@ -88,9 +87,10 @@ public class FlowerMaterial extends PhongMaterial {
 			// want to send to the vertex shader
 			un_maxPhi = (float)Math.PI - (float)(Math.PI/2.0) - theta;
 			un_maxRadius = height/un_maxPhi;
-
+			un_PI = (float)Math.PI;
 			
-			
+			System.out.println(un_maxPhi);
+			System.out.println(un_maxRadius);
 					
 		}
 	}
@@ -130,15 +130,7 @@ public class FlowerMaterial extends PhongMaterial {
 				flowerProgram.getUniform("un_ObjToFrame").setMatrix4(gl, objToFrame);
 			
 			// TODO: (Shaders 1 Problem 2) Send any custom uniforms here
-			if(flowerProgram.getUniform("un_maxPhi") != null)
-				flowerProgram.getUniform("un_maxPhi").set1Float(gl, un_maxPhi);
 			
-			if(flowerProgram.getUniform("un_maxRadius") != null)
-				flowerProgram.getUniform("un_maxRadius").set1Float(gl, un_maxRadius);
-			
-			if(flowerProgram.getUniform("flowerHeight") != null)
-				flowerProgram.getUniform("flowerHeight").set1Float(gl, flowerHeight);
-				
 			if(wireframe) {
 				mesh.drawWireframe(gl);
 			} else {

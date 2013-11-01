@@ -33,7 +33,6 @@ public class FlowerMaterial extends PhongMaterial {
 	private float un_maxPhi;
 	private float un_maxRadius;
 	
-	
 	public FlowerMaterial()
 	{
 		super();
@@ -68,7 +67,6 @@ public class FlowerMaterial extends PhongMaterial {
 		else
 		{
 			useFlowerShader = true;
-			//useFlowerShader = false;
 			
 			// These matrices map between the frame of the flower mesh's vertices and a frame in which
 			// the light lies on the z>0 part of the x-y plane
@@ -88,9 +86,6 @@ public class FlowerMaterial extends PhongMaterial {
 			// want to send to the vertex shader
 			un_maxPhi = (float)Math.PI - (float)(Math.PI/2.0) - theta;
 			un_maxRadius = height/un_maxPhi;
-
-			
-			
 					
 		}
 	}
