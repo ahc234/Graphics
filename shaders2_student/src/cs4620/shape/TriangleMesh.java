@@ -1,5 +1,6 @@
 package cs4620.shape;
 
+import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
 
 import cs4620.framework.IndexBuffer;
@@ -37,8 +38,8 @@ public abstract class TriangleMesh extends Mesh {
 		triangleIndicesBuffer = new IndexBuffer(gl, new int[0]);
 		linesIndicesBuffer = new IndexBuffer(gl, new int[0]);
 		
-		trianglesArray = new VertexArray(gl, gl.GL_TRIANGLES);
-		wireframeArray = new VertexArray(gl, gl.GL_LINES);
+		trianglesArray = new VertexArray(gl, GL.GL_TRIANGLES);
+		wireframeArray = new VertexArray(gl, GL.GL_LINES);
 		
 		trianglesArray.setIndexBuffer(gl, triangleIndicesBuffer);
 		wireframeArray.setIndexBuffer(gl, linesIndicesBuffer);
@@ -51,6 +52,11 @@ public abstract class TriangleMesh extends Mesh {
 		
 		// TODO (Shaders 2 P1): Add code to set up the texture coordinates buffer. Some
 		// objects will not set texture coordinates, so make sure you can handle that
+		texCoordsBuffer = new VertexBuffer(gl, new float[0], 2);
+		
+		trianglesArray.setAttributeBuffer(gl, SceneProgram.TEXTURE_INDEX, texCoordsBuffer);
+		
+		wireframeArray.setAttributeBuffer(gl, SceneProgram.TEXTURE_INDEX, texCoordsBuffer);
 	}
 	
 	protected void setVertices(GL2 gl, float [] vertices)
@@ -83,6 +89,7 @@ public abstract class TriangleMesh extends Mesh {
 		texCoordsBuffer.smartSetData(gl, texCoords);
 		
 		// TODO (Shaders 2 P1): Add any extra code necessary to use the texture coordinates
+
 	}
 	
 	protected void setTriangleIndices(GL2 gl, int [] triangleIndices)
