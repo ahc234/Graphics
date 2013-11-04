@@ -55,7 +55,6 @@ public abstract class TriangleMesh extends Mesh {
 		texCoordsBuffer = new VertexBuffer(gl, new float[0], 2);
 		
 		trianglesArray.setAttributeBuffer(gl, SceneProgram.TEXTURE_INDEX, texCoordsBuffer);
-		
 		wireframeArray.setAttributeBuffer(gl, SceneProgram.TEXTURE_INDEX, texCoordsBuffer);
 	}
 	
@@ -89,6 +88,11 @@ public abstract class TriangleMesh extends Mesh {
 		texCoordsBuffer.smartSetData(gl, texCoords);
 		
 		// TODO (Shaders 2 P1): Add any extra code necessary to use the texture coordinates
+		if (texCoords.length > 0) {
+			gl.glEnable(GL2.GL_TEXTURE_2D);
+		} else {
+			gl.glDisable(GL2.GL_TEXTURE_2D);
+		}
 
 	}
 	

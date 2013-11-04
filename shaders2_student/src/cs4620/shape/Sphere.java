@@ -26,6 +26,7 @@ public class Sphere extends TriangleMesh {
 		
 		float[] vertexCoords = new float[numPoints*3];
 		float[] normalCoords = new float[numPoints*3];
+		float[] textureCoords = new float[numPoints*2];
 		int[] triangleVerts = new int[numPoints*3*2];
 		int[] wireframeVerts = new int[numPoints*2*2];
 		
@@ -54,6 +55,16 @@ public class Sphere extends TriangleMesh {
 				normalCoords[rowPos] = x;
 				normalCoords[rowPos+1] = y;
 				normalCoords[rowPos+2] = z;
+				
+				int texPos = (int)(((v*rowLength) + u)*2);
+				if (u == rowLength-1) {
+					textureCoords[texPos] = u*(1.0f/rowLength);
+					textureCoords[texPos+1] = v*(1.0f/rowLength);
+				} else {
+					textureCoords[texPos] = u*(1.0f/rowLength);
+					textureCoords[texPos+1] = v*(1.0f/rowLength);
+				}
+				
 			}
 		}
 		
@@ -85,6 +96,7 @@ public class Sphere extends TriangleMesh {
 					wireframeVerts[vertPos+2] = triangleVerts[rowPos];
 					wireframeVerts[vertPos+3] = triangleVerts[rowPos+2];
 				}
+				
 			}
 		}
 		
@@ -92,6 +104,7 @@ public class Sphere extends TriangleMesh {
 		setNormals(gl, normalCoords);
 		setTriangleIndices(gl, triangleVerts);
 		setWireframeIndices(gl, wireframeVerts);
+		setTexCoords(gl, textureCoords);
 		
 		// TODO (Shaders 2 P2): Generate texture coordinates for the sphere also.
 	}
