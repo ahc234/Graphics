@@ -40,7 +40,7 @@ void main() {
         // if ndotL < 0 don't add
         if (dot(unitNormal, unitToLight) > 0){
             unitHalfVec = normalize(unitToLight + unitToEye);
-            colorRGB = texture2D(un_Texture, ex_texCoord) * (colorRGB + un_LightIntensities[i] * vec3(1, 1, 1) * max(dot(unitNormal, unitToLight), 0.0));
+            colorRGB = colorRGB + un_LightIntensities[i] * texture2D(un_Texture, ex_texCoord).rgb * un_DiffuseColor * max(dot(unitNormal, unitToLight), 0.0);
             colorRGB = colorRGB + un_LightIntensities[i] * un_SpecularColor * pow(max(dot(unitNormal, unitHalfVec), 0.0), un_Shininess);
         }
     }
