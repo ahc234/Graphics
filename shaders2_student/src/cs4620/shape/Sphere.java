@@ -57,14 +57,10 @@ public class Sphere extends TriangleMesh {
 				normalCoords[rowPos+2] = z;
 				
 				int texPos = (int)(((v*rowLength) + u)*2);
-				if (u == rowLength) {
-					textureCoords[texPos] = u*(1.0f/rowLength);
-					textureCoords[texPos+1] = v*(1.0f/rowLength);
-				} else {
-					textureCoords[texPos] = u*(1.0f/rowLength);
-					textureCoords[texPos+1] = v*(1.0f/rowLength);
-				}
-				
+
+				textureCoords[texPos] = v*(1.0f/(rowLength));
+				textureCoords[texPos+1] = u*(1.0f/(rowLength));
+			
 			}
 		}
 		
