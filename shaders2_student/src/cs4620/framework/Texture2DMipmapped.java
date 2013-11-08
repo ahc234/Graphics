@@ -8,7 +8,6 @@ import java.nio.Buffer;
 import javax.imageio.ImageIO;
 import javax.media.opengl.GL2;
 import javax.media.opengl.GLProfile;
-import javax.media.opengl.glu.GLU;
 import javax.media.opengl.glu.gl2.GLUgl2;
 
 import com.jogamp.opengl.util.awt.ImageUtil;
@@ -113,6 +112,12 @@ public class Texture2DMipmapped extends TextureTwoDim {
 	@Override
 	public void setTextureParameters() {
 		// TODO (Shaders 2 P4): Fill in code here to set the texture parameters to generate a mipmap
+		gl.glGenerateMipmap(GL2.GL_TEXTURE_2D);
+		gl.glTexParameteri(GL2.GL_TEXTURE_2D, GL2.GL_TEXTURE_WRAP_S, GL2.GL_REPEAT);
+		gl.glTexParameteri(GL2.GL_TEXTURE_2D, GL2.GL_TEXTURE_WRAP_T, GL2.GL_REPEAT);
+		gl.glTexParameteri(GL2.GL_TEXTURE_2D, GL2.GL_TEXTURE_WRAP_R, GL2.GL_REPEAT);
+		gl.glTexParameteri(GL2.GL_TEXTURE_2D, GL2.GL_TEXTURE_MIN_FILTER, GL2.GL_LINEAR_MIPMAP_LINEAR);
+		
 		
 		
 	}
