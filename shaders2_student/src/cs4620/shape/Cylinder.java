@@ -199,6 +199,7 @@ public class Cylinder extends TriangleMesh
 		
 		
 		// TODO (Shaders 2 P2): Generate texture coordinates for the cylinder also
+		//See above code for this section (integrated into previous cylinder code)
 		
 	}
 	
