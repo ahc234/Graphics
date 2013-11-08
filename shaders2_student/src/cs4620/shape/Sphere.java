@@ -60,7 +60,7 @@ public class Sphere extends TriangleMesh {
 
 				textureCoords[texPos] = u/rowLength;
 				textureCoords[texPos+1] = v/rowLength;
-			
+
 			}
 		}
 		
