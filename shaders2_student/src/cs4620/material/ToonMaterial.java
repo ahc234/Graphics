@@ -84,6 +84,8 @@ public class ToonMaterial extends PhongMaterial {
 			mesh.draw(gl);
 		}
 		
+		gl.glCullFace(GL2.GL_BACK);
+		
 		// Now use the quantize program
 		Program.use(gl, quantizeProgram);
 		

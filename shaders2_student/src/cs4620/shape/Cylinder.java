@@ -26,6 +26,7 @@ public class Cylinder extends TriangleMesh
 		
 		float[] vertexCoords = new float[numPoints*3*2];
 		float[] normalCoords = new float[numPoints*3*2];
+		float[] textureCoords = new float[numPoints*2*2];
 		int[] triangleVerts = new int[(numPoints*3 + numPoints*3 + numPoints*3)*2];
 		int[] wireframeVerts = new int[(numPoints*2 + numPoints)*2];
 		
@@ -102,6 +103,7 @@ public class Cylinder extends TriangleMesh
 			normalCoords[rowPos+((numPoints+1)*3)] = 0;
 			normalCoords[rowPos+1+((numPoints+1)*3)] = -1;
 			normalCoords[rowPos+2+((numPoints+1)*3)] = 0;
+			
 		}
 	
 		//Populate the triangles and lines
@@ -155,6 +157,14 @@ public class Cylinder extends TriangleMesh
 			triangleVerts[trianglePos+3] = u + 1;
 			triangleVerts[trianglePos+4] = u + rowLength + 2;
 			triangleVerts[trianglePos+5] = u + rowLength + 1;
+			
+			//Vertical textures
+//			int texPos = (u + 2*(rowLength+1))*2;
+//			
+//			textureCoords[texPos] = (float)(u * (1.0/tolerance));
+//			textureCoords[texPos+1] = (float)((u + rowLength) * 1.0/tolerance);
+//			textureCoords[texPos+2] = (float)((u + 1) * 1.0/tolerance);
+//			textureCoords[texPos+3] = (float)((u + rowLength + 1) * 1.0/tolerance);
 			
 		}
 
