@@ -58,7 +58,7 @@ public class Sphere extends TriangleMesh {
 				
 				int texPos = (int)(((v*(rowLength+1)) + u)*2);
 
-				textureCoords[texPos] = u/rowLength;
+				textureCoords[texPos] = 1 - u/rowLength;
 				textureCoords[texPos+1] = v/rowLength;
 
 			}
@@ -66,18 +66,17 @@ public class Sphere extends TriangleMesh {
 		
 		for (int v = 0; v < rowLength; v++) {
 			for (int u = 0; u < rowLength; u++) {
-				int rowPos = (((v*(rowLength+1)) + u)*3*2);
+				int rowPos = (((v*(rowLength)) + u)*3*2);
 
 				triangleVerts[rowPos] = v*(rowLength+1) + u;
 				triangleVerts[rowPos+1] = (v+1)*(rowLength+1) + u;
-				triangleVerts[rowPos+2] = triangleVerts[rowPos] + 1;
+				triangleVerts[rowPos+2] = v*(rowLength+1) + u + 1;
 				
 				triangleVerts[rowPos+3] = triangleVerts[rowPos+2];
 				triangleVerts[rowPos+4] = triangleVerts[rowPos+1];
 				triangleVerts[rowPos+5] = triangleVerts[rowPos+1] + 1;
 
-				
-				int vertPos = (((v*(rowLength+1)) + u)*2*2);
+				int vertPos = (((v*(rowLength)) + u)*2*2);
 
 				wireframeVerts[vertPos] = triangleVerts[rowPos];
 				wireframeVerts[vertPos+1] = triangleVerts[rowPos+1];
@@ -95,6 +94,7 @@ public class Sphere extends TriangleMesh {
 		setTexCoords(gl, textureCoords);
 		
 		// TODO (Shaders 2 P2): Generate texture coordinates for the sphere also.
+		//See above code for this section (integrated into previous sphere code)
 	}
 
 	@Override
