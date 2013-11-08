@@ -28,7 +28,7 @@ public class Cylinder extends TriangleMesh
 		float[] normalCoords = new float[numPoints*3];
 		float[] textureCoords = new float[numPoints*2];
 		int[] triangleVerts = new int[(numPoints-2)*3];
-		int[] wireframeVerts = new int[(numPoints-2)*2];
+		int[] wireframeVerts = new int[(5*(rowLength+1))*2];
 		
 		float x = 0;
 		float y = 0;
@@ -125,14 +125,14 @@ public class Cylinder extends TriangleMesh
 			textureCoords[texPos+2*(rowLength+1)*2 + 1] = 1f;
 			
 			//Top Face Texture
-			texPos = (int)(texPos + (rowLength)*2);
+			texPos = (int)(texPos + (rowLength+1)*2);
 		
 			textureCoords[texPos] = (x+1f)/2.0f;
 			textureCoords[texPos+1] = 1 - (z+1f)/2.0f;
 			
 			//Bottom Face Texture
-			textureCoords[texPos + 2*(rowLength)*2] = (x+1f)/2.0f;
-			textureCoords[texPos + 2*(rowLength)*2 + 1] = 1 - (z+1f)/2.0f;
+			textureCoords[texPos + 2*(rowLength+1)*2] = (x+1f)/2.0f;
+			textureCoords[texPos + 2*(rowLength+1)*2 + 1] = 1 - (z+1f)/2.0f;
 			
 		}
 	
@@ -151,11 +151,11 @@ public class Cylinder extends TriangleMesh
 			triangleVerts[trianglePos+5] = u + (rowLength+1)*2;
 			
 			//Top face triangles
-			trianglePos = (rowLength*6) + (u*3);
+			trianglePos = ((rowLength+1)*6) + (u*3);
 			 
 			triangleVerts[trianglePos] = 4*(rowLength+1);
-			triangleVerts[trianglePos+1] = u + rowLength + 2;
-			triangleVerts[trianglePos+2] = u + rowLength + 1;
+			triangleVerts[trianglePos+1] = u + (rowLength+1) + 1;
+			triangleVerts[trianglePos+2] = u + (rowLength+1);
 			
 			//Bottom face triangles
 			trianglePos += (rowLength)*3;
@@ -163,31 +163,31 @@ public class Cylinder extends TriangleMesh
 			triangleVerts[trianglePos] = 4*(rowLength+1)+1;
 			triangleVerts[trianglePos+1] = u + 3*(rowLength+1);
 			triangleVerts[trianglePos+2] = u + 3*(rowLength+1)+1;
-		
 			
-//			//Top face lines
-//			int vertPos = (u + rowLength+1)*4;
-//			
-//			wireframeVerts[vertPos] = (2*(rowLength+1));
-//			wireframeVerts[vertPos+1] = u;
-//				
-//			wireframeVerts[vertPos+2] = u;
-//			wireframeVerts[vertPos+3] = u+1;
-//			
-//			//Bottom face lines
-//			vertPos = (u + 2*(rowLength+1))*4;
-//			
-//			wireframeVerts[vertPos] = (2*(rowLength+1))+1;
-//			wireframeVerts[vertPos+1] = u + rowLength + 1;
-//				
-//			wireframeVerts[vertPos+2] = u + rowLength + 1;
-//			wireframeVerts[vertPos+3] = u + rowLength + 2;
-//			
-//			//Vertical lines
-//			int linePos = (u*2);
-//			
-//			wireframeVerts[linePos] = u;
-//			wireframeVerts[linePos+1] = u + rowLength + 1;
+			//Vertical lines
+			int linePos = (u*2);
+			
+			wireframeVerts[linePos] = u;
+			wireframeVerts[linePos+1] = u + (rowLength + 1)*2;
+		
+			//Top face lines
+			linePos = ((rowLength+1)*2) + (u*4);
+			
+			wireframeVerts[linePos] = 4*(rowLength+1);
+			wireframeVerts[linePos+1] = u + (rowLength+1);
+				
+			wireframeVerts[linePos+2] = u + (rowLength+1);
+			wireframeVerts[linePos+3] = u + (rowLength+1) + 1;
+			
+			//Bottom face lines
+			linePos = 3*((rowLength+1)*2) + (u*4);
+			
+			wireframeVerts[linePos] = 4*(rowLength+1)+1;
+			wireframeVerts[linePos+1] = u + 3*(rowLength+1);
+				
+			wireframeVerts[linePos+2] = u + 3*(rowLength + 1);
+			wireframeVerts[linePos+3] = u + 3*(rowLength+1) + 1;
+		
 			
 		}
 

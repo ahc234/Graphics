@@ -39,9 +39,9 @@ public class Sphere extends TriangleMesh {
 		
 		for (float v = 0; v <= rowLength; v++) {
 			for (float u = 0; u <= rowLength; u++) {
-				int rowPos = (int)(((v*rowLength) + u)*3);
+				int rowPos = (int)(((v*(rowLength+1)) + u)*3);
 				
-				phi = (float)((v/rowLength) * Math.PI);
+				phi = (float)((v/(rowLength)) * Math.PI);
 				theta = (float)(2 * (u/rowLength) * Math.PI);
 				
 				x = (float)(Math.sin(phi) * Math.cos(theta));
@@ -56,7 +56,7 @@ public class Sphere extends TriangleMesh {
 				normalCoords[rowPos+1] = y;
 				normalCoords[rowPos+2] = z;
 				
-				int texPos = (int)(((v*rowLength) + u)*2);
+				int texPos = (int)(((v*(rowLength+1)) + u)*2);
 
 				textureCoords[texPos] = u/rowLength;
 				textureCoords[texPos+1] = v/rowLength;
@@ -66,32 +66,24 @@ public class Sphere extends TriangleMesh {
 		
 		for (int v = 0; v < rowLength; v++) {
 			for (int u = 0; u < rowLength; u++) {
-				int rowPos = (((v*rowLength) + u)*3*2);
-				
-				triangleVerts[rowPos] = v*rowLength + u;
-				triangleVerts[rowPos+1] = (v+1)*rowLength + u;
+				int rowPos = (((v*(rowLength+1)) + u)*3*2);
+
+				triangleVerts[rowPos] = v*(rowLength+1) + u;
+				triangleVerts[rowPos+1] = (v+1)*(rowLength+1) + u;
 				triangleVerts[rowPos+2] = triangleVerts[rowPos] + 1;
 				
 				triangleVerts[rowPos+3] = triangleVerts[rowPos+2];
 				triangleVerts[rowPos+4] = triangleVerts[rowPos+1];
 				triangleVerts[rowPos+5] = triangleVerts[rowPos+1] + 1;
+
 				
-				int vertPos = (((v*rowLength) + u)*2*2);
+				int vertPos = (((v*(rowLength+1)) + u)*2*2);
+
+				wireframeVerts[vertPos] = triangleVerts[rowPos];
+				wireframeVerts[vertPos+1] = triangleVerts[rowPos+1];
 				
-				if (u == rowLength-1) {
-					wireframeVerts[vertPos] = triangleVerts[rowPos];
-					wireframeVerts[vertPos+1] = triangleVerts[(v*rowLength)*3*2];
-					
-					wireframeVerts[vertPos+2] = triangleVerts[rowPos];
-					wireframeVerts[vertPos+3] = triangleVerts[rowPos+1];
-				}
-				else {
-					wireframeVerts[vertPos] = triangleVerts[rowPos];
-					wireframeVerts[vertPos+1] = triangleVerts[rowPos+1];
-					
-					wireframeVerts[vertPos+2] = triangleVerts[rowPos];
-					wireframeVerts[vertPos+3] = triangleVerts[rowPos+2];
-				}
+				wireframeVerts[vertPos+2] = triangleVerts[rowPos];
+				wireframeVerts[vertPos+3] = triangleVerts[rowPos+2];
 				
 			}
 		}
