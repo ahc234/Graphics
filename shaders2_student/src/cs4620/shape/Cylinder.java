@@ -22,13 +22,13 @@ public class Cylinder extends TriangleMesh
 		// methods from TriangleMesh.
 		float numSectors = (float)(2*Math.PI) / tolerance;
 		int rowLength = (int)(Math.ceil(numSectors));
-		int numPoints = (rowLength+1)*2 + 2;
+		int numPoints = 4*(rowLength+1)+2;
 		
-		float[] vertexCoords = new float[numPoints*3*2];
-		float[] normalCoords = new float[numPoints*3*2];
-		float[] textureCoords = new float[numPoints*2*2];
-		int[] triangleVerts = new int[(numPoints*3 + numPoints*3 + numPoints*3)*2];
-		int[] wireframeVerts = new int[(numPoints*2 + numPoints)*2];
+		float[] vertexCoords = new float[numPoints*3];
+		float[] normalCoords = new float[numPoints*3];
+		float[] textureCoords = new float[numPoints*2];
+		int[] triangleVerts = new int[(numPoints-2)*3];
+		int[] wireframeVerts = new int[(numPoints-2)*2];
 		
 		float x = 0;
 		float y = 0;
@@ -37,24 +37,35 @@ public class Cylinder extends TriangleMesh
 		int rowPos = 0;
 		
 		//Center point for the top face
-		vertexCoords[(numPoints*3)-6] = 0;
-		vertexCoords[(numPoints*3)-5] = 1;
-		vertexCoords[(numPoints*3)-4] = 0;
+		int vertLength = vertexCoords.length;
+		vertexCoords[(vertLength)-6] = 0;
+		vertexCoords[(vertLength)-5] = 1;
+		vertexCoords[(vertLength)-4] = 0;
 		
 		//Center point for the bottom face
-		vertexCoords[(numPoints*3)-3] = 0;
-		vertexCoords[(numPoints*3)-2] = -1;
-		vertexCoords[(numPoints*3)-1] = 0;
+		vertexCoords[(vertLength)-3] = 0;
+		vertexCoords[(vertLength)-2] = -1;
+		vertexCoords[(vertLength)-1] = 0;
 		
 		//Normal for the top face center point
-		normalCoords[(numPoints*3)-6] = 0;
-		normalCoords[(numPoints*3)-5] = 1;
-		normalCoords[(numPoints*3)-4] = 0;
+		int normLength = normalCoords.length;
+		normalCoords[(normLength)-6] = 0;
+		normalCoords[(normLength)-5] = 1;
+		normalCoords[(normLength)-4] = 0;
 		
 		//Normal for the bottom face center point
-		normalCoords[(numPoints*3)-3] = 0;
-		normalCoords[(numPoints*3)-2] = -1;
-		normalCoords[(numPoints*3)-1] = 0;
+		normalCoords[(normLength)-3] = 0;
+		normalCoords[(normLength)-2] = -1;
+		normalCoords[(normLength)-1] = 0;
+		
+		//Texture for the top face center point
+		int textLength = textureCoords.length;
+		textureCoords[(textLength)-4] = 0.5f;
+		textureCoords[(textLength)-3] = 0.5f;
+		
+		//Texture for the bottom face center point
+		textureCoords[(textLength)-2] = 0.5f;
+		textureCoords[(textLength)-1] = 0.5f;
 		
 		//Populate the points and normals for the top and bottom faces
 		for (float u = 0; u <= rowLength; u++) {
@@ -69,21 +80,21 @@ public class Cylinder extends TriangleMesh
 			vertexCoords[rowPos+1] = y;
 			vertexCoords[rowPos+2] = z;
 			
-			vertexCoords[rowPos+((numPoints+1)*3)] = x;
-			vertexCoords[rowPos+((numPoints+1)*3)+1] = y;
-			vertexCoords[rowPos+((numPoints+1)*3)+2] = z;
+			vertexCoords[rowPos+(rowLength+1)*3] = x;
+			vertexCoords[rowPos+(rowLength+1)*3+1] = y;
+			vertexCoords[rowPos+(rowLength+1)*3+2] = z;
 			
 			//Top face normals
 			normalCoords[rowPos] = x;
 			normalCoords[rowPos+1] = 0;
 			normalCoords[rowPos+2] = z;
 			
-			normalCoords[rowPos+((numPoints+1)*3)] = 0;
-			normalCoords[rowPos+1+((numPoints+1)*3)] = 1;
-			normalCoords[rowPos+2+((numPoints+1)*3)] = 0;
+			normalCoords[rowPos+(rowLength+1)*3] = 0;
+			normalCoords[rowPos+(rowLength+1)*3+1] = 1;
+			normalCoords[rowPos+(rowLength+1)*3+2] = 0;
 			
 			//Bottom face points
-			rowPos = (int)((u + rowLength + 1)*3);
+			rowPos = (int)(rowPos + 2*(rowLength+1)*3);
 
 			y = (float)(-1);
 			
@@ -91,80 +102,92 @@ public class Cylinder extends TriangleMesh
 			vertexCoords[rowPos+1] = y;
 			vertexCoords[rowPos+2] = z;
 			
-			vertexCoords[rowPos+((numPoints+1)*3)] = x;
-			vertexCoords[rowPos+((numPoints+1)*3)+1] = y;
-			vertexCoords[rowPos+((numPoints+1)*3)+2] = z;
+			vertexCoords[rowPos+(rowLength+1)*3] = 	x;
+			vertexCoords[rowPos+(rowLength+1)*3+1] = y;
+			vertexCoords[rowPos+(rowLength+1)*3+2] = z;
 			
 			//Bottom face normals
 			normalCoords[rowPos] = x;
 			normalCoords[rowPos+1] = 0;
 			normalCoords[rowPos+2] = z;
 			
-			normalCoords[rowPos+((numPoints+1)*3)] = 0;
-			normalCoords[rowPos+1+((numPoints+1)*3)] = -1;
-			normalCoords[rowPos+2+((numPoints+1)*3)] = 0;
+			normalCoords[rowPos+(rowLength+1)*3] = 0;
+			normalCoords[rowPos+(rowLength+1)*3+1] = -1;
+			normalCoords[rowPos+(rowLength+1)*3+2] = 0;
+			
+			//Vertical Texture
+			int texPos = (int)(u*2);
+			
+			textureCoords[texPos] = u/(rowLength);
+			textureCoords[texPos+1] = 0f;
+			
+			textureCoords[texPos+2*(rowLength+1)*2] = u/(rowLength);
+			textureCoords[texPos+2*(rowLength+1)*2 + 1] = 1f;
+			
+			//Top Face Texture
+			texPos = (int)(texPos + (rowLength)*2);
+		
+			textureCoords[texPos] = (x+1f)/2.0f;
+			textureCoords[texPos+1] = 1 - (z+1f)/2.0f;
+			
+			//Bottom Face Texture
+			textureCoords[texPos + 2*(rowLength)*2] = (x+1f)/2.0f;
+			textureCoords[texPos + 2*(rowLength)*2 + 1] = 1 - (z+1f)/2.0f;
 			
 		}
 	
 		//Populate the triangles and lines
 		for (int u = 0; u < rowLength; u++) {
-			//Top face triangles
-			rowPos = (int)(u*3);
-			 
-			triangleVerts[rowPos] = (2*(rowLength+1));
-			triangleVerts[rowPos+1] = u + 1 + numPoints+1;
-			triangleVerts[rowPos+2] = u +numPoints+1 ;
-			
-			//Bottom face triangles
-			rowPos = (u + rowLength+1)*3;
-			
-			triangleVerts[rowPos] = (2*(rowLength+1))+1;
-			triangleVerts[rowPos+1] = u + rowLength+1 +  numPoints+1;
-			triangleVerts[rowPos+2] = u + rowLength+2 +  numPoints+1;
-			
-			//Top face lines
-			int vertPos = (u*4);
-			
-			wireframeVerts[vertPos] = (2*(rowLength+1));
-			wireframeVerts[vertPos+1] = u;
-				
-			wireframeVerts[vertPos+2] = u;
-			wireframeVerts[vertPos+3] = u+1;
-			
-			//Bottom face lines
-			vertPos = (u + rowLength+1)*4;
-			
-			wireframeVerts[vertPos] = (2*(rowLength+1))+1;
-			wireframeVerts[vertPos+1] = u + rowLength + 1;
-				
-			wireframeVerts[vertPos+2] = u + rowLength + 1;
-			wireframeVerts[vertPos+3] = u + rowLength + 2;
-			
-			//Vertical lines
-			int linePos = (u + 2*(rowLength+1))*4;
-			
-			wireframeVerts[linePos] = u;
-			wireframeVerts[linePos+1] = u + rowLength + 1;
-			
 			
 			//Vertical triangles
-			int trianglePos = (2*(rowLength+1)*3 + u*6);
+			int trianglePos = u*6;
 			
 			triangleVerts[trianglePos] = u;
 			triangleVerts[trianglePos+1] = u + 1;
-			triangleVerts[trianglePos+2] = u + rowLength + 1;
+			triangleVerts[trianglePos+2] = u + (rowLength+1)*2;
 					
 			triangleVerts[trianglePos+3] = u + 1;
-			triangleVerts[trianglePos+4] = u + rowLength + 2;
-			triangleVerts[trianglePos+5] = u + rowLength + 1;
+			triangleVerts[trianglePos+4] = u + (rowLength+1)*2 + 1;
+			triangleVerts[trianglePos+5] = u + (rowLength+1)*2;
 			
-			//Vertical textures
-//			int texPos = (u + 2*(rowLength+1))*2;
+			//Top face triangles
+			trianglePos = (rowLength*6) + (u*3);
+			 
+			triangleVerts[trianglePos] = 4*(rowLength+1);
+			triangleVerts[trianglePos+1] = u + rowLength + 2;
+			triangleVerts[trianglePos+2] = u + rowLength + 1;
+			
+			//Bottom face triangles
+			trianglePos += (rowLength)*3;
+			
+			triangleVerts[trianglePos] = 4*(rowLength+1)+1;
+			triangleVerts[trianglePos+1] = u + 3*(rowLength+1);
+			triangleVerts[trianglePos+2] = u + 3*(rowLength+1)+1;
+		
+			
+//			//Top face lines
+//			int vertPos = (u + rowLength+1)*4;
 //			
-//			textureCoords[texPos] = (float)(u * (1.0/tolerance));
-//			textureCoords[texPos+1] = (float)((u + rowLength) * 1.0/tolerance);
-//			textureCoords[texPos+2] = (float)((u + 1) * 1.0/tolerance);
-//			textureCoords[texPos+3] = (float)((u + rowLength + 1) * 1.0/tolerance);
+//			wireframeVerts[vertPos] = (2*(rowLength+1));
+//			wireframeVerts[vertPos+1] = u;
+//				
+//			wireframeVerts[vertPos+2] = u;
+//			wireframeVerts[vertPos+3] = u+1;
+//			
+//			//Bottom face lines
+//			vertPos = (u + 2*(rowLength+1))*4;
+//			
+//			wireframeVerts[vertPos] = (2*(rowLength+1))+1;
+//			wireframeVerts[vertPos+1] = u + rowLength + 1;
+//				
+//			wireframeVerts[vertPos+2] = u + rowLength + 1;
+//			wireframeVerts[vertPos+3] = u + rowLength + 2;
+//			
+//			//Vertical lines
+//			int linePos = (u*2);
+//			
+//			wireframeVerts[linePos] = u;
+//			wireframeVerts[linePos+1] = u + rowLength + 1;
 			
 		}
 
@@ -172,6 +195,7 @@ public class Cylinder extends TriangleMesh
 		setNormals(gl, normalCoords);
 		setTriangleIndices(gl, triangleVerts);
 		setWireframeIndices(gl, wireframeVerts);
+		setTexCoords(gl, textureCoords);
 		
 		
 		// TODO (Shaders 2 P2): Generate texture coordinates for the cylinder also
