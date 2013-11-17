@@ -186,9 +186,30 @@ attribute vec2 in_TexCoord;
 // TODO (Shaders 2 P3): Add any varying variables you need here
 varying vec3 ex_Vertex;
 varying vec2 ex_TexCoord;
+varying vec2 vUv;
+varying float noise;
+uniform float un_Time;
+
+float turbulence( vec3 p ) {
+    float w = 100.0;
+    float t = -.5;
+    for (float f = 1.0 ; f <= 10.0 ; f++ ){
+        float power = pow( 2.0, f );
+        t += abs( pnoise( vec3( power * p ), vec3( 10.0, 10.0, 10.0 ) ) / power );
+    }
+    return t;
+}
 
 void main() {
 	// TODO (Shaders 2 P3): Implement the fire vertex shader here
+    
+    // add time to the noise parameters so it's animated
+    noise = 10.0 *  -.10 * turbulence( .5 * in_Normal + un_Time );
+    float b = 5.0 * pnoise( 0.05 * in_Vertex + vec3( 2.0 * un_Time ), vec3( 100.0 ) );
+    float displacement = - noise + b;
+    
+    // move the position along the normal and transform it
+    vec3 newPosition = in_Vertex + in_Normal * displacement;
     
 	ex_Vertex= in_Vertex;
     ex_TexCoord = in_TexCoord;

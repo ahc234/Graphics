@@ -10,6 +10,7 @@ import java.util.Map;
 
 import javax.media.opengl.GL2;
 import javax.vecmath.Vector2f;
+import javax.vecmath.Matrix4f;
 
 import org.yaml.snakeyaml.Yaml;
 
@@ -115,6 +116,32 @@ public class BSpline extends DiscreteCurve {
 			// TODO: Splines Problem 1, Section 3.1:
         	// Compute Bezier control points for an open curve with boundary conditions.
     		// Put the computed vertices into the vertices ArrayList declared above.
+    		Matrix4f MBsp = new Matrix4f(-1, 3, -3, 1,
+    									  3, -6, 3, 0,
+    									 -3, 0, 3, 0,
+    									  1, 4, 1, 0);
+    		
+    		for (int j = 0; j < cp.size() - 2; j++) {
+    			//NOTE: still need to handle endpoints and increase loop to the full size
+    			Vector2f p = cp.get(j-1);
+    			float a = p.x;
+    			float b = p.y;
+    			p = cp.get(j);
+    			float c = p.x;
+    			float d = p.y;
+    			p = cp.get(j+1);
+    			float e = p.x;
+    			float f = p.y;
+    			p = cp.get(j+2);
+    			float g = p.x;
+    			float h = p.y;
+    			
+    			vertices.add(new Vector2f(a/6 + 2*c/3 + e/6, b/6 + 2*d/3 + f/6));
+    			vertices.add(new Vector2f(2*c/3 + e/3, 2*d/3 + f/3));
+    			vertices.add(new Vector2f(c/3 + 2*e/3, d/3 + 2*f/3));
+    			vertices.add(new Vector2f(c/6 + 2*e/3 + 9/6, d/6 + 2*f/3 + h/6));
+    			
+    		}
     	}
     	float[] flat_vertices = new float[2 * vertices.size()];
     	float[] flat_normals = new float[2 * vertices.size()];

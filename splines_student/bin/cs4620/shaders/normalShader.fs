@@ -15,10 +15,17 @@ uniform vec3 un_LightIntensities[16];
 uniform vec3 un_LightAmbientIntensity;
 
 // TODO: (Shaders 1 Problem 1) Declare any varying variables here
+varying vec3 ex_Normal;
 
 void main()
 {
 	// TODO: (Shaders 1 Problem 1) Implement the fragment shader for
 	// the normal shader here
-    gl_FragColor = vec4(1, 0, 0, 1);
+    
+    vec3 colorRGB = vec3(0.0,0.0,0.0);
+	colorRGB.x = (ex_Normal.x + 1 )/2;
+    colorRGB.y = (ex_Normal.y + 1 )/2;
+    colorRGB.z = (ex_Normal.z + 1 )/2;
+
+    gl_FragColor = vec4(colorRGB, 1);
 }

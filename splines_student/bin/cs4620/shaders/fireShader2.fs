@@ -27,7 +27,7 @@ varying float noise;
 
 void main() {
 	// TODO (Shaders 2 P3): Implement the fire fragment shader here
-    vec2 set1 = (ex_TexCoord);
+  /*  vec2 set1 = (ex_TexCoord);
     vec2 set2 = (ex_TexCoord * 2);
     vec2 set3 = (ex_TexCoord * 3);
     
@@ -35,22 +35,22 @@ void main() {
     set2.y = set2.y + un_Time * un_ScrollSpeeds.y;
     set3.y = set3.y + un_Time * un_ScrollSpeeds.z;
     
-    set1.x = mod(set1.x , 1.0);
-    set2.x = mod(set2.x , 1.0);
-    set3.x = mod(set3.x , 1.0);
-    set1.y = mod(set1.y , 1.0);
-    set2.y = mod(set2.y , 1.0);
-    set3.y = mod(set3.y , 1.0);
-
+    float colorRGB1 = texture2D(un_NoiseTexture, set1);
+    float colorRGB2 = texture2D(un_NoiseTexture, set2);
+    float colorRGB3 = texture2D(un_NoiseTexture, set3);
     
-    vec4 colorRGB1 = texture2D(un_NoiseTexture, set1);
-    vec4 colorRGB2 = texture2D(un_NoiseTexture, set2);
-    vec4 colorRGB3 = texture2D(un_NoiseTexture, set3);
+    vec2 colorRGB = (1/3)*(colorRGB1 + colorRGB2 + colorRGB3);
     
-    vec4 colorRGB = (colorRGB1/3 + colorRGB2/3 + colorRGB3/3);
+    colorRGB = texture2D(un_FireTexture, colorRGB).rgb;
     
-    colorRGB = texture2D(un_FireTexture, vec2(colorRGB.r, colorRGB.g));
+	gl_FragColor = vec4(colorRGB, 1);*/
     
-	gl_FragColor = vec4(colorRGB.rgb,1);
+    //float r = .01 * random( vec3( 12.9898, 78.233, 151.7182 ), 0.0 );
+    // lookup vertically in the texture, using noise and offset
+    // to get the right RGB colour
+    vec2 tPos = vec2( 0, 1.0 - 1.3 * noise + .01 );
+    vec4 color = texture2D( un_FireTexture, tPos );
     
+    //vec3 color = vec3( ex_TexCoord * ( 1. - 2. * noise ), 0.0 );
+    gl_FragColor = vec4( color.rgb, 1.0 );
 }

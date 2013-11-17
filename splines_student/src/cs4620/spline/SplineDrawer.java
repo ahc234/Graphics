@@ -115,7 +115,6 @@ public class SplineDrawer implements GLPickingDrawer {
         Vector3f p0 = new Vector3f();
         Vector3f p1 = new Vector3f();
         camera.getRayNDC(ndc, p0, p1);
-        p1.sub(p0);
         
         // Solve p0 + t * p1 = z
         float t = (z - p0.z)/ p1.z; 
