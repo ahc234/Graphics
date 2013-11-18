@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.media.opengl.GL2;
+import javax.vecmath.Tuple2f;
 import javax.vecmath.Vector2f;
 import javax.vecmath.Matrix4f;
 
@@ -80,6 +81,35 @@ public class BSpline extends DiscreteCurve {
     public void tessellate_bezier(Vector2f cp[], float epsilon, ArrayList<Vector2f> outPoints, ArrayList<Vector2f> outDerivs) {
     	 	
     	// TODO (Splines P1): Tesselate a bezier segment
+    	
+    	Vector2f p0, p1, p2, p3, p10, p20, p30, p11, p21, p12;
+    	p10 = new Vector2f();
+    	p20 = new Vector2f();
+    	p30 = new Vector2f();
+    	p11 = new Vector2f();
+    	p21 = new Vector2f();
+    	p12 = new Vector2f();
+    	
+    	int i = 0;
+    	while (i < cp.length) {
+    		p0 = cp[i];
+    		p1 = cp[i+1];
+    		p2 = cp[i+2];
+    		p3 = cp[i+3];
+    		p10.interpolate((Tuple2f)p0, ((Tuple2f)p1), 0.5f);
+    		p11.interpolate((Tuple2f)p1, ((Tuple2f)p2), 0.5f);
+    		p12.interpolate((Tuple2f)p2, ((Tuple2f)p3), 0.5f);
+    		p20.interpolate((Tuple2f)p10, ((Tuple2f)p11), 0.5f);
+    		p21.interpolate((Tuple2f)p11, ((Tuple2f)p12), 0.5f);
+    		p30.interpolate((Tuple2f)p20, ((Tuple2f)p21), 0.5f);
+    		
+    		//NOTE: Still need to deal with angle restriction; this ignores it
+    		//NOTE: do we need to add the original points as well?  Might be doing this multiple times
+    		outPoints.add(p0);
+    		outPoints.add(p30);
+    		
+    		i += 3;
+    	}
     }
     
     
@@ -116,13 +146,9 @@ public class BSpline extends DiscreteCurve {
 			// TODO: Splines Problem 1, Section 3.1:
         	// Compute Bezier control points for an open curve with boundary conditions.
     		// Put the computed vertices into the vertices ArrayList declared above.
-    		Matrix4f MBsp = new Matrix4f(-1, 3, -3, 1,
-    									  3, -6, 3, 0,
-    									 -3, 0, 3, 0,
-    									  1, 4, 1, 0);
     		
-    		for (int j = 0; j < cp.size() - 2; j++) {
-    			//NOTE: still need to handle endpoints and increase loop to the full size
+    		for (int j = 1; j < cp.size() - 2; j++) {
+    			//NOTE: still need to handle endpoints and change j to 0 and increase loop to the full size
     			Vector2f p = cp.get(j-1);
     			float a = p.x;
     			float b = p.y;
