@@ -82,6 +82,23 @@ public class BSpline extends DiscreteCurve {
     	 	
     	// TODO (Splines P1): Tesselate a bezier segment
     	
+    	tessellate_helper(cp, epsilon, outPoints, outDerivs, 0);
+
+    }
+    
+    /*
+     * Helper method for tesselate_bezier with a countdown
+     */
+   	private void tessellate_helper(Vector2f cp[], float epsilon, ArrayList<Vector2f> outPoints, ArrayList<Vector2f> outDerivs, int counter) {
+   		Vector2f vec1 = cp[0];
+   		vec1.sub(cp[1]);
+   		Vector2f vec2 = cp[2];
+   		vec2.sub(cp[1]);
+   		float angle = vec1.angle(vec2);
+   		
+    	if (counter == 10 || angle <= epsilon) {
+    		outPoints.add(cp[0]);
+    	}
     	Vector2f p0, p1, p2, p3, p10, p20, p30, p11, p21, p12;
     	p10 = new Vector2f();
     	p20 = new Vector2f();
@@ -89,27 +106,23 @@ public class BSpline extends DiscreteCurve {
     	p11 = new Vector2f();
     	p21 = new Vector2f();
     	p12 = new Vector2f();
+
+		p0 = cp[0];
+		p1 = cp[1];
+		p2 = cp[2];
+		p3 = cp[3];
+		p10.interpolate((Tuple2f)p0, ((Tuple2f)p1), 0.5f);
+		p11.interpolate((Tuple2f)p1, ((Tuple2f)p2), 0.5f);
+		p12.interpolate((Tuple2f)p2, ((Tuple2f)p3), 0.5f);
+		p20.interpolate((Tuple2f)p10, ((Tuple2f)p11), 0.5f);
+		p21.interpolate((Tuple2f)p11, ((Tuple2f)p12), 0.5f);
+		p30.interpolate((Tuple2f)p20, ((Tuple2f)p21), 0.5f);
+    		
+    	Vector2f[] lhs = {p0, p10, p20, p30};
+    	Vector2f[] rhs = {p30, p21, p12, p3};
     	
-    	int i = 0;
-    	while (i < cp.length) {
-    		p0 = cp[i];
-    		p1 = cp[i+1];
-    		p2 = cp[i+2];
-    		p3 = cp[i+3];
-    		p10.interpolate((Tuple2f)p0, ((Tuple2f)p1), 0.5f);
-    		p11.interpolate((Tuple2f)p1, ((Tuple2f)p2), 0.5f);
-    		p12.interpolate((Tuple2f)p2, ((Tuple2f)p3), 0.5f);
-    		p20.interpolate((Tuple2f)p10, ((Tuple2f)p11), 0.5f);
-    		p21.interpolate((Tuple2f)p11, ((Tuple2f)p12), 0.5f);
-    		p30.interpolate((Tuple2f)p20, ((Tuple2f)p21), 0.5f);
-    		
-    		//NOTE: Still need to deal with angle restriction; this ignores it
-    		//NOTE: do we need to add the original points as well?  Might be doing this multiple times
-    		outPoints.add(p0);
-    		outPoints.add(p30);
-    		
-    		i += 3;
-    	}
+    	tessellate_helper(lhs, epsilon, outPoints, outDerivs, counter+1);
+    	tessellate_helper(rhs, epsilon, outPoints, outDerivs, counter+1);
     }
     
     
@@ -123,6 +136,27 @@ public class BSpline extends DiscreteCurve {
     	// Strategy: convert the B-spline segment to a Bezier segment, then approximate that.
     	// TODO (Splines P1): Convert the B-spline control points to control points for an equivalent
     	// Bezier segment, then tesselate that segment, using the tesselate_bezier function.
+    	
+    	Vector2f p = bspPoints[0];
+		float a = p.x;
+		float b = p.y;
+		p = bspPoints[1];
+		float c = p.x;
+		float d = p.y;
+		p = bspPoints[2];
+		float e = p.x;
+		float f = p.y;
+		p = bspPoints[3];
+		float g = p.x;
+		float h = p.y;
+		
+    	Vector2f bezCP[] = {new Vector2f(a/6 + 2*c/3 + e/6, b/6 + 2*d/3 + f/6), 
+    						new Vector2f(2*c/3 + e/3, 2*d/3 + f/3),
+    						new Vector2f(c/3 + 2*e/3, d/3 + 2*f/3), 
+    						new Vector2f(c/6 + 2*e/3 + g/6, d/6 + 2*f/3 + h/6)};
+    	
+    	tessellate_bezier(bezCP, epsilon, outPoints, outDerivs);
+    	
     }
     
     @Override
@@ -146,26 +180,19 @@ public class BSpline extends DiscreteCurve {
 			// TODO: Splines Problem 1, Section 3.1:
         	// Compute Bezier control points for an open curve with boundary conditions.
     		// Put the computed vertices into the vertices ArrayList declared above.
+    		ArrayList<Vector2f> normals = new ArrayList<Vector2f>();
     		
-    		for (int j = 1; j < cp.size() - 2; j++) {
-    			//NOTE: still need to handle endpoints and change j to 0 and increase loop to the full size
-    			Vector2f p = cp.get(j-1);
-    			float a = p.x;
-    			float b = p.y;
-    			p = cp.get(j);
-    			float c = p.x;
-    			float d = p.y;
-    			p = cp.get(j+1);
-    			float e = p.x;
-    			float f = p.y;
-    			p = cp.get(j+2);
-    			float g = p.x;
-    			float h = p.y;
+    		for (int j = 1; j < cp.size()-3; j++) {
+    			bspPoints[0] = cp.get(j-1);
+    			bspPoints[1] = cp.get(j);
+    			bspPoints[2] = cp.get(j+1);
+    			bspPoints[3] = cp.get(j+2);
     			
-    			vertices.add(new Vector2f(a/6 + 2*c/3 + e/6, b/6 + 2*d/3 + f/6));
-    			vertices.add(new Vector2f(2*c/3 + e/3, 2*d/3 + f/3));
-    			vertices.add(new Vector2f(c/3 + 2*e/3, d/3 + 2*f/3));
-    			vertices.add(new Vector2f(c/6 + 2*e/3 + 9/6, d/6 + 2*f/3 + h/6));
+    			tessellate_bspline(bspPoints, epsilon, vertices, normals);
+    			
+    			//NOTE: still need to handle endpoints and change j to 0 and increase loop to the full size
+    			//NOTE: convert the very last point to Bezier and add it to outPoints, calculate its normal, etc.
+    			
     			
     		}
     	}
