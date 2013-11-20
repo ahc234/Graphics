@@ -81,26 +81,28 @@ public class BSpline extends DiscreteCurve {
     public void tessellate_bezier(Vector2f cp[], float epsilon, ArrayList<Vector2f> outPoints, ArrayList<Vector2f> outDerivs) {
     	 	
     	// TODO (Splines P1): Tesselate a bezier segment
-    	
-    	
     	tessellate_helper(cp, epsilon, outPoints, outDerivs, 0);
-
     }
     
     /*
      * Helper method for tesselate_bezier with a countdown
      */
    	private void tessellate_helper(Vector2f cp[], float epsilon, ArrayList<Vector2f> outPoints, ArrayList<Vector2f> outDerivs, int counter) {
-   		Vector2f vec1 = cp[0];
+   		Vector2f vec1 = new Vector2f(cp[0].x, cp[0].y);
    		vec1.sub(cp[1]);
-   		Vector2f vec2 = cp[2];
+   		Vector2f vec2 = new Vector2f(cp[2].x, cp[2].y);
    		vec2.sub(cp[1]);
    		float angle = vec1.angle(vec2);
+   		//angle = Math.abs((float)Math.PI - angle);
+   		System.out.println("Angle: " + angle);
+   		System.out.println("Epsilon: " + epsilon);
+   		
    		
    		Vector2f normal = new Vector2f(vec1.y, -vec1.x);
+   		normal.normalize();
    		
-    	if (counter >= 10 || angle <= epsilon) {
-    		outPoints.add(cp[0]);
+    	if (counter == 10 || angle <= epsilon) {
+    		outPoints.add(new Vector2f(cp[0].x, cp[0].y));
     		outDerivs.add(normal);
     	} else {
 	    	Vector2f p0, p1, p2, p3, p10, p20, p30, p11, p21, p12;
@@ -111,10 +113,10 @@ public class BSpline extends DiscreteCurve {
 	    	p21 = new Vector2f();
 	    	p12 = new Vector2f();
 	
-			p0 = cp[0];
-			p1 = cp[1];
-			p2 = cp[2];
-			p3 = cp[3];
+			p0 = new Vector2f(cp[0].x, cp[0].y);
+			p1 = new Vector2f(cp[1].x, cp[1].y);
+			p2 = new Vector2f(cp[2].x, cp[2].y);
+			p3 = new Vector2f(cp[3].x, cp[3].y);
 			p10.interpolate((Tuple2f)p0, ((Tuple2f)p1), 0.5f);
 			p11.interpolate((Tuple2f)p1, ((Tuple2f)p2), 0.5f);
 			p12.interpolate((Tuple2f)p2, ((Tuple2f)p3), 0.5f);
@@ -155,10 +157,10 @@ public class BSpline extends DiscreteCurve {
 		float g = p.x;
 		float h = p.y;
 		
-    	Vector2f bezCP[] = {new Vector2f(a/6 + 2*c/3 + e/6, b/6 + 2*d/3 + f/6), 
-    						new Vector2f(2*c/3 + e/3, 2*d/3 + f/3),
-    						new Vector2f(c/3 + 2*e/3, d/3 + 2*f/3), 
-    						new Vector2f(c/6 + 2*e/3 + g/6, d/6 + 2*f/3 + h/6)};
+    	Vector2f bezCP[] = {new Vector2f(a/6 + (2*c)/3 + e/6, b/6 + (2*d)/3 + f/6), 
+    						new Vector2f((2*c)/3 + e/3, (2*d)/3 + f/3),
+    						new Vector2f(c/3 + (2*e)/3, d/3 + (2*f)/3), 
+    						new Vector2f(c/6 + (2*e)/3 + g/6, d/6 + (2*f)/3 + h/6)};
     	
     	tessellate_bezier(bezCP, epsilon, outPoints, outDerivs);
     	
@@ -186,7 +188,7 @@ public class BSpline extends DiscreteCurve {
 			// TODO: Splines Problem 1, Section 3.1:
         	// Compute Bezier control points for an open curve with boundary conditions.
     		// Put the computed vertices into the vertices ArrayList declared above.
-    		for (int j = 0; j < cp.size()-2; j++) {
+    		for (int j = 0; j < cp.size()-1; j++) {
     			if (j < 1) {
 					bspPoints[1] = cp.get(j);
         			bspPoints[2] = cp.get(j+1);
@@ -196,7 +198,7 @@ public class BSpline extends DiscreteCurve {
         			frontEnd.scale(2f);
         			frontEnd.sub(bspPoints[2]);
     				bspPoints[0] = frontEnd;
-    			} else if (j == cp.size()-1) {
+    			} else if (j == cp.size()-2) {
     				bspPoints[0] = cp.get(j-1);
         			bspPoints[1] = cp.get(j);
         			bspPoints[2] = cp.get(j+1);
@@ -205,7 +207,6 @@ public class BSpline extends DiscreteCurve {
         			backEnd.scale(2f);
         			backEnd.sub(bspPoints[1]);
     				bspPoints[3] = backEnd;
-    				
     			} else {
 	    			bspPoints[0] = cp.get(j-1);
 	    			bspPoints[1] = cp.get(j);
@@ -214,11 +215,12 @@ public class BSpline extends DiscreteCurve {
     			}
     			
     			tessellate_bspline(bspPoints, epsilon, vertices, normals);
-    			System.out.println(vertices.size());
     		}
     		
-        	Vector2f endDummy[] = {cp.get(cp.size()-1), new Vector2f(0, 0), new Vector2f(0, 0), new Vector2f(0, 0)};
-        	tessellate_bspline(endDummy, Float.POSITIVE_INFINITY, vertices, normals);
+    		System.out.println(vertices.size());
+    		
+        	//Vector2f endDummy[] = {cp.get(cp.size()-1), cp.get(cp.size()-1), cp.get(cp.size()-1), cp.get(cp.size()-1)};
+        	//tessellate_bspline(endDummy, epsilon, vertices, normals);
     	}
     	float[] flat_vertices = new float[2 * vertices.size()];
     	float[] flat_normals = new float[2 * vertices.size()];
