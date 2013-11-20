@@ -127,7 +127,7 @@ public class FireMaterial extends Material{
 	@Override
 	public Object getYamlObjectRepresentation() {
 		Map<Object, Object> result = new HashMap<Object,Object>();
-		result.put("type", "ShaderFireMaterial");
+		result.put("type", "FireMaterial");
 		
 		result.put("scroll_speeds", convertFloatArrayToList(scrollSpeeds));
 

@@ -99,7 +99,7 @@ public class TextureMaterial extends PhongMaterial {
 	public Object getYamlObjectRepresentation() {
 		// TODO Auto-generated method stub
 		Map<Object, Object> result = new HashMap<Object,Object>();
-		result.put("type", "ShaderTextureMaterial");
+		result.put("type", "TextureMaterial");
 
 		result.put("ambient", convertFloatArrayToList(ambient));
 		result.put("diffuse", convertFloatArrayToList(diffuse));

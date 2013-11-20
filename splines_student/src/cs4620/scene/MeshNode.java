@@ -11,9 +11,14 @@ import cs4620.material.PhongMaterial;
 import cs4620.shape.Mesh;
 import cs4620.shape.Sphere;
 import cs4620.util.Util;
-
+import cs4620.material.CometMaterial;
+import cs4620.material.EarthMaterial;
+import cs4620.material.FireMaterial;
 import cs4620.material.GreenMaterial;
+import cs4620.material.MarsMaterial;
+import cs4620.material.MoonMaterial;
 import cs4620.material.NormalMaterial;
+import cs4620.material.TextureMaterial;
 import cs4620.material.ToonMaterial;
 import cs4620.material.TexCoordMaterial;
 
@@ -152,6 +157,15 @@ public class MeshNode extends SceneNode
 			
 			material = glMaterial;
 		}
+		else if (materialMap.get("type").equals("TextureMaterial"))
+		{
+			TextureMaterial glMaterial = new TextureMaterial();
+			Util.assign4ElementArrayFromYamlObject(glMaterial.ambient, materialMap.get("ambient"));
+			Util.assign4ElementArrayFromYamlObject(glMaterial.diffuse, materialMap.get("diffuse"));
+			Util.assign4ElementArrayFromYamlObject(glMaterial.specular, materialMap.get("specular"));
+			glMaterial.shininess = Float.valueOf(materialMap.get("shininess").toString());
+			material = glMaterial;
+		}
 		else if (materialMap.get("type").equals("ToonMaterial"))
 		{
 			ToonMaterial glMaterial = new ToonMaterial();
@@ -169,8 +183,52 @@ public class MeshNode extends SceneNode
 			TexCoordMaterial glMaterial = new TexCoordMaterial();
 			material = glMaterial;
 		}
+		else if (materialMap.get("type").equals("FireMaterial"))
+		{
+			FireMaterial glMaterial = new FireMaterial();
+			Util.assign3ElementArrayFromYamlObject(glMaterial.scrollSpeeds, materialMap.get("scroll_speeds"));
+			material = glMaterial;
+		}
+		else if (materialMap.get("type").equals("MoonMaterial"))
+		{
+			MoonMaterial glMaterial = new MoonMaterial();
+			Util.assign4ElementArrayFromYamlObject(glMaterial.ambient, materialMap.get("ambient"));
+			Util.assign4ElementArrayFromYamlObject(glMaterial.diffuse, materialMap.get("diffuse"));
+			Util.assign4ElementArrayFromYamlObject(glMaterial.specular, materialMap.get("specular"));
+			glMaterial.shininess = Float.valueOf(materialMap.get("shininess").toString());
+			material = glMaterial;
+		}
+		else if (materialMap.get("type").equals("EarthMaterial"))
+		{
+			EarthMaterial glMaterial = new EarthMaterial();
+			Util.assign4ElementArrayFromYamlObject(glMaterial.ambient, materialMap.get("ambient"));
+			Util.assign4ElementArrayFromYamlObject(glMaterial.diffuse, materialMap.get("diffuse"));
+			Util.assign4ElementArrayFromYamlObject(glMaterial.specular, materialMap.get("specular"));
+			glMaterial.shininess = Float.valueOf(materialMap.get("shininess").toString());
+			material = glMaterial;
+		}
+		else if (materialMap.get("type").equals("MarsMaterial"))
+		{
+			MarsMaterial glMaterial = new MarsMaterial();
+			Util.assign4ElementArrayFromYamlObject(glMaterial.ambient, materialMap.get("ambient"));
+			Util.assign4ElementArrayFromYamlObject(glMaterial.diffuse, materialMap.get("diffuse"));
+			Util.assign4ElementArrayFromYamlObject(glMaterial.specular, materialMap.get("specular"));
+			glMaterial.shininess = Float.valueOf(materialMap.get("shininess").toString());
+			material = glMaterial;
+		}
+		else if (materialMap.get("type").equals("CometMaterial"))
+		{
+			CometMaterial glMaterial = new CometMaterial();
+			Util.assign4ElementArrayFromYamlObject(glMaterial.ambient, materialMap.get("ambient"));
+			Util.assign4ElementArrayFromYamlObject(glMaterial.diffuse, materialMap.get("diffuse"));
+			Util.assign4ElementArrayFromYamlObject(glMaterial.specular, materialMap.get("specular"));
+			glMaterial.shininess = Float.valueOf(materialMap.get("shininess").toString());
+			material = glMaterial;
+		}
 		else
-			throw new RuntimeException("Supported materials are PhongMaterial, DiffuseMaterial, NormalMaterial, GreenMaterial, or ToonMaterial");
+		{
+			throw new RuntimeException("Unsupported material: " + materialMap.get("type"));
+		}
 
 	}
 

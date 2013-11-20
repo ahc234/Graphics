@@ -223,7 +223,7 @@ public class VertexArray {
 			// confirm that buffers have enough elements to satisfy index buffer
 			if (getMinVertexCount(true) < indexBuffer.getExpectedNumElements())
 			{
-				System.err.println("WARNING: Buffer(s) have insufficient elements for index buffer");
+				//System.err.println("WARNING: Buffer(s) have insufficient elements for index buffer");
 			}
 			
 			if(!supportsVAOs || RESET_INDICES)

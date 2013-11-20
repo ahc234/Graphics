@@ -20,6 +20,17 @@ public class Util
 				Float.valueOf(yamlList.get(1).toString()),
 				Float.valueOf(yamlList.get(2).toString()));
 	}
+	
+	public static void assign3ElementArrayFromYamlObject(float[] output, Object yamlObject)
+	{
+		if (!(yamlObject instanceof List))
+			throw new RuntimeException("yamlObject not a List");
+		List<?> yamlList = (List<?>)yamlObject;
+
+		output[0] = Float.valueOf(yamlList.get(0).toString());
+		output[1] = Float.valueOf(yamlList.get(1).toString());
+		output[2] = Float.valueOf(yamlList.get(2).toString());
+	}
 
 	public static void assign4ElementArrayFromYamlObject(float[] output, Object yamlObject)
 	{
