@@ -30,6 +30,9 @@ public class BSpline extends DiscreteCurve {
     protected ArrayList<Vector2f> localControlPoints = new ArrayList<Vector2f>();
     protected float [] length_buffer;
     private float totLength = 0.0f;
+    //TODO: include these global variable when copying over code
+    private Vector2f endVertex;
+    private Vector2f endNormal;
 
     // Workspaces for spline tesselation routines
     // (caution, not a thread safe programming practice)
@@ -92,11 +95,7 @@ public class BSpline extends DiscreteCurve {
    		vec1.sub(cp[0]);
    		Vector2f vec2 = new Vector2f(cp[3].x, cp[3].y);
    		vec2.sub(cp[0]);
-   		float angle = vec1.angle(vec2);
-   		//angle = Math.abs((float)Math.PI - angle);
-   		System.out.println("Angle: " + angle);
-   		System.out.println("Epsilon: " + epsilon);
-   		
+   		float angle = vec1.angle(vec2);   		
    		
    		Vector2f normal = new Vector2f(-vec1.y, vec1.x);
    		normal.normalize();
@@ -104,6 +103,13 @@ public class BSpline extends DiscreteCurve {
     	if (counter == 10 || angle <= epsilon/2) {
     		outPoints.add(new Vector2f(cp[0].x, cp[0].y));
     		outDerivs.add(normal);
+	   		vec1 = new Vector2f(cp[3].x, cp[3].y);
+	   		vec1.sub(cp[2]);  		
+	   		
+	   		normal = new Vector2f(-vec1.y, vec1.x);
+	   		normal.normalize();
+			endVertex = new Vector2f(cp[3].x, cp[3].y);
+			endNormal = normal;
     	} else {
 	    	Vector2f p0, p1, p2, p3, p10, p20, p30, p11, p21, p12;
 	    	p10 = new Vector2f();
@@ -216,11 +222,8 @@ public class BSpline extends DiscreteCurve {
     			
     			tessellate_bspline(bspPoints, epsilon, vertices, normals);
     		}
-    		
-    		System.out.println(vertices.size());
-    		
-        	//Vector2f endDummy[] = {cp.get(cp.size()-1), cp.get(cp.size()-1), cp.get(cp.size()-1), cp.get(cp.size()-1)};
-        	//tessellate_bspline(endDummy, epsilon, vertices, normals);
+    		vertices.add(endVertex);
+    		normals.add(endNormal);
     	}
     	float[] flat_vertices = new float[2 * vertices.size()];
     	float[] flat_normals = new float[2 * vertices.size()];
