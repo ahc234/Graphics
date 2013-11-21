@@ -94,8 +94,8 @@ public class BSpline extends DiscreteCurve {
    		vec2.sub(cp[0]);
    		float angle = vec1.angle(vec2);
    		//angle = Math.abs((float)Math.PI - angle);
-   		System.out.println("Angle: " + angle);
-   		System.out.println("Epsilon: " + epsilon);
+   		//System.out.println("Angle: " + angle);
+   		//System.out.println("Epsilon: " + epsilon);
    		
    		
    		Vector2f normal = new Vector2f(-vec1.y, vec1.x);
