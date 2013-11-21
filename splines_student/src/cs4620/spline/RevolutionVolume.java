@@ -25,10 +25,19 @@ public class RevolutionVolume extends TriangleMesh {
 		
 		float curveVert[] = curve.vertices;
 		float curveNorm[] = curve.normals;
+		
+		float maxRad = 0;
+		
+		for (int i = 0; i < curve.vertices.length; i = i + 2) {
+			if (curveVert[i] > maxRad) {
+				maxRad = curveVert[i];
+			}
+		}
 
-    	float numSectors = (float)((2*Math.PI) / tolerance);
+    	float numSectors = (float)((maxRad*2*Math.PI) / tolerance);
 		int rowLength = (int)(Math.ceil(numSectors));
-		int numPoints = ((rowLength+1) * (rowLength+1));
+		int rowHeight = curveVert.length/2;
+		int numPoints = ((rowLength+1) * (rowHeight+1));
 		
 		float[] vertexCoords = new float[numPoints*3];
 		float[] normalCoords = new float[numPoints*3];
@@ -42,11 +51,8 @@ public class RevolutionVolume extends TriangleMesh {
 		
 		float phi = 0;
 		float theta = 0;
-
-		System.out.print("CurveLeng:" + curveVert.length);
-		System.out.print("VertLeng:" + vertexCoords.length);
 		
-		for (float v = 0; v <= rowLength; v++) {
+		for (float v = 0; v < rowHeight; v++) {
 			for (float u = 0; u <= rowLength; u++) {
 				int rowPos = (int)(((v*(rowLength+1)) + u)*3);
 				
@@ -71,12 +77,12 @@ public class RevolutionVolume extends TriangleMesh {
 				int texPos = (int)(((v*(rowLength+1)) + u)*2);
 
 				textureCoords[texPos] = 1 - u/rowLength;
-				textureCoords[texPos+1] = v/rowLength;
+				textureCoords[texPos+1] = v/rowHeight;
 
 			}
 		}
 		
-		for (int v = 0; v < rowLength; v++) {
+		for (int v = 0; v < rowHeight; v++) {
 			for (int u = 0; u < rowLength; u++) {
 				int rowPos = (((v*(rowLength)) + u)*3*2);
 
