@@ -243,7 +243,22 @@ public class BSpline extends DiscreteCurve {
   
         // TODO: PPA2 Problem 3, Section 5.1:
 	    // Compute the 'normalized' total length values.
-	
+        for (int i = 0; i < vertices.size()-1; i++) {
+        	float ys = (vertices.get(i+1).y - vertices.get(i).y);
+        	float xs = (vertices.get(i+1).x - vertices.get(i).x);
+        	//float dist = (float)Math.sqrt(xs*xs+ys*ys);
+        	
+        	float dist = distance(vertices.get(i), vertices.get(i+1));
+        	length_buffer[i] = totLength;
+        	totLength+= dist;
+        	
+        }
+      //  length_buffer[nvertices-2] = totLength;
+        
+        for (int i = 0; i < vertices.size(); i++) {
+        	length_buffer[i] = length_buffer[i]/totLength;
+        }
+        
         setVertices(gl, flat_vertices);
         setNormals(gl, flat_normals);
 

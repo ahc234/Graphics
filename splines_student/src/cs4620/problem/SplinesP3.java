@@ -167,11 +167,38 @@ class SolarSystemAnimatorP3 extends SceneTraverser
 		// Update the scene given the current time
 		// in this.time. This method will be called once per node in the scene
 		// to update the whole scene.
+		SceneNode parent = node.getSceneNodeParent();
+		Vector3f transOrig = new Vector3f(0, 0, 0);
+		if (parent != null){
+		Matrix4f parTrans = new Matrix4f(parent.toWorld());
+		parTrans.transform(transOrig);
+		}
+		
+		if (node.getName().equals("MarsGroup")) node.rotation.z = time*2;
+		
+		if (node.getName().equals("Mars")) node.rotation.z =  time*4;
+
+		if (node.getName().equals("EarthGroup")) node.rotation.z = time*4;
+
+		if (node.getName().equals("Earth")) node.rotation.z = time*4;
+		
+		if (node.getName().equals("Moon")) node.rotation.z = time*5;
 		
 		// TODO: PPA2 Problem 3, Section 5.3: For spline nodes, set the node
 		// time, and use the calculated spline offset to update the child nodes.
 		// Note that the time for the solar system is set between 0 and 360, but for splines
 		// it works better to normalize it to [0, 1].
+		//if(node.getName().equals("comet")) {
+		if (node instanceof SplineNode){
+			SplineNode spnode = (SplineNode)node;
+			Spline sp = (Spline)spnode.getMesh();
+		
+			spnode.setTime(time);
+			spnode.setTranslation(
+				spnode.translation.x+spnode.splineOffset.x, 
+				spnode.translation.x+spnode.splineOffset.y, spnode.translation.z);
+			
+		}
 		
 	}
 }

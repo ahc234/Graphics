@@ -27,13 +27,20 @@ public class RevolutionVolume extends TriangleMesh {
 		float curveNorm[] = curve.normals;
 		
 		float maxRad = 0;
+		float curveLength= 0;
 		
-		for (int i = 0; i < curve.vertices.length; i = i + 2) {
+		for (int i = 0; i < curveVert.length; i = i + 2) {
 			if (curveVert[i] > maxRad) {
 				maxRad = curveVert[i];
 			}
+		
 		}
-
+		for (int i = 0; i < curveVert.length-1; i+=2) {
+			//curveVert[i]
+			
+		}
+		
+				
     	float numSectors = (float)((maxRad*2*Math.PI) / tolerance);
 		int rowLength = (int)(Math.ceil(numSectors));
 		int rowHeight = curveVert.length/2;

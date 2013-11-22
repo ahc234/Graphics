@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Map;
 
 import javax.media.opengl.GL2;
+import javax.vecmath.Vector2f;
 import javax.vecmath.Vector3f;
 
 import cs4620.material.Material;
@@ -56,6 +57,22 @@ public class SplineNode extends MeshNode {
 		// TODO: PPA2 Problem 3, Section 5.2:
 		// Accounting for speed, do a binary search for time over the 'normalized'
 		// lengths array and set the splineOffset to the closest position in time.
+		
+		Spline splineMesh = (Spline)getMesh();
+		BSpline spline = splineMesh.getBspline();
+		float length_buffer[] = spline.getLengthBuffer();
+		if (spline!= null){
+		int index = (int)Arrays.binarySearch(length_buffer,speed*t)+1;
+		System.out.println(index);
+		System.out.println(spline);
+		System.out.println(spline.vertices);
+		int vert= (int)spline.vertices[index];
+		splineOffset.setX(speed*spline.vertices[vert*2]);
+		splineOffset.setY(speed*spline.vertices[vert*2+1]);
+		
+		}
+		
+		
 	}
 
 	public static SceneNode fromYamlObject(GL2 gl, Object yamlObject)
