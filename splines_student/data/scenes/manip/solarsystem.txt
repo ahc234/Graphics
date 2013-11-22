@@ -7,11 +7,11 @@ children:
   name: Sun
   children:
   - translation: [0.0, 0.0, 0.0]
-    rotation: [0.0, 0.0, 0.0]
+    rotation: [0.0, 0.0, 480.0]
     name: MarsGroup
     children:
     - translation: [3.8, 0.0, 0.0]
-      rotation: [0.0, 0.0, 0.0]
+      rotation: [0.0, 0.0, 960.0]
       name: Mars
       children:
       - translation: [0.0, 1.2, 0.0]
@@ -32,22 +32,22 @@ children:
         specular: [1.0, 1.0, 1.0, 1.0]
         diffuse: [0.8, 0.2, 0.0, 1.0]
         shininess: 40.0
-        type: PhongMaterial
+        type: MarsMaterial
         ambient: [0.05, 0.05, 0.05, 1.0]
       mesh: {type: Sphere}
       scaling: [0.42178053, 0.42178053, 0.42178053]
     type: SceneNode
     scaling: [1.0, 1.0, 1.0]
   - translation: [0.0, 0.0, 0.0]
-    rotation: [0.0, 0.0, 0.0]
+    rotation: [0.0, 0.0, 960.0]
     name: EarthGroup
     children:
     - translation: [-2.2, 0.0, 0.0]
-      rotation: [0.0, 0.0, 0.0]
+      rotation: [0.0, 0.0, 960.0]
       name: Earth
       children:
       - translation: [-2.0, 0.0, 0.0]
-        rotation: [0.0, 0.0, 0.0]
+        rotation: [0.0, 0.0, 1200.0]
         name: Moon
         children:
         - translation: [0.0, 1.3, 0.0]
@@ -87,7 +87,7 @@ children:
           specular: [1.0, 1.0, 1.0, 1.0]
           diffuse: [1.0, 1.0, 1.0, 1.0]
           shininess: 40.0
-          type: PhongMaterial
+          type: MoonMaterial
           ambient: [0.0, 0.0, 0.0, 1.0]
         mesh: {type: Sphere}
         scaling: [0.441, 0.441, 0.441]
@@ -96,7 +96,7 @@ children:
         specular: [1.0, 1.0, 1.0, 1.0]
         diffuse: [0.0, 0.6, 1.0, 1.0]
         shininess: 40.0
-        type: PhongMaterial
+        type: EarthMaterial
         ambient: [0.05, 0.05, 0.05, 1.0]
       mesh: {type: Sphere}
       scaling: [0.4654033, 0.4654033, 0.4654033]
@@ -110,13 +110,49 @@ children:
     type: LightNode
     ambient: [1.0, 1.0, 1.0, 1.0]
     scaling: [0.0, 0.0, 0.0]
+  - translation: [-1.7779988, 0.37182388, 1.4061759]
+    speed: '1.0'
+    rotation: [15.378506, 30.552048, -10.252369]
+    name: Spline
+    children:
+    - translation: [0.8692713, 0.79374856, 0.0]
+      rotation: [0.0, 0.0, 0.0]
+      name: RevMesh
+      children: []
+      type: MeshNode
+      material:
+        specular: [1.0, 1.0, 1.0, 1.0]
+        diffuse: [0.9, 0.0, 0.0, 1.0]
+        shininess: 40.0
+        type: CometMaterial
+        ambient: [0.0, 0.0, 0.0, 1.0]
+      mesh:
+        spline:
+          ctrls: [-1.5, 1.0714672, -0.09146672, 0.86240053, -0.78400046, -0.06533337,
+            0.2090668, -1.5, -1.5, -1.5]
+          closed: 'false'
+          type: BSpline
+        type: RevMesh
+      scaling: [0.1, 0.1, 0.1]
+    type: SplineNode
+    material:
+      specular: [1.0, 1.0, 1.0, 1.0]
+      diffuse: [0.8, 0.8, 0.0, 1.0]
+      shininess: 50.0
+      type: PhongMaterial
+      ambient: [0.1, 0.1, 0.1, 1.0]
+    mesh:
+      spline:
+        ctrls: [1.5, -1.5, -1.5, -0.69253373, -0.74480045, 0.36586687, -1.5, 1.5,
+          0.039200023, 1.5]
+        closed: 'true'
+        type: BSpline
+      type: Spline
+    scaling: [2.757, 2.419, 1.154]
   type: MeshNode
   material:
-    specular: [1.0, 1.0, 1.0, 1.0]
-    diffuse: [1.0, 0.5, 0.0, 1.0]
-    shininess: 60.0
-    type: PhongMaterial
-    ambient: [0.95, 0.55, 0.05, 1.0]
+    scroll_speeds: [1.0, 2.0, 4.0]
+    type: FireMaterial
   mesh: {type: Sphere}
   scaling: [0.7076059, 0.7076059, 0.7076059]
 type: SceneNode

@@ -62,13 +62,12 @@ public class SplineNode extends MeshNode {
 		BSpline spline = splineMesh.getBspline();
 		float length_buffer[] = spline.getLengthBuffer();
 		if (spline!= null){
-		int index = (int)Arrays.binarySearch(length_buffer,speed*t)+1;
-		System.out.println(index);
-		System.out.println(spline);
-		System.out.println(spline.vertices);
-		int vert= (int)spline.vertices[index];
-		splineOffset.setX(speed*spline.vertices[vert*2]);
-		splineOffset.setY(speed*spline.vertices[vert*2+1]);
+		float time = ((t*speed % 360)/360) ;
+		int index = (int)Arrays.binarySearch(length_buffer,time);
+		if (index < 0) index = ((index+1)*-1);
+		if (index == length_buffer.length) index= index-1;
+		splineOffset.x = spline.vertices[index*2];
+		splineOffset.y = spline.vertices[index*2+1];
 		
 		}
 		

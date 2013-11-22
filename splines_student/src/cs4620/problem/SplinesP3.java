@@ -191,12 +191,19 @@ class SolarSystemAnimatorP3 extends SceneTraverser
 		//if(node.getName().equals("comet")) {
 		if (node instanceof SplineNode){
 			SplineNode spnode = (SplineNode)node;
-			Spline sp = (Spline)spnode.getMesh();
-		
 			spnode.setTime(time);
-			spnode.setTranslation(
-				spnode.translation.x+spnode.splineOffset.x, 
-				spnode.translation.x+spnode.splineOffset.y, spnode.translation.z);
+			for (int i=0; i < spnode.getChildCount(); i++){
+				spnode.getSceneNodeChild(i).setTranslation(
+//						spnode.getSceneNodeChild(i).translation.x+spnode.splineOffset.x, 
+//						spnode.getSceneNodeChild(i).translation.y+spnode.splineOffset.y, 
+//						spnode.getSceneNodeChild(i).translation.z);
+					spnode.splineOffset.x, 
+					spnode.splineOffset.y, 
+					spnode.getSceneNodeChild(i).translation.z);
+				System.out.println(spnode.splineOffset.x);
+				System.out.println(spnode.splineOffset.y);
+			
+			}
 			
 		}
 		
