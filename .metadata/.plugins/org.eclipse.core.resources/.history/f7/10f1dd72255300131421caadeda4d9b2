@@ -26,29 +26,29 @@ public class RevolutionVolume extends TriangleMesh {
 		float curveNorm[] = curve.normals;
 		
 		float maxRad = 0;
-//<<<<<<< HEAD
-//		float curveLength= 0;
-//		
-//		for (int i = 0; i < curveVert.length; i = i + 2) {
-//=======
+<<<<<<< HEAD
+		float curveLength= 0;
+		
+		for (int i = 0; i < curveVert.length; i = i + 2) {
+=======
 		float curveLength = 0;
 		
 		for (int i = 0; i < curve.vertices.length; i += 2) {
-//>>>>>>> b691dd4e21f049b2479ce877ba016e46e0c9ec26
+>>>>>>> b691dd4e21f049b2479ce877ba016e46e0c9ec26
 			if (curveVert[i] > maxRad) {
 				maxRad = curveVert[i];
 			}
 		
 		}
-//<<<<<<< HEAD
-//		for (int i = 0; i < curveVert.length-1; i+=2) {
-//			//curveVert[i]
-//			
-//		}
-//		
-//				
-//    	float numSectors = (float)((maxRad*2*Math.PI) / tolerance);
-//=======
+<<<<<<< HEAD
+		for (int i = 0; i < curveVert.length-1; i+=2) {
+			//curveVert[i]
+			
+		}
+		
+				
+    	float numSectors = (float)((maxRad*2*Math.PI) / tolerance);
+=======
 		
 		for (int i = 0; i < curve.vertices.length-3; i += 2) {
 			float x1 = curveVert[i];
@@ -59,7 +59,7 @@ public class RevolutionVolume extends TriangleMesh {
 		}
 
     	float numSectors = (float)((maxRad*2f*Math.PI) / tolerance);
-//>>>>>>> b691dd4e21f049b2479ce877ba016e46e0c9ec26
+>>>>>>> b691dd4e21f049b2479ce877ba016e46e0c9ec26
 		int rowLength = (int)(Math.ceil(numSectors));
 		int rowHeight = curveVert.length/2;
 		int numPoints = ((rowLength+1) * (rowHeight));

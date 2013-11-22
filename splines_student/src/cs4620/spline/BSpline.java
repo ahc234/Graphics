@@ -91,17 +91,28 @@ public class BSpline extends DiscreteCurve {
      * Helper method for tesselate_bezier with a countdown
      */
    	private void tessellate_helper(Vector2f cp[], float epsilon, ArrayList<Vector2f> outPoints, ArrayList<Vector2f> outDerivs, int counter) {
-   		Vector2f vec1 = new Vector2f(cp[1].x, cp[1].y);
-   		vec1.sub(cp[0]);
-   		Vector2f vec2 = new Vector2f(cp[3].x, cp[3].y);
-   		vec2.sub(cp[0]);
-   		float angle = vec1.angle(vec2);
-
+   		Vector2f vec1 = new Vector2f(cp[0].x, cp[0].y);
+   		vec1.sub(cp[1]);
+   		Vector2f vec2 = new Vector2f(cp[2].x, cp[2].y);
+   		vec2.sub(cp[1]);
    		
-   		Vector2f normal = new Vector2f(-vec1.y, vec1.x);
+   		Vector2f vec3 = new Vector2f(cp[3].x, cp[3].y);
+   		vec3.sub(cp[2]);
+   		Vector2f vec4 = new Vector2f(cp[1].x, cp[1].y);
+   		vec4.sub(cp[2]);
+   		
+   		vec1.normalize();
+   		vec2.normalize();
+   		vec3.normalize();
+   		vec4.normalize();
+   		
+   		float lhAngle = (float)Math.PI - (float)Math.acos(vec1.dot(vec2));
+   		float rhAngle = (float)Math.PI - (float)Math.acos(vec3.dot(vec4));
+   		
+   		Vector2f normal = new Vector2f(vec1.y, -vec1.x);
    		normal.normalize();
    		
-    	if (counter == 10 || angle <= epsilon/2) {
+    	if (counter == 10 || (lhAngle <= epsilon/2f && rhAngle <= epsilon/2f)) {
     		outPoints.add(new Vector2f(cp[0].x, cp[0].y));
     		outDerivs.add(normal);
 	   		vec1 = new Vector2f(cp[3].x, cp[3].y);
@@ -170,7 +181,6 @@ public class BSpline extends DiscreteCurve {
     						new Vector2f(c/6 + (2*e)/3 + g/6, d/6 + (2*f)/3 + h/6)};
     	
     	tessellate_bezier(bezCP, epsilon, outPoints, outDerivs);
-    	
     }
     
     @Override
@@ -191,6 +201,34 @@ public class BSpline extends DiscreteCurve {
 			// TODO: Splines Problem 2, Section 4:
         	// Compute Bezier control points for a closed curve. Put the computed vertices
     		// into the vertices ArrayList declared above.
+    		for (int j = 0; j < cp.size(); j++) {
+    			if (j < 1) {
+    				bspPoints[0] = cp.get(cp.size()-1);
+					bspPoints[1] = cp.get(j);
+        			bspPoints[2] = cp.get(j+1);
+        			bspPoints[3] = cp.get(j+2);
+    			} else if (j == cp.size()-2) {
+    				bspPoints[0] = cp.get(j-1);
+        			bspPoints[1] = cp.get(j);
+        			bspPoints[2] = cp.get(j+1);
+    				bspPoints[3] = cp.get(0);
+    			} else if (j == cp.size()-1) {
+    				bspPoints[0] = cp.get(j-1);
+        			bspPoints[1] = cp.get(j);
+        			bspPoints[2] = cp.get(0);
+    				bspPoints[3] = cp.get(1);
+    			} else {
+	    			bspPoints[0] = cp.get(j-1);
+	    			bspPoints[1] = cp.get(j);
+	    			bspPoints[2] = cp.get(j+1);
+	    			bspPoints[3] = cp.get(j+2);
+    			}
+    			
+    			tessellate_bspline(bspPoints, epsilon, vertices, normals);
+    		}
+    		vertices.add(endVertex);
+    		normals.add(endNormal);
+    		
     	} else {
 			// TODO: Splines Problem 1, Section 3.1:
         	// Compute Bezier control points for an open curve with boundary conditions.

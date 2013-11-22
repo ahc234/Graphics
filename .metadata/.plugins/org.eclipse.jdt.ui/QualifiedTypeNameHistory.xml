@@ -4,4 +4,5 @@
 <fullyQualifiedTypeName name="java.lang.System"/>
 <fullyQualifiedTypeName name="cs4620.test.ManipTestHelpers"/>
 <fullyQualifiedTypeName name="javax.vecmath.Point2f"/>
+<fullyQualifiedTypeName name="javax.vecmath.Vector2f"/>
 </qualifiedTypeNameHistroy>
