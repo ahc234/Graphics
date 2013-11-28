@@ -188,15 +188,11 @@ class SolarSystemAnimatorP3 extends SceneTraverser
 		// time, and use the calculated spline offset to update the child nodes.
 		// Note that the time for the solar system is set between 0 and 360, but for splines
 		// it works better to normalize it to [0, 1].
-		//if(node.getName().equals("comet")) {
 		if (node instanceof SplineNode){
 			SplineNode spnode = (SplineNode)node;
 			spnode.setTime(time);
 			for (int i=0; i < spnode.getChildCount(); i++){
 				spnode.getSceneNodeChild(i).setTranslation(
-//						spnode.getSceneNodeChild(i).translation.x+spnode.splineOffset.x, 
-//						spnode.getSceneNodeChild(i).translation.y+spnode.splineOffset.y, 
-//						spnode.getSceneNodeChild(i).translation.z);
 					spnode.splineOffset.x, 
 					spnode.splineOffset.y, 
 					spnode.getSceneNodeChild(i).translation.z);

@@ -70,8 +70,6 @@ public class SplineNode extends MeshNode {
 		splineOffset.y = spline.vertices[index*2+1];
 		
 		}
-		
-		
 	}
 
 	public static SceneNode fromYamlObject(GL2 gl, Object yamlObject)

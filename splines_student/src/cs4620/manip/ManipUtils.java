@@ -115,29 +115,29 @@ public class ManipUtils {
 		// TODO (Manipulators P1): Implement this helper method as described in the assignment
 		// description and the comment above.
 		//Check whether rays are parallel
-				Vector3f vectDot = new Vector3f(vTarget);
-				vectDot.sub(v);
-				float dotProd = vectDot.dot(vectDot);
-				float epsilon = 1e-3f;
-				if (dotProd < epsilon) {
-					return 0f;
-				}
-				
-				//Solve the linear equations:
-				//(v dot (point on v, point on vTarget) = 0
-				//(vTarget dot (point on v, point on vTarget)) = 0
-				Vector3f pDiff = new Vector3f(p);
-				pDiff.sub(pTarget);
-				
-				float num = (v.dot(vTarget))*(vTarget.dot(pDiff)) - (vTarget.dot(vTarget))*(v.dot(pDiff));
-				float denom = (v.dot(v))*(vTarget.dot(vTarget)) - (v.dot(vTarget))*(v.dot(vTarget));
-				
-			    if (denom < epsilon) {
-			        return 0f;
-			    }
-			    else {
-			        return num/denom;
-			    }
+		Vector3f vectDot = new Vector3f(vTarget);
+		vectDot.sub(v);
+		float dotProd = vectDot.dot(vectDot);
+		float epsilon = 1e-3f;
+		if (dotProd < epsilon) {
+			return 0f;
+		}
+		
+		//Solve the linear equations:
+		//(v dot (point on v, point on vTarget) = 0
+		//(vTarget dot (point on v, point on vTarget)) = 0
+		Vector3f pDiff = new Vector3f(p);
+		pDiff.sub(pTarget);
+		
+		float num = (v.dot(vTarget))*(vTarget.dot(pDiff)) - (vTarget.dot(vTarget))*(v.dot(pDiff));
+		float denom = (v.dot(v))*(vTarget.dot(vTarget)) - (v.dot(vTarget))*(v.dot(vTarget));
+		
+	    if (denom < epsilon) {
+	        return 0f;
+	    }
+	    else {
+	        return num/denom;
+	    }
 	}
 	
 	/**
