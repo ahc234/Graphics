@@ -43,6 +43,12 @@ public class KeyframeAnimation {
 	{
 		// TODO (Animation P1): Implement if you find useful -- evaluate a Catmull-Rom spline
 		// using quaternions with the given four control points, and write result to iNode.
+		Quat4f q1 = getQuaternionFromEulerAngles(p1);
+		Quat4f q2 = getQuaternionFromEulerAngles(p2);
+		
+		q1 = slerp(q1, q2, t);
+		
+		iNode = getEulerAnglesFromQuaternion(q1);
 		
 	}
 	
@@ -51,7 +57,26 @@ public class KeyframeAnimation {
 	{
 		// TODO (Animation P1): Implement if you find useful -- evaluate a Catmull-Rom spline
 		// with the given four control points, and write result to iNode.
-				
+		float a = p0.x;
+		float b = p0.y;
+		float c = p0.z;
+		float d = p1.x;
+		float e = p1.y;
+		float f = p1.z;
+		float g = p2.x;
+		float h = p2.y;
+		float i = p2.z;
+		float j = p3.x;
+		float k = p3.y;
+		float l = p3.z;
+		float t2 = t*t;
+		float t3 = t*t*t;
+		
+		float x = (1/2)*(-a*t3 + 3*d*t3 - 3*g*t3 + j*t3 + 2*a*t2 - 5*d*t2 + 4*g*t2 - j*t2 - a*t + g*t + 2*d);
+		float y = (1/2)*(-b*t3 + 3*e*t3 - 3*h*t3 + k*t3 + 2*b*t2 - 5*e*t2 + 4*h*t2 - k*t2 - b*t + h*t + 2*e);
+		float z = (1/2)*(-c*t3 + 3*f*t3 - 3*i*t3 + l*t3 + 2*c*t2 - 5*f*t2 + 4*i*t2 - l*t2 - c*t + i*t + 2*f);
+		
+		iNode = new Vector3f(x, y, z);
 	}
 	
 	public static Quat4f slerp(Quat4f i1, Quat4f i2, float t)

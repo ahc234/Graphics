@@ -124,7 +124,6 @@ public class RevolutionVolume extends TriangleMesh {
 		setWireframeIndices(gl, wireframeVerts);
 		setTexCoords(gl, textureCoords);
     }
-    }
 
 	@Override
 	public Object getYamlObjectRepresentation() {
