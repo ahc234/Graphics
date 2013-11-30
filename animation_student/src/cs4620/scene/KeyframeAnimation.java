@@ -76,7 +76,10 @@ public class KeyframeAnimation {
 		float y = (1/2)*(-b*t3 + 3*e*t3 - 3*h*t3 + k*t3 + 2*b*t2 - 5*e*t2 + 4*h*t2 - k*t2 - b*t + h*t + 2*e);
 		float z = (1/2)*(-c*t3 + 3*f*t3 - 3*i*t3 + l*t3 + 2*c*t2 - 5*f*t2 + 4*i*t2 - l*t2 - c*t + i*t + 2*f);
 		
-		iNode = new Vector3f(x, y, z);
+		//System.out.println("This BEFORE: " + iNode);
+		iNode.set(new Vector3f(x, y, z));
+		//System.out.println("This AFTER: " + iNode);
+
 	}
 	
 	public static Quat4f slerp(Quat4f i1, Quat4f i2, float t)

@@ -6,6 +6,7 @@ import java.util.TreeMap;
 import java.util.Map.Entry;
 
 import javax.media.opengl.GL2;
+import javax.vecmath.Vector3f;
 
 public class LightNodeKeyframeable extends LightNode implements Keyframeable {
 	private static final long serialVersionUID = 7302614078550499605L;
@@ -78,13 +79,48 @@ public class LightNodeKeyframeable extends LightNode implements Keyframeable {
 	public void linearInterpolateTo(int frame) {
 		// TODO (Animation P1): Set the state of this light to the specified frame by
 		// linearly interpolating the states of the appropriate keyframes.
+		/*if (keyframes.containsKey(frame)){
+			translation.set(keyframes.get(frame).translation);
+		}else{
+		LightNode f1 = keyframes.get(frame-1);
+		LightNode f0 = keyframes.get(frame-2);
+		LightNode f2 = keyframes.get(frame+1);
+		LightNode f3 = keyframes.get(frame+2);
+		
+		// TODO (Animation P1): Set the state of this light to the specified frame by 
+		// interpolating the states of the appropriate keyframes using Catmull-Rom splines.
+		KeyframeAnimation.catmullRomInterpolation(f1.translation, f0.translation, f2.translation, f3.translation, frame, this.translation);*/
 		
 	}
 
 	@Override
 	public void catmullRomInterpolateTo(int frame) {
+		if (keyframes.containsKey(frame)){
+			translation.set(keyframes.get(frame).translation);
+		}else{
+		int lastkeyframe= keyframes.lastKey();
+		if (frame > lastkeyframe) translation.set(keyframes.get(lastkeyframe).translation);
+		else{
+			
+			
+		Map.Entry<Integer,LightNode> mf1 = keyframes.floorEntry(frame);
+		Map.Entry<Integer,LightNode> mf0 = keyframes.floorEntry(mf1.getKey());
+		Map.Entry<Integer,LightNode> mf2 = keyframes.higherEntry(frame);
+		Map.Entry<Integer,LightNode> mf3 = keyframes.higherEntry(mf2.getKey());
+		
+		if (mf0 == null) mf0 = mf1;
+		if (mf3 == null) mf3 = mf2;
+			
+		LightNode f1 = mf1.getValue();
+		LightNode f0 = mf0.getValue();
+		LightNode f2 = mf2.getValue();
+		LightNode f3 = mf3.getValue();
+		
 		// TODO (Animation P1): Set the state of this light to the specified frame by 
 		// interpolating the states of the appropriate keyframes using Catmull-Rom splines.
+		KeyframeAnimation.catmullRomInterpolation(f1.translation, f0.translation, f2.translation, f3.translation, frame, this.translation);
+			}
+		}
 		
 	}
 	

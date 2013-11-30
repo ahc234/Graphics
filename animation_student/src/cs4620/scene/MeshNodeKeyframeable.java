@@ -125,6 +125,40 @@ public class MeshNodeKeyframeable extends MeshNode implements Keyframeable {
 	{
 		// TODO (Animation P1): Set the state of this node to the specified frame by 
 		// interpolating the states of the appropriate keyframes using Catmull-Rom splines.
+		if (keyframes.containsKey(frame)){
+			setToMeshNode(keyframes.get(frame));
+		}else{
+		int lastkeyframe= keyframes.lastKey();
+		if (frame > lastkeyframe) setToMeshNode(keyframes.get(lastkeyframe));
+		else{
+			
+			
+		Map.Entry<Integer,MeshNode> mf1 = keyframes.floorEntry(frame);
+		Map.Entry<Integer,MeshNode> mf0 = keyframes.floorEntry(mf1.getKey());
+		Map.Entry<Integer,MeshNode> mf2 = keyframes.higherEntry(frame);
+		Map.Entry<Integer,MeshNode> mf3 = keyframes.higherEntry(mf2.getKey());
+		
+		if (mf0 == null) mf0 = mf1;
+		if (mf3 == null) mf3 = mf2;
+			
+		MeshNode f1 = mf1.getValue();
+		MeshNode f0 = mf0.getValue();
+		MeshNode f2 = mf2.getValue();
+		MeshNode f3 = mf3.getValue();
+		
+//		System.out.println(f1.translation);
+//		System.out.println(f0.translation);
+//		System.out.println(f2.translation);
+//		System.out.println(f3.translation);
+		// TODO (Animation P1): Set the state of this light to the specified frame by 
+		// interpolating the states of the appropriate keyframes using Catmull-Rom splines.
+		KeyframeAnimation.catmullRomInterpolation(f1.translation, f0.translation, f2.translation, f3.translation, frame, this.translation);
+		KeyframeAnimation.catmullRomRotationInterpolation(f1.rotation, f0.rotation, f2.rotation, f3.rotation, frame, this.rotation);
+		//System.out.println("This Translation: " + this.translation);
+		//System.out.println("This Rotaion: " + this.rotation);
+		
+			}
+		}
 		
 	}
 	
