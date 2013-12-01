@@ -99,7 +99,7 @@ public class SceneNodeKeyframeable extends SceneNode
 			
 			
 		Map.Entry<Integer,SceneNode> mf1 = keyframes.floorEntry(frame);
-		Map.Entry<Integer,SceneNode> mf0 = keyframes.floorEntry(mf1.getKey()-1);
+		Map.Entry<Integer,SceneNode> mf0 = keyframes.floorEntry(mf1.getKey());
 		Map.Entry<Integer,SceneNode> mf2 = keyframes.higherEntry(frame);
 		Map.Entry<Integer,SceneNode> mf3 = keyframes.higherEntry(mf2.getKey());
 		
@@ -111,18 +111,14 @@ public class SceneNodeKeyframeable extends SceneNode
 		SceneNode f2 = mf2.getValue();
 		SceneNode f3 = mf3.getValue();
 		
-//		System.out.println(mf1.getKey());
-//		System.out.println(mf0.getKey());
-//		System.out.println(mf2.getKey());
-//		System.out.println(mf3.getKey());
-		
-		float t1 = mf2.getKey() - mf1.getKey();
-		float t2 = frame - mf1.getKey();
-		float t = t2 /t1;
+		System.out.println(f1.translation);
+		System.out.println(f0.translation);
+		System.out.println(f2.translation);
+		System.out.println(f3.translation);
 		// TODO (Animation P1): Set the state of this light to the specified frame by 
 		// interpolating the states of the appropriate keyframes using Catmull-Rom splines.
-		KeyframeAnimation.catmullRomInterpolation(f0.translation, f1.translation, f2.translation, f3.translation, t, this.translation);
-		KeyframeAnimation.catmullRomRotationInterpolation(f0.rotation, f1.rotation, f2.rotation, f3.rotation, t, this.rotation);
+		KeyframeAnimation.catmullRomInterpolation(f1.translation, f0.translation, f2.translation, f3.translation, frame, this.translation);
+		KeyframeAnimation.catmullRomRotationInterpolation(f1.rotation, f0.rotation, f2.rotation, f3.rotation, frame, this.rotation);
 			}
 		}
 		

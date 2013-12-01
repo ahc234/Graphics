@@ -96,15 +96,15 @@ public class LightNodeKeyframeable extends LightNode implements Keyframeable {
 	@Override
 	public void catmullRomInterpolateTo(int frame) {
 		if (keyframes.containsKey(frame)){
-			translation.set(keyframes.get(frame).translation);
+			setToLightNode(keyframes.get(frame));
 		}else{
 		int lastkeyframe= keyframes.lastKey();
-		if (frame > lastkeyframe) translation.set(keyframes.get(lastkeyframe).translation);
+		if (frame > lastkeyframe) setToLightNode(keyframes.get(lastkeyframe));
 		else{
 			
 			
 		Map.Entry<Integer,LightNode> mf1 = keyframes.floorEntry(frame);
-		Map.Entry<Integer,LightNode> mf0 = keyframes.floorEntry(mf1.getKey());
+		Map.Entry<Integer,LightNode> mf0 = keyframes.floorEntry(mf1.getKey()-1);
 		Map.Entry<Integer,LightNode> mf2 = keyframes.higherEntry(frame);
 		Map.Entry<Integer,LightNode> mf3 = keyframes.higherEntry(mf2.getKey());
 		
@@ -116,9 +116,20 @@ public class LightNodeKeyframeable extends LightNode implements Keyframeable {
 		LightNode f2 = mf2.getValue();
 		LightNode f3 = mf3.getValue();
 		
+//		System.out.println(f1.translation);
+//		System.out.println(f0.translation);
+//		System.out.println(f2.translation);
+//		System.out.println(f3.translation);
 		// TODO (Animation P1): Set the state of this light to the specified frame by 
 		// interpolating the states of the appropriate keyframes using Catmull-Rom splines.
-		KeyframeAnimation.catmullRomInterpolation(f1.translation, f0.translation, f2.translation, f3.translation, frame, this.translation);
+	//	System.out.println("Before Translation: " + this.translation);
+		float t1 = mf2.getKey() - mf1.getKey();
+		float t2 = frame - mf1.getKey();
+		float t = t2 /t1;
+		
+		//KeyframeAnimation.catmullRomInterpolation(f0.intensity, f1.translation, f2.translation, f3.translation, t, this.translation);
+		KeyframeAnimation.catmullRomInterpolation(f0.translation, f1.translation, f2.translation, f3.translation, t, this.translation);
+		KeyframeAnimation.catmullRomRotationInterpolation(f0.rotation, f1.rotation, f2.rotation, f3.rotation, t, this.rotation);
 			}
 		}
 		

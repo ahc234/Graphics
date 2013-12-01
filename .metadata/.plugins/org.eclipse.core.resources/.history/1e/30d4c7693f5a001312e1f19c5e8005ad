@@ -48,10 +48,7 @@ public class KeyframeAnimation {
 		
 		q1 = slerp(q1, q2, t);
 		
-		System.out.println(getEulerAnglesFromQuaternion(q1));
-		//iNode = getEulerAnglesFromQuaternion(q1);
-		//iNode.set(getEulerAnglesFromQuaternion(q1));
-		
+		iNode = getEulerAnglesFromQuaternion(q1);
 		
 	}
 	
@@ -75,16 +72,14 @@ public class KeyframeAnimation {
 		float t2 = t*t;
 		float t3 = t*t*t;
 		
-		float x = (.5f)*(-a*t3 + 3*d*t3 - 3*g*t3 + j*t3 + 2*a*t2 - 5*d*t2 + 4*g*t2 - j*t2 - a*t + g*t + 2*d);
-		float y = (.5f)*(-b*t3 + 3*e*t3 - 3*h*t3 + k*t3 + 2*b*t2 - 5*e*t2 + 4*h*t2 - k*t2 - b*t + h*t + 2*e);
-		float z = (.5f)*(-c*t3 + 3*f*t3 - 3*i*t3 + l*t3 + 2*c*t2 - 5*f*t2 + 4*i*t2 - l*t2 - c*t + i*t + 2*f);
+		float x = (1/2)*(-a*t3 + 3*d*t3 - 3*g*t3 + j*t3 + 2*a*t2 - 5*d*t2 + 4*g*t2 - j*t2 - a*t + g*t + 2*d);
+		float y = (1/2)*(-b*t3 + 3*e*t3 - 3*h*t3 + k*t3 + 2*b*t2 - 5*e*t2 + 4*h*t2 - k*t2 - b*t + h*t + 2*e);
+		float z = (1/2)*(-c*t3 + 3*f*t3 - 3*i*t3 + l*t3 + 2*c*t2 - 5*f*t2 + 4*i*t2 - l*t2 - c*t + i*t + 2*f);
 		
-//		System.out.println(p0);
-//		System.out.println(p1);
-//		System.out.println(p2);
-//		System.out.println(p3);
-		
+		System.out.println("This BEFORE: " + iNode);
+		//iNode = new Vector3f(x, y, z);
 		iNode.set(new Vector3f(x, y, z));
+		System.out.println("This after: " + iNode);
 
 	}
 	

@@ -48,16 +48,14 @@ public class KeyframeAnimation {
 		
 		q1 = slerp(q1, q2, t);
 		
-		System.out.println(getEulerAnglesFromQuaternion(q1));
-		//iNode = getEulerAnglesFromQuaternion(q1);
-		//iNode.set(getEulerAnglesFromQuaternion(q1));
-		
+		iNode = getEulerAnglesFromQuaternion(q1);
 		
 	}
 	
 	public static void catmullRomInterpolation(Vector3f p0, Vector3f p1,
 			Vector3f p2, Vector3f p3, float t, Vector3f iNode)
 	{
+		t = t*.00333333333333333f;
 		// TODO (Animation P1): Implement if you find useful -- evaluate a Catmull-Rom spline
 		// with the given four control points, and write result to iNode.
 		float a = p0.x;
@@ -79,12 +77,10 @@ public class KeyframeAnimation {
 		float y = (.5f)*(-b*t3 + 3*e*t3 - 3*h*t3 + k*t3 + 2*b*t2 - 5*e*t2 + 4*h*t2 - k*t2 - b*t + h*t + 2*e);
 		float z = (.5f)*(-c*t3 + 3*f*t3 - 3*i*t3 + l*t3 + 2*c*t2 - 5*f*t2 + 4*i*t2 - l*t2 - c*t + i*t + 2*f);
 		
-//		System.out.println(p0);
-//		System.out.println(p1);
-//		System.out.println(p2);
-//		System.out.println(p3);
-		
+		System.out.println("This BEFORE: " + iNode);
+		//iNode = new Vector3f(x, y, z);
 		iNode.set(new Vector3f(x, y, z));
+		System.out.println("This after: " + iNode);
 
 	}
 	
