@@ -28,6 +28,15 @@ public class KeyframeAnimation {
 		// TODO (Animation P1): Implement if you find useful -- interpolate linearly between two size-four
 		// arrays and write result to iFloat.
 		
+		Vector4f p0 = new Vector4f(sFloat[0], sFloat[1], sFloat[2], sFloat[3]);
+		Vector4f p1 = new Vector4f(eFloat[0], eFloat[1], eFloat[2], eFloat[3]);
+		
+		p1.sub(p0);
+		p1.scale(t);
+		p1.add(p0);
+		
+		iFloat = new float[]{p1.x, p1.y, p1.z, p1.w};
+		
 	}
 	
 	public static void catmullRomInterpolate4Float(float [] p0, float [] p1, float [] p2, float [] p3,
@@ -36,6 +45,35 @@ public class KeyframeAnimation {
 		// TODO (Animation P1): Implement if you find useful -- evaluate a Catmull-Rom spline on four
 		// four-element-array "control points" and write result to iNode.
 		
+		float a = p0[0];
+		float b = p0[1];
+		float c = p0[2];
+		float d = p0[3];
+		
+		float e = p1[0];
+		float f = p1[1];
+		float g = p1[2];
+		float h = p1[3];
+		
+		float i = p2[0];
+		float j = p2[1];
+		float k = p2[2];
+		float l = p2[3];
+		
+		float m = p3[0];
+		float n = p3[1];
+		float o = p3[2];
+		float p = p3[3];
+		
+		float t2 = t*t;
+		float t3 = t*t*t;
+		
+		float x = 1/2*(-a*t3 + 3*e*t3 - 3*i*t3 + m*t3 + 2*a*t2 - 5*e*t2 + 4*i*t2 - m*t2 - a*t + i*t + 2*e);
+		float y = 1/2*(-b*t3 + 3*f*t3 - 3*j*t3 + n*t3 + 2*b*t2 - 5*f*t2 + 4*j*t2 - n*t2 - b*t + j*t + 2*f);
+		float z = 1/2*(-c*t3 + 3*g*t3 - 3*k*t3 + o*t3 + 2*c*t2 - 5*g*t2 + 4*k*t2 - o*t2 - c*t + k*t + 2*g);
+		float w = 1/2*(-d*t3 + 3*h*t3 - 3*l*t3 + p*t3 + 2*d*t2 - 5*h*t2 + 4*l*t2 - p*t2 - d*t + l*t + 2*h);
+		
+		iNode = new float[]{x, y, z, w};		
 	}
 	
 	public static void catmullRomRotationInterpolation(Vector3f p0, Vector3f p1,
@@ -48,11 +86,10 @@ public class KeyframeAnimation {
 		
 		q1 = slerp(q1, q2, t);
 		
-		System.out.println(getEulerAnglesFromQuaternion(q1));
-		//iNode = getEulerAnglesFromQuaternion(q1);
-		//iNode.set(getEulerAnglesFromQuaternion(q1));
-		
-		
+		//System.out.println(getEulerAnglesFromQuaternion(q1));
+		iNode = getEulerAnglesFromQuaternion(q1);
+		iNode.set(getEulerAnglesFromQuaternion(q1));
+
 	}
 	
 	public static void catmullRomInterpolation(Vector3f p0, Vector3f p1,
@@ -79,11 +116,6 @@ public class KeyframeAnimation {
 		float y = (.5f)*(-b*t3 + 3*e*t3 - 3*h*t3 + k*t3 + 2*b*t2 - 5*e*t2 + 4*h*t2 - k*t2 - b*t + h*t + 2*e);
 		float z = (.5f)*(-c*t3 + 3*f*t3 - 3*i*t3 + l*t3 + 2*c*t2 - 5*f*t2 + 4*i*t2 - l*t2 - c*t + i*t + 2*f);
 		
-//		System.out.println(p0);
-//		System.out.println(p1);
-//		System.out.println(p2);
-//		System.out.println(p3);
-		
 		iNode.set(new Vector3f(x, y, z));
 
 	}
@@ -94,6 +126,13 @@ public class KeyframeAnimation {
 		Vector4f vecQ1 = new Vector4f(i1.w, i1.x, i1.y, i1.z);
 		Vector4f vecQ2 = new Vector4f(i2.w, i2.x, i2.y, i2.z);
 		float psi = (float)Math.acos((vecQ1.dot(vecQ2)));
+		if (Math.abs(psi) < 0.001f) {
+			if (psi < 0) {
+				psi = -0.001f;
+			} else {
+				psi = 0.001f;
+			}
+		}
 		
 		Quat4f q = new Quat4f(i1.x, i1.y, i1.z, i1.w);
 		q.scale((float)Math.sin(1-t)*psi);
