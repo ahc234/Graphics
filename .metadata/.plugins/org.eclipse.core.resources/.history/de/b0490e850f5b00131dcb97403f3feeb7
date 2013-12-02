@@ -10,14 +10,15 @@ public class KeyframeAnimation {
 		// TODO (Animation P1): Implement if you find useful -- set the state of SceneNode iNode
 		// (which can be a superclass of SceneNode, such as SceneNodeKeyframeable) to be
 		// the linear interpolation of the states of nodes sNode and eNode.
-		Vector3f p0 =  new Vector3f(sNode.translation);
-		Vector3f p1 =  new Vector3f(eNode.translation);
+		Vector3f p0 = sNode.translation;
+		Vector3f p1 = eNode.translation;
 		
-		Vector3f p2 = new Vector3f(sNode.scaling);
-		Vector3f p3 = new Vector3f(eNode.scaling);
+		Vector3f p2 = sNode.scaling;
+		Vector3f p3 = eNode.scaling;
 		
-		Vector3f p4 = new Vector3f(sNode.rotation);
-		Vector3f p5 = new Vector3f(eNode.rotation);
+		Vector3f p4 = sNode.rotation;
+		Vector3f p5 = eNode.rotation;
+		
 		
 		p0.scale(1-t);
 		p1.scale(t);
@@ -26,13 +27,18 @@ public class KeyframeAnimation {
 		p2.scale(1-t);
 		p3.scale(t);
 		p3.add(p2);
-
+		
+		p4.scale(1-t);
+		p5.scale(t);
+		p5.add(p4);
+		
 		System.out.println("Translation: " + p1);
 		System.out.println("Scale: " + p3);
 		
 		iNode.setTranslation(p1.x, p1.y, p1.z);
 		iNode.setScaling(p3.x, p3.y, p3.z);
-		catmullRomRotationInterpolation(p4,p4,p5,p5,t,iNode.rotation);
+		iNode.setRotation(p5.x, p5.y, p5.z);
+		
 	}
 	
 	public static void catmullRomInterpolateTransformation(SceneNode p0, SceneNode p1,
@@ -94,10 +100,10 @@ public class KeyframeAnimation {
 		float t2 = t*t;
 		float t3 = t*t*t;
 		
-		float x = .5f*(-a*t3 + 3*e*t3 - 3*i*t3 + m*t3 + 2*a*t2 - 5*e*t2 + 4*i*t2 - m*t2 - a*t + i*t + 2*e);
-		float y = .5f*(-b*t3 + 3*f*t3 - 3*j*t3 + n*t3 + 2*b*t2 - 5*f*t2 + 4*j*t2 - n*t2 - b*t + j*t + 2*f);
-		float z = .5f*(-c*t3 + 3*g*t3 - 3*k*t3 + o*t3 + 2*c*t2 - 5*g*t2 + 4*k*t2 - o*t2 - c*t + k*t + 2*g);
-		float w = .5f*(-d*t3 + 3*h*t3 - 3*l*t3 + p*t3 + 2*d*t2 - 5*h*t2 + 4*l*t2 - p*t2 - d*t + l*t + 2*h);
+		float x = 1/2*(-a*t3 + 3*e*t3 - 3*i*t3 + m*t3 + 2*a*t2 - 5*e*t2 + 4*i*t2 - m*t2 - a*t + i*t + 2*e);
+		float y = 1/2*(-b*t3 + 3*f*t3 - 3*j*t3 + n*t3 + 2*b*t2 - 5*f*t2 + 4*j*t2 - n*t2 - b*t + j*t + 2*f);
+		float z = 1/2*(-c*t3 + 3*g*t3 - 3*k*t3 + o*t3 + 2*c*t2 - 5*g*t2 + 4*k*t2 - o*t2 - c*t + k*t + 2*g);
+		float w = 1/2*(-d*t3 + 3*h*t3 - 3*l*t3 + p*t3 + 2*d*t2 - 5*h*t2 + 4*l*t2 - p*t2 - d*t + l*t + 2*h);
 		
 		iNode[0] = x;
 		iNode[1] = y;

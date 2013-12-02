@@ -7,66 +7,37 @@ import java.util.Map.Entry;
 
 import javax.media.opengl.GL2;
 
-import cs4620.material.Material;
-import cs4620.shape.Mesh;
 
-public class MeshNodeKeyframeable extends MeshNode implements Keyframeable {
-	private static final long serialVersionUID = -2756185791348683068L;
+public class SceneNodeKeyframeable extends SceneNode
+		implements Keyframeable {
+	private static final long serialVersionUID = 4345300320997053825L;
 	
-	protected TreeMap<Integer, MeshNode> keyframes = new TreeMap<Integer, MeshNode>();
+	protected TreeMap<Integer, SceneNode> keyframes = new TreeMap<Integer, SceneNode>();
 	
-	public MeshNodeKeyframeable()
+	public SceneNodeKeyframeable()
 	{
 		super();
-		keyframes.put(0, new MeshNode());
-	}
-	
-	public MeshNodeKeyframeable(GL2 gl, String name)
-	{
-		super(gl, name);
-		keyframes.put(0, new MeshNode(gl, name));
-	}
-	
-	public MeshNodeKeyframeable(String name, Mesh mesh)
-	{
-		super(name, mesh);
-		keyframes.put(0, new MeshNode(name, mesh));
-	}
-	
-	public MeshNodeKeyframeable(String name, Mesh mesh, Material material)
-	{
-		super(name, mesh, material);
-		keyframes.put(0, new MeshNode(name, mesh, material));
-	}
-	
-	public MeshNodeKeyframeable(String name, Mesh mesh, int [] frames)
-	{
-		super(name, mesh);
-		for(int f : frames)
-		{
-			keyframes.put(f, new MeshNode(name, mesh));
-		}
-	}
-	
-	public MeshNodeKeyframeable(GL2 gl, String name, int[] frames)
-	{
-		super(gl, name);
-		for(int f : frames)
-		{
-			keyframes.put(f, new MeshNode(gl, name));
-		}
-	}
-	
-	public MeshNodeKeyframeable(String name, Mesh mesh, Material mat,
-			int[] frames) {
-		super(name, mesh, mat);
-		for(int f : frames)
-		{
-			keyframes.put(f, new MeshNode(name, mesh, mat));
-		}
+		keyframes.put(0, new SceneNode());
+		
 	}
 
-	public void setToMeshNode(MeshNode node)
+	public SceneNodeKeyframeable(String name)
+	{
+		super(name);
+		resetTransformation();
+		keyframes.put(0, new SceneNode(name));
+	}
+	
+	public SceneNodeKeyframeable(String name, int [] frames)
+	{
+		super(name);
+		for(int f : frames)
+		{
+			keyframes.put(f, new SceneNode(name));
+		}
+	}
+	
+	public void setToTransformation(SceneNode node)
 	{
 		rotation.set(node.rotation);
 		scaling.set(node.scaling);
@@ -74,8 +45,7 @@ public class MeshNodeKeyframeable extends MeshNode implements Keyframeable {
 	}
 
 	@Override
-	public int[] getFrameNumbers()
-	{
+	public int[] getFrameNumbers() {
 		Integer [] integerArray = keyframes.keySet().toArray(new Integer[0]);
 		int [] outArray = new int[integerArray.length];
 		for(int i = 0; i < outArray.length; i++)
@@ -84,9 +54,8 @@ public class MeshNodeKeyframeable extends MeshNode implements Keyframeable {
 	}
 
 	@Override
-	public void addAsKeyframe(int frame)
-	{
-		MeshNode keyframeNode = new MeshNode(getName(), getMesh(), getMaterial());
+	public void addAsKeyframe(int frame) {
+		SceneNode keyframeNode = new SceneNode(getName());
 		keyframeNode.rotation.set(rotation);
 		keyframeNode.scaling.set(scaling);
 		keyframeNode.translation.set(translation);
@@ -106,42 +75,32 @@ public class MeshNodeKeyframeable extends MeshNode implements Keyframeable {
 	}
 
 	@Override
-	public void deleteKeyframe(int frame)
-	{
+	public void deleteKeyframe(int frame) {
 		keyframes.remove(new Integer(frame));
-
 	}
 
 	@Override
-	public void linearInterpolateTo(int frame)
-	{
+	public void linearInterpolateTo(int frame) {
 		// TODO (Animation P1): Set the state of this node to the specified frame by
 		// linearly interpolating the states of the appropriate keyframes.
 		if (keyframes.containsKey(frame)){
-			setToMeshNode(keyframes.get(frame));
+			setToTransformation(keyframes.get(frame));
 		}else{
 		int lastkeyframe= keyframes.lastKey();
-		if (frame > lastkeyframe) setToMeshNode(keyframes.get(lastkeyframe));
+		if (frame > lastkeyframe) setToTransformation(keyframes.get(lastkeyframe));
 		else{
 			
 			
-		Map.Entry<Integer,MeshNode> mf1 = keyframes.lowerEntry(frame);
-		Map.Entry<Integer,MeshNode> mf2 = keyframes.higherEntry(frame);
+		Map.Entry<Integer,SceneNode> mf1 = keyframes.lowerEntry(frame);
+		Map.Entry<Integer,SceneNode> mf2 = keyframes.higherEntry(frame);
 		
 			
 		SceneNode f1 = mf1.getValue();
 		SceneNode f2 = mf2.getValue();
 		
-		
 		float t1 = mf2.getKey() - mf1.getKey();
 		float t2 = frame - mf1.getKey();
 		float t = t2 /t1;
-		
-		System.out.println("Frame: " + frame);
-		System.out.println("First point: " +  mf1.getKey());
-		System.out.println("Second point: " +  mf2.getKey());
-		System.out.println("t: " + t);
-		
 		// TODO (Animation P1): Set the state of this light to the specified frame by 
 		// interpolating the states of the appropriate keyframes using Catmull-Rom splines.
 		KeyframeAnimation.linearInterpolateTransformation(f1, f2, t, this);
@@ -151,50 +110,48 @@ public class MeshNodeKeyframeable extends MeshNode implements Keyframeable {
 	}
 
 	@Override
-	public void catmullRomInterpolateTo(int frame)
-	{
+	public void catmullRomInterpolateTo(int frame) {
 		// TODO (Animation P1): Set the state of this node to the specified frame by 
 		// interpolating the states of the appropriate keyframes using Catmull-Rom splines.
 		if (keyframes.containsKey(frame)){
-			setToMeshNode(keyframes.get(frame));
+			setToTransformation(keyframes.get(frame));
 		}else{
 		int lastkeyframe= keyframes.lastKey();
-		if (frame > lastkeyframe) setToMeshNode(keyframes.get(lastkeyframe));
+		if (frame > lastkeyframe) setToTransformation(keyframes.get(lastkeyframe));
 		else{
 			
 			
-		Map.Entry<Integer,MeshNode> mf1 = keyframes.lowerEntry(frame);
-		Map.Entry<Integer,MeshNode> mf0 = keyframes.lowerEntry(mf1.getKey());
-		Map.Entry<Integer,MeshNode> mf2 = keyframes.higherEntry(frame);
-		Map.Entry<Integer,MeshNode> mf3 = keyframes.higherEntry(mf2.getKey());
+		Map.Entry<Integer,SceneNode> mf1 = keyframes.lowerEntry(frame);
+		Map.Entry<Integer,SceneNode> mf0 = keyframes.lowerEntry(mf1.getKey());
+		Map.Entry<Integer,SceneNode> mf2 = keyframes.higherEntry(frame);
+		Map.Entry<Integer,SceneNode> mf3 = keyframes.higherEntry(mf2.getKey());
 		
 		if (mf0 == null) mf0 = mf1;
 		if (mf3 == null) mf3 = mf2;
 			
-		MeshNode f1 = mf1.getValue();
-		MeshNode f0 = mf0.getValue();
-		MeshNode f2 = mf2.getValue();
-		MeshNode f3 = mf3.getValue();
+		SceneNode f1 = mf1.getValue();
+		SceneNode f0 = mf0.getValue();
+		SceneNode f2 = mf2.getValue();
+		SceneNode f3 = mf3.getValue();
 		
-//		System.out.println(f1.translation);
-//		System.out.println(f0.translation);
-//		System.out.println(f2.translation);
-//		System.out.println(f3.translation);
-		// TODO (Animation P1): Set the state of this light to the specified frame by 
-		// interpolating the states of the appropriate keyframes using Catmull-Rom splines.
-	//	System.out.println("Before Translation: " + this.translation);
+//		System.out.println(mf1.getKey());
+//		System.out.println(mf0.getKey());
+//		System.out.println(mf2.getKey());
+//		System.out.println(mf3.getKey());
+		
 		float t1 = mf2.getKey() - mf1.getKey();
 		float t2 = frame - mf1.getKey();
 		float t = t2 /t1;
 		
-
+		System.out.println("Frame: " + frame);
+		System.out.println("First point: " +  mf1.getKey());
+		System.out.println("Second point: " +  mf2.getKey());
+		System.out.println("t: " + t);
+		// TODO (Animation P1): Set the state of this light to the specified frame by 
+		// interpolating the states of the appropriate keyframes using Catmull-Rom splines.
 		KeyframeAnimation.catmullRomInterpolation(f0.translation, f1.translation, f2.translation, f3.translation, t, this.translation);
 		KeyframeAnimation.catmullRomRotationInterpolation(f0.rotation, f1.rotation, f2.rotation, f3.rotation, t, this.rotation);
 		KeyframeAnimation.catmullRomInterpolation(f0.scaling, f1.scaling, f2.scaling, f3.scaling, t, this.scaling);
-	//	System.out.println("This Translation: " + this.translation);
-		
-		//System.out.println("This Rotation: " + this.rotation);
-		
 			}
 		}
 		
@@ -205,22 +162,22 @@ public class MeshNodeKeyframeable extends MeshNode implements Keyframeable {
 		this.name = name;
 		if(keyframes != null)
 		{
-			for(Entry<Integer, MeshNode> entry : keyframes.entrySet())
+			for(Entry<Integer, SceneNode> entry : keyframes.entrySet())
 			{
 				entry.getValue().setName(name);
 			}
 		}
 	}
-
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public Object getYamlObjectRepresentation()
 	{
 		Map<String, Object> result = (Map<String, Object>)super.getYamlObjectRepresentation();
-		result.put("type", "MeshNodeKeyframeable");
+		result.put("type", "SceneNodeKeyframeable");
 		
 		Map<Object, Object> framesMap = new HashMap<Object, Object>();
-		for (Entry<Integer, MeshNode> entry: keyframes.entrySet())
+		for (Entry<Integer, SceneNode> entry: keyframes.entrySet())
 		{
 			framesMap.put(entry.getKey(), entry.getValue().getYamlObjectRepresentation());
 		}
@@ -228,7 +185,7 @@ public class MeshNodeKeyframeable extends MeshNode implements Keyframeable {
 		
 		return result;
 	}
-	
+
 	public void extractFramesFromYamlObject(GL2 gl, Object yamlObject)
 	{
 		if (!(yamlObject instanceof Map))
@@ -240,7 +197,7 @@ public class MeshNodeKeyframeable extends MeshNode implements Keyframeable {
 		for (Entry<Object, Object> entry: framesMap.entrySet())
 		{
 			int frameIndex = Integer.parseInt(entry.getKey().toString());
-			MeshNode node = (MeshNode) MeshNode.fromYamlObject(gl, entry.getValue());
+			SceneNode node = (SceneNode) SceneNode.fromYamlObject(gl, entry.getValue());
 			keyframes.put(frameIndex, node);
 		}
 	}
@@ -251,12 +208,10 @@ public class MeshNodeKeyframeable extends MeshNode implements Keyframeable {
 			throw new RuntimeException("yamlObject not a Map");
 		Map<?,?> yamlMap = (Map<?,?>)yamlObject;
 
-		MeshNodeKeyframeable result = new MeshNodeKeyframeable(gl, (String)yamlMap.get("name"));
+		SceneNodeKeyframeable result = new SceneNodeKeyframeable((String)yamlMap.get("name"));
+		result.extractFramesFromYamlObject(gl, yamlObject);
 		result.extractTransformationFromYamlObject(yamlObject);
 		result.addChildrenFromYamlObject(gl, yamlObject);
-		result.extractMeshFromYamlObject(gl, yamlObject);
-		result.extractMaterialFromYamlObject(yamlObject);
-		result.extractFramesFromYamlObject(gl, yamlObject);
 
 		return result;
 	}

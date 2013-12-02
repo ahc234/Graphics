@@ -92,15 +92,14 @@ public class LightNodeKeyframeable extends LightNode implements Keyframeable {
 		Map.Entry<Integer,LightNode> mf2 = keyframes.higherEntry(frame);
 		
 			
-		LightNode f1 = mf1.getValue();
-		LightNode f2 = mf2.getValue();
+		SceneNode f1 = mf1.getValue();
+		SceneNode f2 = mf2.getValue();
 		
 		float t1 = mf2.getKey() - mf1.getKey();
 		float t2 = frame - mf1.getKey();
 		float t = t2 /t1;
 		// TODO (Animation P1): Set the state of this light to the specified frame by 
 		// interpolating the states of the appropriate keyframes using Catmull-Rom splines.
-		KeyframeAnimation.linearInterpolate4Float(f1.intensity, f2.intensity,t,this.intensity);
 		KeyframeAnimation.linearInterpolateTransformation(f1, f2, t, this);
 			}
 		}
@@ -140,9 +139,9 @@ public class LightNodeKeyframeable extends LightNode implements Keyframeable {
 		float t2 = frame - mf1.getKey();
 		float t = t2 /t1;
 		
-		KeyframeAnimation.catmullRomInterpolate4Float(f0.intensity, f1.intensity, f2.intensity, f3.intensity, t, this.intensity);
+		//KeyframeAnimation.catmullRomInterpolate4Float(f0.intensity, f1.intensity, f2.intensity, f3.intensity, t, this.intensity);
 		KeyframeAnimation.catmullRomInterpolation(f0.translation, f1.translation, f2.translation, f3.translation, t, this.translation);
-		KeyframeAnimation.catmullRomRotationInterpolation(f0.rotation, f1.rotation, f2.rotation, f3.rotation, t, this.rotation);
+		KeyframeAnimation.catmullRomInterpolation(f0.rotation, f1.rotation, f2.rotation, f3.rotation, t, this.rotation);
 		KeyframeAnimation.catmullRomInterpolation(f0.scaling, f1.scaling, f2.scaling, f3.scaling, t, this.scaling);
 			}
 		}

@@ -6,37 +6,41 @@ import java.util.TreeMap;
 import java.util.Map.Entry;
 
 import javax.media.opengl.GL2;
-import javax.vecmath.Vector3f;
 
-public class LightNodeKeyframeable extends LightNode implements Keyframeable {
-	private static final long serialVersionUID = 7302614078550499605L;
+
+public class SceneNodeKeyframeable extends SceneNode
+		implements Keyframeable {
+	private static final long serialVersionUID = 4345300320997053825L;
 	
-	protected TreeMap<Integer, LightNode> keyframes = new TreeMap<Integer, LightNode>();
+	protected TreeMap<Integer, SceneNode> keyframes = new TreeMap<Integer, SceneNode>();
 	
-	public LightNodeKeyframeable()
+	public SceneNodeKeyframeable()
 	{
 		super();
-		keyframes.put(0, new LightNode());
+		keyframes.put(0, new SceneNode());
+		
 	}
 
-	public LightNodeKeyframeable(String name)
+	public SceneNodeKeyframeable(String name)
 	{
 		super(name);
-		keyframes.put(0, new LightNode(name));
+		resetTransformation();
+		keyframes.put(0, new SceneNode(name));
 	}
 	
-	public LightNodeKeyframeable(String name, int [] frames)
+	public SceneNodeKeyframeable(String name, int [] frames)
 	{
 		super(name);
 		for(int f : frames)
 		{
-			keyframes.put(f, new LightNode(name));
+			keyframes.put(f, new SceneNode(name));
 		}
 	}
 	
-	public void setToLightNode(LightNode node)
+	public void setToTransformation(SceneNode node)
 	{
-		setIntensity(node.intensity[0], node.intensity[1], node.intensity[2]);
+		rotation.set(node.rotation);
+		scaling.set(node.scaling);
 		translation.set(node.translation);
 	}
 
@@ -51,9 +55,9 @@ public class LightNodeKeyframeable extends LightNode implements Keyframeable {
 
 	@Override
 	public void addAsKeyframe(int frame) {
-		LightNode keyframeNode = new LightNode(getName());
-		
-		keyframeNode.setIntensity(intensity[0], intensity[1], intensity[2]);
+		SceneNode keyframeNode = new SceneNode(getName());
+		keyframeNode.rotation.set(rotation);
+		keyframeNode.scaling.set(scaling);
 		keyframeNode.translation.set(translation);
 		
 		keyframes.put(frame, keyframeNode);
@@ -77,72 +81,71 @@ public class LightNodeKeyframeable extends LightNode implements Keyframeable {
 
 	@Override
 	public void linearInterpolateTo(int frame) {
-		// TODO (Animation P1): Set the state of this light to the specified frame by
+		// TODO (Animation P1): Set the state of this node to the specified frame by
 		// linearly interpolating the states of the appropriate keyframes.
-		
 		if (keyframes.containsKey(frame)){
-			setToLightNode(keyframes.get(frame));
+			setToTransformation(keyframes.get(frame));
 		}else{
 		int lastkeyframe= keyframes.lastKey();
-		if (frame > lastkeyframe) setToLightNode(keyframes.get(lastkeyframe));
+		if (frame > lastkeyframe) setToTransformation(keyframes.get(lastkeyframe));
 		else{
 			
 			
-		Map.Entry<Integer,LightNode> mf1 = keyframes.floorEntry(frame);
-		Map.Entry<Integer,LightNode> mf2 = keyframes.higherEntry(frame);
+		Map.Entry<Integer,SceneNode> mf1 = keyframes.lowerEntry(frame);
+		Map.Entry<Integer,SceneNode> mf2 = keyframes.higherEntry(frame);
 		
 			
-		LightNode f1 = mf1.getValue();
-		LightNode f2 = mf2.getValue();
+		SceneNode f1 = mf1.getValue();
+		SceneNode f2 = mf2.getValue();
 		
 		float t1 = mf2.getKey() - mf1.getKey();
 		float t2 = frame - mf1.getKey();
 		float t = t2 /t1;
 		// TODO (Animation P1): Set the state of this light to the specified frame by 
 		// interpolating the states of the appropriate keyframes using Catmull-Rom splines.
-		KeyframeAnimation.linearInterpolate4Float(f1.intensity, f2.intensity,t,this.intensity);
 		KeyframeAnimation.linearInterpolateTransformation(f1, f2, t, this);
-			}
 		}
+		}
+		
 	}
 
 	@Override
 	public void catmullRomInterpolateTo(int frame) {
+		// TODO (Animation P1): Set the state of this node to the specified frame by 
+		// interpolating the states of the appropriate keyframes using Catmull-Rom splines.
 		if (keyframes.containsKey(frame)){
-			setToLightNode(keyframes.get(frame));
+			setToTransformation(keyframes.get(frame));
 		}else{
 		int lastkeyframe= keyframes.lastKey();
-		if (frame > lastkeyframe) setToLightNode(keyframes.get(lastkeyframe));
+		if (frame > lastkeyframe) setToTransformation(keyframes.get(lastkeyframe));
 		else{
 			
 			
-		Map.Entry<Integer,LightNode> mf1 = keyframes.floorEntry(frame);
-		Map.Entry<Integer,LightNode> mf0 = keyframes.floorEntry(mf1.getKey()-1);
-		Map.Entry<Integer,LightNode> mf2 = keyframes.higherEntry(frame);
-		Map.Entry<Integer,LightNode> mf3 = keyframes.higherEntry(mf2.getKey());
+		Map.Entry<Integer,SceneNode> mf1 = keyframes.lowerEntry(frame);
+		Map.Entry<Integer,SceneNode> mf0 = keyframes.lowerEntry(mf1.getKey());
+		Map.Entry<Integer,SceneNode> mf2 = keyframes.higherEntry(frame);
+		Map.Entry<Integer,SceneNode> mf3 = keyframes.higherEntry(mf2.getKey());
 		
 		if (mf0 == null) mf0 = mf1;
 		if (mf3 == null) mf3 = mf2;
 			
-		LightNode f1 = mf1.getValue();
-		LightNode f0 = mf0.getValue();
-		LightNode f2 = mf2.getValue();
-		LightNode f3 = mf3.getValue();
+		SceneNode f1 = mf1.getValue();
+		SceneNode f0 = mf0.getValue();
+		SceneNode f2 = mf2.getValue();
+		SceneNode f3 = mf3.getValue();
 		
-//		System.out.println(f1.translation);
-//		System.out.println(f0.translation);
-//		System.out.println(f2.translation);
-//		System.out.println(f3.translation);
-		// TODO (Animation P1): Set the state of this light to the specified frame by 
-		// interpolating the states of the appropriate keyframes using Catmull-Rom splines.
-	//	System.out.println("Before Translation: " + this.translation);
+//		System.out.println(mf1.getKey());
+//		System.out.println(mf0.getKey());
+//		System.out.println(mf2.getKey());
+//		System.out.println(mf3.getKey());
+		
 		float t1 = mf2.getKey() - mf1.getKey();
 		float t2 = frame - mf1.getKey();
 		float t = t2 /t1;
-		
-		KeyframeAnimation.catmullRomInterpolate4Float(f0.intensity, f1.intensity, f2.intensity, f3.intensity, t, this.intensity);
+		// TODO (Animation P1): Set the state of this light to the specified frame by 
+		// interpolating the states of the appropriate keyframes using Catmull-Rom splines.
 		KeyframeAnimation.catmullRomInterpolation(f0.translation, f1.translation, f2.translation, f3.translation, t, this.translation);
-		KeyframeAnimation.catmullRomRotationInterpolation(f0.rotation, f1.rotation, f2.rotation, f3.rotation, t, this.rotation);
+		KeyframeAnimation.catmullRomInterpolation(f0.rotation, f1.rotation, f2.rotation, f3.rotation, t, this.rotation);
 		KeyframeAnimation.catmullRomInterpolation(f0.scaling, f1.scaling, f2.scaling, f3.scaling, t, this.scaling);
 			}
 		}
@@ -154,7 +157,7 @@ public class LightNodeKeyframeable extends LightNode implements Keyframeable {
 		this.name = name;
 		if(keyframes != null)
 		{
-			for(Entry<Integer, LightNode> entry : keyframes.entrySet())
+			for(Entry<Integer, SceneNode> entry : keyframes.entrySet())
 			{
 				entry.getValue().setName(name);
 			}
@@ -166,10 +169,10 @@ public class LightNodeKeyframeable extends LightNode implements Keyframeable {
 	public Object getYamlObjectRepresentation()
 	{
 		Map<String, Object> result = (Map<String, Object>)super.getYamlObjectRepresentation();
-		result.put("type", "LightNodeKeyframeable");
+		result.put("type", "SceneNodeKeyframeable");
 		
 		Map<Object, Object> framesMap = new HashMap<Object, Object>();
-		for (Entry<Integer, LightNode> entry: keyframes.entrySet())
+		for (Entry<Integer, SceneNode> entry: keyframes.entrySet())
 		{
 			framesMap.put(entry.getKey(), entry.getValue().getYamlObjectRepresentation());
 		}
@@ -177,7 +180,7 @@ public class LightNodeKeyframeable extends LightNode implements Keyframeable {
 		
 		return result;
 	}
-	
+
 	public void extractFramesFromYamlObject(GL2 gl, Object yamlObject)
 	{
 		if (!(yamlObject instanceof Map))
@@ -189,7 +192,7 @@ public class LightNodeKeyframeable extends LightNode implements Keyframeable {
 		for (Entry<Object, Object> entry: framesMap.entrySet())
 		{
 			int frameIndex = Integer.parseInt(entry.getKey().toString());
-			LightNode node = (LightNode) LightNode.fromYamlObject(gl, entry.getValue());
+			SceneNode node = (SceneNode) SceneNode.fromYamlObject(gl, entry.getValue());
 			keyframes.put(frameIndex, node);
 		}
 	}
@@ -200,14 +203,12 @@ public class LightNodeKeyframeable extends LightNode implements Keyframeable {
 			throw new RuntimeException("yamlObject not a Map");
 		Map<?,?> yamlMap = (Map<?,?>)yamlObject;
 
-		LightNodeKeyframeable result = new LightNodeKeyframeable((String)yamlMap.get("name"));
-		result.setName((String)yamlMap.get("name"));
-		result.addChildrenFromYamlObject(gl, yamlObject);
-		result.extractTransformationFromYamlObject(yamlObject);
-		result.extractLightFromYamlObject(yamlObject);
+		SceneNodeKeyframeable result = new SceneNodeKeyframeable((String)yamlMap.get("name"));
 		result.extractFramesFromYamlObject(gl, yamlObject);
+		result.extractTransformationFromYamlObject(yamlObject);
+		result.addChildrenFromYamlObject(gl, yamlObject);
 
 		return result;
 	}
-
+	
 }

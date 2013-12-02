@@ -142,10 +142,12 @@ public class SceneNodeKeyframeable extends SceneNode
 		float t1 = mf2.getKey() - mf1.getKey();
 		float t2 = frame - mf1.getKey();
 		float t = t2 /t1;
+		
+	
 		// TODO (Animation P1): Set the state of this light to the specified frame by 
 		// interpolating the states of the appropriate keyframes using Catmull-Rom splines.
 		KeyframeAnimation.catmullRomInterpolation(f0.translation, f1.translation, f2.translation, f3.translation, t, this.translation);
-		KeyframeAnimation.catmullRomInterpolation(f0.rotation, f1.rotation, f2.rotation, f3.rotation, t, this.rotation);
+		KeyframeAnimation.catmullRomRotationInterpolation(f0.rotation, f1.rotation, f2.rotation, f3.rotation, t, this.rotation);
 		KeyframeAnimation.catmullRomInterpolation(f0.scaling, f1.scaling, f2.scaling, f3.scaling, t, this.scaling);
 			}
 		}

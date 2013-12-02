@@ -136,12 +136,6 @@ public class MeshNodeKeyframeable extends MeshNode implements Keyframeable {
 		float t1 = mf2.getKey() - mf1.getKey();
 		float t2 = frame - mf1.getKey();
 		float t = t2 /t1;
-		
-		System.out.println("Frame: " + frame);
-		System.out.println("First point: " +  mf1.getKey());
-		System.out.println("Second point: " +  mf2.getKey());
-		System.out.println("t: " + t);
-		
 		// TODO (Animation P1): Set the state of this light to the specified frame by 
 		// interpolating the states of the appropriate keyframes using Catmull-Rom splines.
 		KeyframeAnimation.linearInterpolateTransformation(f1, f2, t, this);
@@ -187,7 +181,6 @@ public class MeshNodeKeyframeable extends MeshNode implements Keyframeable {
 		float t2 = frame - mf1.getKey();
 		float t = t2 /t1;
 		
-
 		KeyframeAnimation.catmullRomInterpolation(f0.translation, f1.translation, f2.translation, f3.translation, t, this.translation);
 		KeyframeAnimation.catmullRomRotationInterpolation(f0.rotation, f1.rotation, f2.rotation, f3.rotation, t, this.rotation);
 		KeyframeAnimation.catmullRomInterpolation(f0.scaling, f1.scaling, f2.scaling, f3.scaling, t, this.scaling);
