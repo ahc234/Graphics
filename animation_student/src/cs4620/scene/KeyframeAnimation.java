@@ -92,6 +92,7 @@ public class KeyframeAnimation {
 		Quat4f q2 = getQuaternionFromEulerAngles(p2);
 		
 		q1 = slerp(q1, q2, t);
+		//q1.interpolate(q1, q2, t);
 		
 		//System.out.println(getEulerAnglesFromQuaternion(q1));
 		iNode.set(getEulerAnglesFromQuaternion(q1));
@@ -129,25 +130,34 @@ public class KeyframeAnimation {
 	public static Quat4f slerp(Quat4f i1, Quat4f i2, float t)
 	{
 		// TODO (Animation P1): Implement slerp.
-		Vector4f vecQ1 = new Vector4f(i1.w, i1.x, i1.y, i1.z);
-		Vector4f vecQ2 = new Vector4f(i2.w, i2.x, i2.y, i2.z);
-		float psi = (float)Math.acos((vecQ1.dot(vecQ2)));
-		if (Math.abs(psi) < 0.001f) {
-			if (psi < 0) {
-				psi = -0.001f;
-			} else {
-				psi = 0.001f;
-			}
+		
+		Vector4f vecQ1 = new Vector4f(i1);
+		Vector4f vecQ2 = new Vector4f(i2);
+		
+		float dotProd = vecQ1.dot(vecQ2);
+		
+		if (dotProd < 0) {
+			dotProd = -dotProd;
+			i2.scale(-1f);
 		}
 		
-		Quat4f q = new Quat4f(i1.x, i1.y, i1.z, i1.w);
-		q.scale((float)Math.sin(1-t)*psi);
-		Quat4f i2Deep = new Quat4f(i2.x, i2.y, i2.z, i2.w);
-		i2Deep.scale((float)Math.sin(t)*psi);
-		q.add(i2Deep);
-		q.scale(1f/(float)Math.sin(psi));
-		
-		return q;
+		if (1.0 - Math.abs(dotProd) > 0.001f) {
+			float psi = (float)Math.acos(dotProd);
+			Quat4f q = new Quat4f(i1);
+			q.scale((float)Math.sin((1-t)*psi));
+			Quat4f i2Deep = new Quat4f(i2);
+			i2Deep.scale((float)Math.sin(t*psi));
+			q.add(i2Deep);
+			q.scale(1f/(float)Math.sin(psi));
+				
+			return q;
+		} else {
+			i2.sub(i1);
+			i2.scale(t);
+			i2.add(i1);
+			
+			return i2;
+		} 
 		
 	}
 	
