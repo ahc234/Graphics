@@ -35,7 +35,11 @@ public class KeyframeAnimation {
 		p1.scale(t);
 		p1.add(p0);
 		
-		iFloat = new float[]{p1.x, p1.y, p1.z, p1.w};
+		iFloat[0] = p1.x;
+		iFloat[1] = p1.y;
+		iFloat[2] = p1.z;
+		iFloat[3] = p1.w;
+		
 		
 	}
 	
@@ -73,7 +77,10 @@ public class KeyframeAnimation {
 		float z = 1/2*(-c*t3 + 3*g*t3 - 3*k*t3 + o*t3 + 2*c*t2 - 5*g*t2 + 4*k*t2 - o*t2 - c*t + k*t + 2*g);
 		float w = 1/2*(-d*t3 + 3*h*t3 - 3*l*t3 + p*t3 + 2*d*t2 - 5*h*t2 + 4*l*t2 - p*t2 - d*t + l*t + 2*h);
 		
-		iNode = new float[]{x, y, z, w};		
+		iNode[0] = x;
+		iNode[1] = y;
+		iNode[2] = z;
+		iNode[3] = w;
 	}
 	
 	public static void catmullRomRotationInterpolation(Vector3f p0, Vector3f p1,
@@ -87,7 +94,6 @@ public class KeyframeAnimation {
 		q1 = slerp(q1, q2, t);
 		
 		//System.out.println(getEulerAnglesFromQuaternion(q1));
-		iNode = getEulerAnglesFromQuaternion(q1);
 		iNode.set(getEulerAnglesFromQuaternion(q1));
 
 	}

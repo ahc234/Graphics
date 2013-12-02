@@ -79,6 +79,7 @@ public class LightNodeKeyframeable extends LightNode implements Keyframeable {
 	public void linearInterpolateTo(int frame) {
 		// TODO (Animation P1): Set the state of this light to the specified frame by
 		// linearly interpolating the states of the appropriate keyframes.
+		
 		/*if (keyframes.containsKey(frame)){
 			translation.set(keyframes.get(frame).translation);
 		}else{
@@ -127,9 +128,10 @@ public class LightNodeKeyframeable extends LightNode implements Keyframeable {
 		float t2 = frame - mf1.getKey();
 		float t = t2 /t1;
 		
-		//KeyframeAnimation.catmullRomInterpolation(f0.intensity, f1.translation, f2.translation, f3.translation, t, this.translation);
+		//KeyframeAnimation.catmullRomInterpolate4Float(f0.intensity, f1.intensity, f2.intensity, f3.intensity, t, this.intensity);
 		KeyframeAnimation.catmullRomInterpolation(f0.translation, f1.translation, f2.translation, f3.translation, t, this.translation);
 		KeyframeAnimation.catmullRomRotationInterpolation(f0.rotation, f1.rotation, f2.rotation, f3.rotation, t, this.rotation);
+		KeyframeAnimation.catmullRomInterpolation(f0.scaling, f1.scaling, f2.scaling, f3.scaling, t, this.scaling);
 			}
 		}
 		

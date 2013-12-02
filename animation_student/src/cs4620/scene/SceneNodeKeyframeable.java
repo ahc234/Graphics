@@ -83,6 +83,41 @@ public class SceneNodeKeyframeable extends SceneNode
 	public void linearInterpolateTo(int frame) {
 		// TODO (Animation P1): Set the state of this node to the specified frame by
 		// linearly interpolating the states of the appropriate keyframes.
+		if (keyframes.containsKey(frame)){
+			setToTransformation(keyframes.get(frame));
+		}else{
+		int lastkeyframe= keyframes.lastKey();
+		if (frame > lastkeyframe) setToTransformation(keyframes.get(lastkeyframe));
+		else{
+			
+			
+		Map.Entry<Integer,SceneNode> mf1 = keyframes.floorEntry(frame);
+		Map.Entry<Integer,SceneNode> mf0 = keyframes.floorEntry(mf1.getKey()-1);
+		Map.Entry<Integer,SceneNode> mf2 = keyframes.higherEntry(frame);
+		Map.Entry<Integer,SceneNode> mf3 = keyframes.higherEntry(mf2.getKey());
+		
+		if (mf0 == null) mf0 = mf1;
+		if (mf3 == null) mf3 = mf2;
+			
+		SceneNode f1 = mf1.getValue();
+		SceneNode f0 = mf0.getValue();
+		SceneNode f2 = mf2.getValue();
+		SceneNode f3 = mf3.getValue();
+		
+//		System.out.println(mf1.getKey());
+//		System.out.println(mf0.getKey());
+//		System.out.println(mf2.getKey());
+//		System.out.println(mf3.getKey());
+		
+		float t1 = mf2.getKey() - mf1.getKey();
+		float t2 = frame - mf1.getKey();
+		float t = t2 /t1;
+		// TODO (Animation P1): Set the state of this light to the specified frame by 
+		// interpolating the states of the appropriate keyframes using Catmull-Rom splines.
+		KeyframeAnimation.catmullRomInterpolation(f0.translation, f1.translation, f2.translation, f3.translation, t, this.translation);
+		KeyframeAnimation.catmullRomInterpolation(f0.rotation, f1.rotation, f2.rotation, f3.rotation, t, this.rotation);
+		}
+		}
 		
 	}
 
@@ -123,6 +158,7 @@ public class SceneNodeKeyframeable extends SceneNode
 		// interpolating the states of the appropriate keyframes using Catmull-Rom splines.
 		KeyframeAnimation.catmullRomInterpolation(f0.translation, f1.translation, f2.translation, f3.translation, t, this.translation);
 		KeyframeAnimation.catmullRomRotationInterpolation(f0.rotation, f1.rotation, f2.rotation, f3.rotation, t, this.rotation);
+		KeyframeAnimation.catmullRomInterpolation(f0.scaling, f1.scaling, f2.scaling, f3.scaling, t, this.scaling);
 			}
 		}
 		

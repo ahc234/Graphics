@@ -159,6 +159,7 @@ public class MeshNodeKeyframeable extends MeshNode implements Keyframeable {
 		
 		KeyframeAnimation.catmullRomInterpolation(f0.translation, f1.translation, f2.translation, f3.translation, t, this.translation);
 		KeyframeAnimation.catmullRomRotationInterpolation(f0.rotation, f1.rotation, f2.rotation, f3.rotation, t, this.rotation);
+		KeyframeAnimation.catmullRomInterpolation(f0.scaling, f1.scaling, f2.scaling, f3.scaling, t, this.scaling);
 	//	System.out.println("This Translation: " + this.translation);
 		
 		//System.out.println("This Rotation: " + this.rotation);
