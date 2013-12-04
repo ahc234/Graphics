@@ -1,0 +1,28 @@
+translation: [0.0, 0.0, 0.0]
+rotation: [0.0, 0.0, 0.0]
+name: Root
+children:
+- translation: [5.0, 5.0, -3.5]
+  rotation: [0.0, 0.0, 0.0]
+  name: Light
+  intensity: [1.0, 1.0, 1.0, 1.0]
+  children: []
+  type: LightNode
+  ambient: [0.2, 0.2, 0.2, 1.0]
+  scaling: [1.0, 1.0, 1.0]
+- translation: [0.0, 0.0, 0.0]
+  rotation: [0.0, 75.0, 0.0]
+  name: Teapot
+  children: []
+  type: MeshNode
+  material:
+    specular: [1.0, 1.0, 1.0, 1.0]
+    displaceScale: 0.05
+    diffuse: [0.2, 0.0, 0.0, 1.0]
+    shininess: 40.0
+    type: ToonMaterial
+    ambient: [0.0, 0.0, 0.0, 1.0]
+  mesh: {type: Teapot}
+  scaling: [1.0, 1.0, 1.0]
+type: SceneNode
+scaling: [1.0, 1.0, 1.0]

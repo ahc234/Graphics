@@ -68,6 +68,7 @@ public class BasicRayTracer extends RayTracer {
 
 				// TODO: Compute the viewing ray,
 				//       and call shadeRay on it to get the ray's color.
+<<<<<<< HEAD
 				double adjU = x/dWidth;
 				double adjV = y/dHeight;
 				cam.getRay(ray, adjU, adjV);
@@ -84,6 +85,17 @@ public class BasicRayTracer extends RayTracer {
 					}
 				//TODO: remove this when code works ^^^^^^^
 
+=======
+				double r = 1;
+				double l = 0;
+				double t = 1;
+				double b = 0;
+				double adjU = l + (r-l)*(x + 0.5)/dWidth;
+				double adjV = b + (t-b)*(y + 0.5)/dHeight;
+				cam.getRay(ray, adjU, adjV);
+				shadeRay(pixelColor, scene, ray, work);
+		
+>>>>>>> 91cb0647527d71242e3026dfc350eedcc383472c
 				image.setPixelColor(pixelColor, x, y);
 
 				counter ++;
@@ -121,13 +133,21 @@ public class BasicRayTracer extends RayTracer {
 		// Record intersection in intersectionRecord. If it doesn't hit anything, just return.
 		if (!scene.getFirstIntersection(intersectionRecord, ray)) {
 			return;
+<<<<<<< HEAD
 		}
+=======
+		}	
+>>>>>>> 91cb0647527d71242e3026dfc350eedcc383472c
 		// 2) Compute the direction of outgoing light, by subtracting the
 		//	  intersection point from the origin of the ray.
 		outgoing.sub(ray.origin, intersectionRecord.location);
 		// 3) Get the shader from the intersection record.
 		Shader recordShader = intersectionRecord.surface.getShader();
 		// 4) Call the shader's shade() method to set the color for this ray.
+<<<<<<< HEAD
+=======
+		
+>>>>>>> 91cb0647527d71242e3026dfc350eedcc383472c
 		recordShader.shade(outColor, scene, workspace);
 	}
 }

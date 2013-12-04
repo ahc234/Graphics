@@ -31,7 +31,10 @@ public class Box extends Surface {
 	  Point3 p = new Point3(rayIn.origin);
 
 	  Vector3 d = new Vector3(rayIn.direction);
+<<<<<<< HEAD
 	  d.normalize();
+=======
+>>>>>>> 91cb0647527d71242e3026dfc350eedcc383472c
 	  
 	 // p + td
 	  double txmin = (minPt.x - p.x) / d.x;
@@ -63,8 +66,11 @@ public class Box extends Surface {
 		  tzmin = (maxPt.z - p.z)/d.z;
 		  tzmax = (minPt.z - p.z)/d.z;
 	  }
+<<<<<<< HEAD
 	  
 	  
+=======
+>>>>>>> 91cb0647527d71242e3026dfc350eedcc383472c
 	
 	  double txenter = Math.min(txmin, txmax);
 	  double txexit = Math.max(txmin, txmax);
@@ -75,8 +81,11 @@ public class Box extends Surface {
 	  
 	  double tenter = Math.max(Math.max(txenter, tyenter),tzenter);
 	  double texit = Math.min(Math.min(txexit, tyexit),tzexit);
+<<<<<<< HEAD
 
 	
+=======
+>>>>>>> 91cb0647527d71242e3026dfc350eedcc383472c
 	  
 	  Vector3 d2 = new Vector3(d);
 	  Point3 pointenter = new Point3(p);
@@ -87,6 +96,7 @@ public class Box extends Surface {
 	  Point3 pointexit = new Point3(p);
 	  d3.scale(texit);
 	  pointexit.add(d3);
+<<<<<<< HEAD
 
 
 	  
@@ -113,6 +123,33 @@ public class Box extends Surface {
 	  }
 
 return false;
+=======
+	  
+	  if (tenter < rayIn.start || tenter > rayIn.end) {
+		 return false;
+	  }
+
+	 if (!((txmin > tymax) || (tymin > txmax) || (tzmin > tymax) || 
+	     (tzmin > txmax) || (txmin > tzmax) || tymin > tzmax)){ 
+		 
+		  double epsilon = Ray.EPSILON;
+		  if (pointenter.x >= minPt.x - epsilon && pointenter.x <= minPt.x + epsilon) outRecord.normal.set(new Vector3(-1,0,0));
+		  if (pointenter.x >= maxPt.x - epsilon && pointenter.x <= maxPt.x + epsilon) outRecord.normal.set(new Vector3(1,0,0));
+		  if (pointenter.y >= minPt.y - epsilon && pointenter.y <= minPt.y + epsilon) outRecord.normal.set(new Vector3(0,-1,0));
+	      if (pointenter.y >= maxPt.y - epsilon && pointenter.y <= maxPt.y + epsilon) outRecord.normal.set(new Vector3(0,1,0));
+		  if (pointenter.z >= minPt.z - epsilon && pointenter.z <= minPt.z + epsilon) outRecord.normal.set(new Vector3(0,0,-1));
+		  if (pointenter.z >= maxPt.z - epsilon && pointenter.z <= maxPt.z + epsilon) outRecord.normal.set(new Vector3(0,0,1));
+		 
+		  outRecord.t = tenter;
+		  outRecord.location = pointenter;
+		  outRecord.surface = this;
+		  return true;
+	  
+	  }
+
+	 return false;
+	 
+>>>>>>> 91cb0647527d71242e3026dfc350eedcc383472c
   }
   
   /**

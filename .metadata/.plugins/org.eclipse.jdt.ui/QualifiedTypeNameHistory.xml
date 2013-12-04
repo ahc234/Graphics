@@ -1,2 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<qualifiedTypeNameHistroy/>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="cs4620.manip.Manip"/>
+<fullyQualifiedTypeName name="java.lang.System"/>
+<fullyQualifiedTypeName name="cs4620.test.ManipTestHelpers"/>
+<fullyQualifiedTypeName name="javax.vecmath.Point2f"/>
+<fullyQualifiedTypeName name="javax.vecmath.Vector2f"/>
+<fullyQualifiedTypeName name="java.util.NavigableMap"/>
+</qualifiedTypeNameHistroy>

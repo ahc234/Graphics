@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Move package &apos;cs4620.shaders&apos; to &apos;animation_student/src/cs4620.shaders&apos;&#x0A;- Original project: &apos;manipulators_student&apos;&#x0A;- Destination element: &apos;animation_student/src/cs4620.shaders&apos;&#x0A;- Original element: &apos;manipulators_student/src/cs4620.shaders&apos;&#x0A;- Update references to refactored element" description="Move package" destination="=animation_student/src&lt;cs4620.shaders" element1="/src&lt;cs4620.shaders" flags="589830" fragments="1" id="org.eclipse.jdt.ui.move" policy="org.eclipse.jdt.ui.movePackages" stamp="1385839859295" version="1.0"/>
+</session>

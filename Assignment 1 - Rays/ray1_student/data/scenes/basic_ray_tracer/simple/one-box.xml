@@ -13,10 +13,8 @@
   <image>
     300 300 
   </image>
-  <shader name="blue" type="Phong">
+  <shader name="blue" type="Lambertian">
     <diffuseColor>.2 .3 .8</diffuseColor>
-    <specularColor>1 1 0</specularColor>
-    <exponent>20</exponent>
   </shader>
   <surface type="Box">
     <shader ref="blue" />

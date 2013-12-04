@@ -1,0 +1,123 @@
+translation: [0.0, 0.0, 0.0]
+rotation: [0.0, 0.0, 0.0]
+name: Root
+children:
+- translation: [0.0, 0.0, 0.0]
+  rotation: [0.0, 0.0, 0.0]
+  name: Sun
+  children:
+  - translation: [0.0, 0.0, 0.0]
+    rotation: [0.0, 0.0, 0.0]
+    name: MarsGroup
+    children:
+    - translation: [3.8, 0.0, 0.0]
+      rotation: [0.0, 0.0, 0.0]
+      name: Mars
+      children:
+      - translation: [0.0, 1.2, 0.0]
+        rotation: [0.0, 0.0, 0.0]
+        name: Teapot
+        children: []
+        type: MeshNode
+        material:
+          specular: [1.0, 1.0, 1.0, 1.0]
+          diffuse: [1.0, 1.0, 0.9, 1.0]
+          shininess: 40.0
+          type: GLPhongMaterial
+          ambient: [0.05, 0.05, 0.05, 1.0]
+        mesh: {type: Teapot}
+        scaling: [0.4881904, 0.4881904, 0.4881904]
+      type: MeshNode
+      material:
+        specular: [1.0, 1.0, 1.0, 1.0]
+        diffuse: [0.8, 0.2, 0.0, 1.0]
+        shininess: 40.0
+        type: GLPhongMaterial
+        ambient: [0.05, 0.05, 0.05, 1.0]
+      mesh: {type: Sphere}
+      scaling: [0.42178053, 0.42178053, 0.42178053]
+    type: SceneNode
+    scaling: [1.0, 1.0, 1.0]
+  - translation: [0.0, 0.0, 0.0]
+    rotation: [0.0, 0.0, 0.0]
+    name: EarthGroup
+    children:
+    - translation: [-2.2, 0.0, 0.0]
+      rotation: [0.0, 0.0, 0.0]
+      name: Earth
+      children:
+      - translation: [-2.0, 0.0, 0.0]
+        rotation: [0.0, 0.0, 0.0]
+        name: Moon
+        children:
+        - translation: [0.0, 1.3, 0.0]
+          rotation: [0.0, 0.0, 0.0]
+          name: Flag
+          children:
+          - translation: [0.107186794, 0.2382741, -0.3]
+            rotation: [0.0, 0.0, 0.0]
+            name: Cloth
+            children: []
+            type: MeshNode
+            material:
+              specular: [1.0, 1.0, 1.0, 1.0]
+              diffuse: [1.0, 0.0, 0.9, 1.0]
+              shininess: 40.0
+              type: GLPhongMaterial
+              ambient: [0.05, 0.05, 0.05, 1.0]
+            mesh: {type: Cube}
+            scaling: [0.0059463712, 0.27430934, 0.4159608]
+          - translation: [0.0, -0.1, 0.0]
+            rotation: [0.0, 0.0, 0.0]
+            name: Flagpole
+            children: []
+            type: MeshNode
+            material:
+              specular: [1.0, 1.0, 1.0, 1.0]
+              diffuse: [0.8, 0.7, 0.0, 1.0]
+              shininess: 40.0
+              type: GLPhongMaterial
+              ambient: [0.05, 0.05, 0.05, 1.0]
+            mesh: {type: Cylinder}
+            scaling: [0.040664047, 0.47484776, 0.040664047]
+          type: SceneNode
+          scaling: [1.0, 1.0, 1.0]
+        type: MeshNode
+        material:
+          specular: [1.0, 1.0, 1.0, 1.0]
+          diffuse: [1.0, 1.0, 1.0, 1.0]
+          shininess: 40.0
+          type: GLPhongMaterial
+          ambient: [0.0, 0.0, 0.0, 1.0]
+        mesh: {type: Sphere}
+        scaling: [0.441, 0.441, 0.441]
+      type: MeshNode
+      material:
+        specular: [1.0, 1.0, 1.0, 1.0]
+        diffuse: [0.0, 0.6, 1.0, 1.0]
+        shininess: 40.0
+        type: GLPhongMaterial
+        ambient: [0.05, 0.05, 0.05, 1.0]
+      mesh: {type: Sphere}
+      scaling: [0.4654033, 0.4654033, 0.4654033]
+    type: SceneNode
+    scaling: [1.0, 1.0, 1.0]
+  - translation: [0.0, 0.0, 0.0]
+    rotation: [0.0, 0.0, 0.0]
+    name: Light
+    intensity: [1.0, 1.0, 1.0, 1.0]
+    children: []
+    type: LightNode
+    ambient: [1.0, 1.0, 1.0, 1.0]
+    scaling: [0.0, 0.0, 0.0]
+  type: MeshNode
+  material:
+    specular: [1.0, 1.0, 1.0, 1.0]
+    diffuse: [1.0, 0.5, 0.0, 1.0]
+    shininess: 60.0
+    type: GLPhongMaterial
+    ambient: [0.95, 0.55, 0.05, 1.0]
+  mesh: {type: Sphere}
+  scaling: [0.7076059, 0.7076059, 0.7076059]
+type: SceneNode
+scaling: [1.0, 1.0, 1.0]

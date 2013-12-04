@@ -54,8 +54,16 @@ public class Sphere extends Surface {
 	  if (discriminant < 0 ) {
 		  return false;
 	  }
+<<<<<<< HEAD
 	  if (discriminant == 0 ){
 		  t1 = (-B)/A;
+=======
+	  else if (discriminant == 0 ){
+		  t1 = (-B)/A;
+		  if (t1 < rayIn.start || t1 > rayIn.end) {
+			  return false;
+		  }
+>>>>>>> 91cb0647527d71242e3026dfc350eedcc383472c
 		  Vector3 d2 = new Vector3(d);
 		  d2.scale(t1);
 		  Point3 location= new Point3(e);
@@ -65,6 +73,7 @@ public class Sphere extends Surface {
 		  outRecord.surface = this;
 		  outRecord.normal.sub(location, center);   //outRecordnormal
 		  outRecord.normal.normalize();
+<<<<<<< HEAD
 		
 		  return true;
 	  }
@@ -76,15 +85,39 @@ public class Sphere extends Surface {
 		if (t1 >= 0 && t2 >= 0) t1 = Math.min(t1, t2);
 		
 		  //t1 = (-B)/A;
+=======
+		  return true;
+	  }
+	  else {
+		  t1 = ((-B) + Math.sqrt(discriminant))/A;
+		  t2 = ((-B) - Math.sqrt(discriminant))/A;
+		  if (t1 < rayIn.start || t1 > rayIn.end) {
+			  	t1 = t2;
+		  }
+		  if (t1 < rayIn.start || t1 > rayIn.end) {
+			  return false;
+		  }
+			  
+		  t1 = Math.min(t1, t2);
+			
+>>>>>>> 91cb0647527d71242e3026dfc350eedcc383472c
 		  Vector3 d2 = new Vector3(d);
 		  d2.scale(t1);
 		  Point3 location= new Point3(e);
 		  location.add(d2);
 		  outRecord.location.set(location);
+<<<<<<< HEAD
+=======
+		
+>>>>>>> 91cb0647527d71242e3026dfc350eedcc383472c
 		  outRecord.t = t1;
 		  outRecord.surface = this;
 		  outRecord.normal.sub(location, center);  //outRecordnormal
 		  outRecord.normal.normalize();
+<<<<<<< HEAD
+=======
+		  
+>>>>>>> 91cb0647527d71242e3026dfc350eedcc383472c
 		  return true;
 	  }
 
