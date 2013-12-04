@@ -53,7 +53,7 @@ public class Lambertian extends Shader {
 					Color lintense = new Color(l.intensity);
 					Color scolor = new Color(color);
 					
-					//outIntensity = scolor*lintense*max(0,normal dot incoming)
+					//Formula for outIntensity = scolor*lintense*max(0,normal dot incoming)
 					double ndotl = record.normal.dot(incoming);
 					lintense.scale(Math.max(0,ndotl));
 					scolor.scale(lintense);

@@ -31,7 +31,7 @@ public class Box extends Surface {
 	  Point3 p = new Point3(rayIn.origin);
 
 	  Vector3 d = new Vector3(rayIn.direction);
-	    
+	  d.normalize();
 	  
 	 // p + td
 	  double txmin = (minPt.x - p.x) / d.x;
@@ -42,17 +42,77 @@ public class Box extends Surface {
 	  double tymax = (maxPt.y - p.y) / d.y;
 	  double tzmax = (maxPt.z - p.z) / d.z;
 	  
-	  double tmin = Math.max(Math.max(txmin, tymin),tzmin);
-	  double tmax = Math.min(Math.min(txmax, tymax),tzmax);
+	  if (d.x >= 0){
+	  txmin = (minPt.x - p.x)/d.x;
+	  txmax = (maxPt.x - p.x)/d.x;
+	  }else{
+	  txmin = (maxPt.x - p.x)/d.x;
+	  txmax = (minPt.x - p.x)/d.x;
+	  }
+	  if (d.y >= 0){
+		  tymin = (minPt.y - p.y)/d.y;
+		  tymax = (maxPt.y - p.y)/d.y;
+      }else{
+		  tymin = (maxPt.y - p.y)/d.y;
+		  tymax = (minPt.y - p.y)/d.y;
+	  }
+	  if (d.z >= 0){
+		  tzmin = (minPt.z - p.z)/d.z;
+		  tzmax = (maxPt.z - p.z)/d.z;
+	  }else{
+		  tzmin = (maxPt.z - p.z)/d.z;
+		  tzmax = (minPt.z - p.z)/d.z;
+	  }
+	  
+	  
+	
+	  double txenter = Math.min(txmin, txmax);
+	  double txexit = Math.max(txmin, txmax);
+	  double tyenter = Math.min(tymin, tymax);
+	  double tyexit = Math.max(tymin, tymax);
+	  double tzenter = Math.min(tzmin, tzmax);
+	  double tzexit = Math.max(tzmin, tzmax);
+	  
+	  double tenter = Math.max(Math.max(txenter, tyenter),tzenter);
+	  double texit = Math.min(Math.min(txexit, tyexit),tzexit);
+
+	
 	  
 	  Vector3 d2 = new Vector3(d);
-	  Vector3 location = new Vector3(d);
-	  d2.scale(tmin);
-	  location.add(d);
+	  Point3 pointenter = new Point3(p);
+	  d2.scale(tenter);
+	  pointenter.add(d2);
+	  
+	  Vector3 d3 = new Vector3(d);
+	  Point3 pointexit = new Point3(p);
+	  d3.scale(texit);
+	  pointexit.add(d3);
 
-    
-    return true;
 
+	  
+//	  if (pointmin.x >= minPt.x && pointmin.x <= maxPt.x &&
+//		  pointmin.y >= minPt.y && pointmin.y <= maxPt.y &&
+//	      pointmin.z >= minPt.z && pointmin.z <= maxPt.z) {
+//	  
+	 if (!((txmin > tymax) || (tymin > txmax) || (tzmin > tymax) || 
+	     (tzmin > txmax) || (txmin > tzmax) || tymin > tzmax)){ 
+		
+
+		  outRecord.location = pointenter;
+		  if (pointenter.x == minPt.x) outRecord.normal = new Vector3(0,-1,0);
+		  if (pointexit.x == maxPt.x) outRecord.normal = new Vector3(0,1,0);
+		  if (pointenter.y == minPt.y) outRecord.normal = new Vector3(0,0,-1);
+	      if (pointexit.y == maxPt.y) outRecord.normal = new Vector3(0,0,1);
+		  if (pointenter.z == minPt.z) outRecord.normal = new Vector3(-1,0,0);
+		  if (pointexit.z == minPt.z) outRecord.normal = new Vector3(1,0,0);
+		  
+		  outRecord.t = tenter;
+		  outRecord.surface = this;
+		  return true;
+	  
+	  }
+
+return false;
   }
   
   /**

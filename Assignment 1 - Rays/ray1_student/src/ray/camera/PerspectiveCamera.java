@@ -2,6 +2,7 @@
 package ray.camera;
 
 import ray.Ray;
+import ray.math.Point3;
 import ray.math.Vector3;
 
 /**
@@ -66,7 +67,38 @@ public class PerspectiveCamera extends Camera {
   public void getRay(Ray outRay, double inU, double inV) {
     if (!initialized) initView();
     
-    // TODO: fill in this function.
+	inU = viewWidth/2 * (2 * inU -1);
+	inV = viewHeight/2 * (2 * inV -1);
+	Vector3 tempU = new Vector3(basisU);
+	tempU.scale(inU);
+	Vector3 tempV = new Vector3(basisV);
+	tempV.scale(inV);
+	Vector3 newDir = new Vector3(this.viewDir);
+	newDir.normalize();
+	newDir.scale(projDistance);
+	newDir.add(tempU);
+	newDir.add(tempV); // newDir = -dw + uu + vv
+	
+	//System.out.println(tempU);
+	//System.out.println(tempV);
+	
+	outRay.set(this.viewPoint, newDir);
+    
+//	inU = viewWidth/2 * (2 * inU -1);
+//	inV = viewHeight/2 * (2 * inV -1);
+//	Vector3 tempU = new Vector3(basisU);
+//	tempU.scale(inU);
+//	Vector3 tempV = new Vector3(basisV);
+//	tempV.scale(inV);
+//	Point3 newOrigin = new Point3(this.viewPoint);
+//	newOrigin.add(newOrigin, tempU);
+//	newOrigin.add(newOrigin, tempV);
+//	
+//	System.out.println(viewDir);
+//	
+//	outRay.set(newOrigin, viewDir);
+
+    
 
   }
 }

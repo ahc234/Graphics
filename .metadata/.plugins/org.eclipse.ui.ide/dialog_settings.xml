@@ -1,5 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
+	<list key="installedFeatures">
+		<item value="org.eclipse.cvs:1.4.0.v20130605-2000"/>
+		<item value="org.eclipse.egit:3.0.0.201306101825-r"/>
+		<item value="org.eclipse.emf.common:2.9.0.v20130528-0742"/>
+		<item value="org.eclipse.emf.ecore:2.9.0.v20130528-0742"/>
+		<item value="org.eclipse.epp.mpc:1.2.0.v20130612-1900"/>
+		<item value="org.eclipse.help:2.0.0.v20130605-2000"/>
+		<item value="org.eclipse.jdt:3.9.0.v20130605-2000"/>
+		<item value="org.eclipse.jgit:3.0.0.201306101825-r"/>
+		<item value="org.eclipse.pde:3.9.0.v20130605-2000"/>
+		<item value="org.eclipse.rcp:4.3.0.v20130605-2000"/>
+		<item value="org.eclipse.wst.common.fproj:3.4.0.v201202292300-377F8N8s735555393B7B"/>
+		<item value="org.eclipse.wst.jsdt.feature:1.5.0.v201301022000-7H7DFhZFC7sReqSz-frflXk"/>
+		<item value="org.eclipse.wst.web_ui.feature:3.5.0.v201209252144-7O7QG-6EMkBQ3Bg_peduj80T4Kg8QYEUELicbYyf"/>
+		<item value="org.eclipse.wst.xml_ui.feature:3.5.0.v201301022000-7H7IFisDxumVt037ridXmVSgs8DdRZKtSyS6PL"/>
+	</list>
 	<section name="ExternalProjectImportWizard">
 		<item value="false" key="WizardProjectsImportPage.STORE_ARCHIVE_SELECTED"/>
 		<item value="false" key="WizardProjectsImportPage.STORE_COPY_PROJECT_ID"/>

@@ -48,13 +48,47 @@ public class Phong extends Shader {
 		Ray shadowRay = workspace.shadowRay;
 		Color color = workspace.color;
 		// TODO: Fill in this function.
+		outIntensity = new Color(0,0,0);
+		color = new Color(0,0,0);
 		// 1) Loop through each light in the scene.
+		for (Light l : scene.getLights()){
 		// 2) If the intersection point is shadowed, skip the calculation for the light.
 		//	  See Shader.java for a useful shadowing function.
+			if (!isShadowed(scene,l,record,shadowRay)) {
+				
 		// 3) Compute the incoming direction by subtracting
 		//    the intersection point from the light's position.
+				incoming.sub(l.position, record.location);
 		// 4) Compute the color of the point using the Phong shading model. Add this value
 		//    to the output.
+				
+				double ndotwi = record.normal.dot(incoming);
+				
+				if (ndotwi >= 0) {
+					Vector3 h = new Vector3 (incoming);
+					h.add(outgoing);
+					h.normalize();
+					
+					double ndoth = record.normal.dot(h);
+					Color kd = new Color(diffuseColor);
+					Color ks = new Color(specularColor);
+					Color I = new Color(l.intensity);
+					
+					I.scale(Math.max(0, ndotwi));
+					kd.scale(I);
+					
+					I = new Color(l.intensity);
+					I.scale(Math.pow((Math.max(0, ndoth)), exponent));
+					ks.scale(I);
+					
+					kd.add(ks);
+					
+					color.add(kd);
+				}
+
+				outIntensity.add(color);
+			}
+		}
 		
 	}
 

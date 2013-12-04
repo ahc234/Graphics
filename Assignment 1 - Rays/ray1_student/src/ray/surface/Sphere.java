@@ -37,6 +37,7 @@ public class Sphere extends Surface {
     // TODO: fill in this function.
 	  Point3 e = new Point3(rayIn.origin);
 	  Vector3 d = new Vector3(rayIn.direction);
+	  d.normalize();
 	  Point3 c = new Point3(center);
 	  
 	  double t1;
@@ -48,44 +49,44 @@ public class Sphere extends Surface {
 	  double A = (d.dot(d));
 	  double C = (EminC).dot(EminC) - (radius*radius);
 	  
-	  double discriminant= (B*2) - A*C;
+	  double discriminant= (B*B) - A*C;
 	  
-	  if (discriminant < 0 ) return false;
+	  if (discriminant < 0 ) {
+		  return false;
+	  }
 	  if (discriminant == 0 ){
-		  t1 = (B*-1.0)/A;
+		  t1 = (-B)/A;
 		  Vector3 d2 = new Vector3(d);
 		  d2.scale(t1);
 		  Point3 location= new Point3(e);
 		  location.add(d2);
-		  outRecord.location = location;
+		  outRecord.location.set(location);
 		  outRecord.t = t1;
 		  outRecord.surface = this;
 		  outRecord.normal.sub(location, center);   //outRecordnormal
+		  outRecord.normal.normalize();
 		
 		  return true;
 	  }
 	  else {
-		  t1 = ((B*-1.0) + Math.sqrt(discriminant))/A;
-		  t2 = ((B*-1.0) - Math.sqrt(discriminant))/A;
+		  System.out.println("hi");
+		  t1 = ((-B) - Math.sqrt(discriminant))/A;
+		  t2 = ((-B) + Math.sqrt(discriminant))/A;
 		if (t1 < 0) t1 = t2;
 		if (t1 >= 0 && t2 >= 0) t1 = Math.min(t1, t2);
 		
-		  t1 = (B*-1.0)/A;
+		  //t1 = (-B)/A;
 		  Vector3 d2 = new Vector3(d);
 		  d2.scale(t1);
 		  Point3 location= new Point3(e);
 		  location.add(d2);
-		  outRecord.location = location;
+		  outRecord.location.set(location);
 		  outRecord.t = t1;
 		  outRecord.surface = this;
 		  outRecord.normal.sub(location, center);  //outRecordnormal
+		  outRecord.normal.normalize();
+		  return true;
 	  }
-
-	  
-	  
-	 
-        
-    return true;
 
   }
   
