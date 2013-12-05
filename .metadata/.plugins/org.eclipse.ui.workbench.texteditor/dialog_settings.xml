@@ -13,16 +13,16 @@
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="linear" key="selection"/>
+		<item value="scene" key="selection"/>
 		<list key="findhistory">
+			<item value="scene"/>
+			<item value="getMaxFrameNumber()"/>
+			<item value="text"/>
+			<item value="play"/>
+			<item value="floor"/>
+			<item value="lower"/>
 			<item value="linear"/>
 			<item value="linearro"/>
-			<item value="T"/>
-			<item value="animationTimer"/>
-			<item value="startAnimation"/>
-			<item value="playButton"/>
-			<item value="catmullRomInterpolateTo(int"/>
-			<item value="vertices"/>
 		</list>
 		<list key="replacehistory">
 		</list>
