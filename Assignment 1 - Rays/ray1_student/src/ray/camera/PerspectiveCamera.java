@@ -84,8 +84,29 @@ public class PerspectiveCamera extends Camera {
 	newDir.add(tempU);
 	newDir.add(tempV); // newDir = -dw + uu + vv
 	
+<<<<<<< HEAD
+	//System.out.println(tempU);
+	//System.out.println(tempV);
+	
+	outRay.set(this.viewPoint, newDir);
+    
+//	inU = viewWidth/2 * (2 * inU -1);
+//	inV = viewHeight/2 * (2 * inV -1);
+//	Vector3 tempU = new Vector3(basisU);
+//	tempU.scale(inU);
+//	Vector3 tempV = new Vector3(basisV);
+//	tempV.scale(inV);
+//	Point3 newOrigin = new Point3(this.viewPoint);
+//	newOrigin.add(newOrigin, tempU);
+//	newOrigin.add(newOrigin, tempV);
+//	
+//	System.out.println(viewDir);
+//	
+//	outRay.set(newOrigin, viewDir);
+=======
 	outRay.set(this.viewPoint, newDir);
 
+>>>>>>> 91cb0647527d71242e3026dfc350eedcc383472c
 
     
 

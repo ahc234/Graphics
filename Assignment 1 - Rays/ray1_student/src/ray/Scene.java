@@ -77,7 +77,10 @@ public class Scene {
 					outRecord.surface = tempRecord.surface;
 					outRecord.t = tempRecord.t;
 					outRecord.location = tempRecord.location;
+<<<<<<< HEAD
+=======
 					outRecord.normal.set(tempRecord.normal);
+>>>>>>> 91cb0647527d71242e3026dfc350eedcc383472c
 				}
 			}
 		//		 5) If there was an intersection, return true; otherwise return false.
@@ -96,6 +99,10 @@ public class Scene {
 		IntersectionRecord tempRecord = new IntersectionRecord();
 		for (Surface s : surfaces){
 			if (s.intersect(tempRecord, ray)) {
+<<<<<<< HEAD
+				System.out.println("yes");
+=======
+>>>>>>> 91cb0647527d71242e3026dfc350eedcc383472c
 				return true;
 			}
 		}
