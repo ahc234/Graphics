@@ -219,7 +219,7 @@ public class AnimationPanel extends JPanel implements ActionListener, ChangeList
 				}
 				else
 				{
-					//stopAnimation();
+					stopAnimation();
 					setCurrentFrame(0);
 				}
 			}

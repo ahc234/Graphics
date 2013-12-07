@@ -51,7 +51,7 @@ public class SceneKeyframeable extends Scene implements Keyframeable
 			return new int[0];
 		
 		int numFrames = keyframes.size();
-		
+		AnimationPanel.numTicks = numFrames;
 		int [] frameNumbers = new int[numFrames];
 		
 		Iterator<Integer> iter = keyframes.iterator();
@@ -59,9 +59,7 @@ public class SceneKeyframeable extends Scene implements Keyframeable
 		{
 			frameNumbers[i] = iter.next();
 		}
-		if (numFrames > 0){
-		AnimationPanel.numTicks = frameNumbers[frameNumbers.length-1];
-		}
+		
 		return frameNumbers;
 	}
 	

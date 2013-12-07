@@ -39,7 +39,7 @@ public class AnimationPanel extends JPanel implements ActionListener, ChangeList
 	JPanel southPanel;
 	JCheckBox splineInterpolation;
 	//JCheckBox capture;
-	public static int numTicks = 300;
+	int numTicks = 300;
 	int initValue = 0;
 	int currentFrame = 0;
 	boolean linearInterpolation = true;
@@ -219,7 +219,7 @@ public class AnimationPanel extends JPanel implements ActionListener, ChangeList
 				}
 				else
 				{
-					//stopAnimation();
+					stopAnimation();
 					setCurrentFrame(0);
 				}
 			}

@@ -59,9 +59,7 @@ public class SceneKeyframeable extends Scene implements Keyframeable
 		{
 			frameNumbers[i] = iter.next();
 		}
-		if (numFrames > 0){
-		AnimationPanel.numTicks = frameNumbers[frameNumbers.length-1];
-		}
+		//AnimationPanel.numTicks = frameNumbers[numFrames-1];
 		return frameNumbers;
 	}
 	
