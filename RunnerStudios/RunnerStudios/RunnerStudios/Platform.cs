@@ -38,7 +38,7 @@ namespace RunnerStudios
 
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
-            spriteBatch.Draw(path, new Vector2(pathStart.X, pathStart.Y - platDepth), null, Color.White, 0.0f, Vector2.Zero,
+            spriteBatch.Draw(path, new Vector2(pathStart.X - 25, pathStart.Y - platDepth), null, Color.White, 0.0f, Vector2.Zero,
                    1.0f, SpriteEffects.None, 1.0f);
             spriteBatch.Draw(platform, new Vector2(pathStart.X + platPos, pathStart.Y - platDepth), null, Color.White, 0.0f, Vector2.Zero,
                                1.0f, SpriteEffects.None, 1.0f);

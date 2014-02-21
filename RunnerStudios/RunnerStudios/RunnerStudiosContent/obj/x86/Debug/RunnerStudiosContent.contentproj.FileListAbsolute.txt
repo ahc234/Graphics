@@ -1,1 +1,2 @@
 C:\Users\Athena\Documents\_Notes\CS 4152\RunnerStudios\RunnerStudios\RunnerStudiosContent\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Athena\Documents\GitHub\Graphics\RunnerStudios\RunnerStudios\RunnerStudiosContent\obj\x86\Debug\ResolveAssemblyReference.cache
