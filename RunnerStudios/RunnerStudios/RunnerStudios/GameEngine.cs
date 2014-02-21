@@ -79,6 +79,8 @@ namespace RunnerStudios
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+
+            level.bun.Update();
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
@@ -87,16 +89,25 @@ namespace RunnerStudios
             currState = Mouse.GetState();
 
             //Just started dragging
+            List<Platform> platforms = level.getPlatforms();
             if (prevState.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Released && 
                 currState.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed)
             {
-                List<Platform> platforms = level.getPlatforms();
+   
                 foreach (Platform p in platforms)
                 {
                     if (p.onPlat(currState))
                     {
                         currPlat = p;
                     }
+                }
+            }
+
+            foreach (Platform p in platforms)
+            {
+                if (p.isOnPlat(level.bun.Pos))
+                {
+                    level.bun.Vel = new Vector2(0, 0);
                 }
             }
 

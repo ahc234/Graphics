@@ -8,3 +8,13 @@ C:\Users\Athena\Documents\_Notes\CS 4152\RunnerStudios\RunnerStudios\RunnerStudi
 C:\Users\Athena\Documents\_Notes\CS 4152\RunnerStudios\RunnerStudios\RunnerStudios\bin\x86\Debug\Content\Images\platform.xnb
 C:\Users\Athena\Documents\_Notes\CS 4152\RunnerStudios\RunnerStudios\RunnerStudios\bin\x86\Debug\Content\Images\path.png
 C:\Users\Athena\Documents\_Notes\CS 4152\RunnerStudios\RunnerStudios\RunnerStudios\bin\x86\Debug\Content\Images\platform.png
+C:\Users\Kristin\Documents\GitHub\Graphics\RunnerStudios\RunnerStudios\RunnerStudios\bin\x86\Debug\Content\Images\path.xnb
+C:\Users\Kristin\Documents\GitHub\Graphics\RunnerStudios\RunnerStudios\RunnerStudios\bin\x86\Debug\Content\Images\platform.xnb
+C:\Users\Kristin\Documents\GitHub\Graphics\RunnerStudios\RunnerStudios\RunnerStudios\bin\x86\Debug\Content\Images\path.png
+C:\Users\Kristin\Documents\GitHub\Graphics\RunnerStudios\RunnerStudios\RunnerStudios\bin\x86\Debug\Content\Images\platform.png
+C:\Users\Kristin\Documents\GitHub\Graphics\RunnerStudios\RunnerStudios\RunnerStudios\bin\x86\Debug\RunnerStudios.exe
+C:\Users\Kristin\Documents\GitHub\Graphics\RunnerStudios\RunnerStudios\RunnerStudios\bin\x86\Debug\RunnerStudios.pdb
+C:\Users\Kristin\Documents\GitHub\Graphics\RunnerStudios\RunnerStudios\RunnerStudios\obj\x86\Debug\RunnerStudios.csprojResolveAssemblyReference.cache
+C:\Users\Kristin\Documents\GitHub\Graphics\RunnerStudios\RunnerStudios\RunnerStudios\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+C:\Users\Kristin\Documents\GitHub\Graphics\RunnerStudios\RunnerStudios\RunnerStudios\obj\x86\Debug\RunnerStudios.exe
+C:\Users\Kristin\Documents\GitHub\Graphics\RunnerStudios\RunnerStudios\RunnerStudios\obj\x86\Debug\RunnerStudios.pdb

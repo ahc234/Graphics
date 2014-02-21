@@ -68,7 +68,7 @@ namespace RunnerStudios
             platPos += moveDist;
         }
 
-        public bool isOnPlat(Point pos)
+        public bool isOnPlat(Vector2 pos)
         {
             //return true if character is within the bounds of the platform
             return (pos.X > pathStart.X + platPos && pos.X < pathStart.X + platPos + platLen &&

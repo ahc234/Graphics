@@ -14,17 +14,21 @@ namespace RunnerStudios
     public class Level
     {
         private List<Platform> platforms;
+        public Bunny bun;
 
         public Level()
         {
             platforms = new List<Platform>();
             platforms.Add(new Platform(100, 100, new Point(200, 200), 400));
             platforms.Add(new Platform(250, 100, new Point(300, 300), 400));
+            bun = new Bunny(new Vector2(0, 0));
+
         }
 
         public static void LoadContent(ContentManager content)
         {
             Platform.LoadContent(content);
+            Bunny.LoadContent(content);
 
         }
 
@@ -34,6 +38,8 @@ namespace RunnerStudios
             {
                 p.Draw(spriteBatch, gameTime);
             }
+
+            bun.Draw(spriteBatch,gameTime);
         }
 
         public List<Platform> getPlatforms()
